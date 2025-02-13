@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <!DOCTYPE html>
+    <html lang="fa">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="library/script1.js"></script>
+        <link rel="stylesheet" href="library/style1.css">
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+        <title> همه کتاب ها</title>
+
+
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                text-align: center;
+                background-color: #f8f8f8;
+            }
+
+    
+    
+            .filter-container {
+                margin: 20px auto;
+                display: flex;
+                justify-content: center;
+                width: 500px;
+                align-items: center;
+                gap: 10px;
+                padding: 10px;
+                font-family: modam;
+                background-color: #bbb;
+            }
+    
+            .filter-container input, .filter-container select, .filter-container button {
+                padding: 3px;
+                font-size: 16px;
+            }
+            .filter-container select{
+                border-radius: 3px;
+                cursor: pointer;
+                border: none;
+                font-family: modam;
+                text-align: center;
+                width: 200px;
+            }
+    
+            .book-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+    
+            .card {
+                width: 180px;
+                height: 350px;
+                background: white;
+                padding: 10px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.116);
+                text-align: center;
+                margin: 30px 10px;
+            }
+            .card a{
+                text-decoration: none;
+                color: black;
+            }
+    
+            .card img {
+                width: 100%;
+                height: 230px;
+                border-radius: 10px;
+            }
+    
+            .info div {
+                margin: 5px 0;
+            }
+    
+            .card .discount {
+                color: white;
+                background: #419f4e;
+                padding: 5px 10px;
+                border-radius: 5px;
+                width: 50px;
+                text-align: center;
+                float: right;
+                margin-top: -35px;
+            }
+    
+            #right{
+                text-align: right;
+                font-family: modam;
+                font-size: 13px;
+                margin-top: 0px;
+            }
+    
+            #left{
+                text-align: left;
+                font-family: modam;
+                font-size: 13px;
+                margin-top: 0px;
+            }
+    
+            /* ریسپانسیو */
+            @media (max-width: 1024px) {
+                .card {
+                    width: 140px;
+                    height: 280px;
+                }
+    
+                .card img {
+                    height: 190px;
+                }
+            }
+    
+            @media (max-width: 768px) {
+                .filters {
+                    flex-direction: column;
+                    align-items: center;
+                }
+        
+                .book-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+        
+                .card {
+                    width: 120px;
+                    height: 250px;
+                }
+    
+                .card img {
+                    height: 170px;
+                }
+            }
+    
+            @media (max-width: 480px) {
+                .book-list {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 10px;
+                }
+    
+                .card {
+                    width: 130px;
+                    height: 240px;
+                    margin: 10px auto;
+                }
+    
+                .card img {
+                    height: 150px;
+                }
+            }
+
+
+            
+        </style>
+            <script>
+                const menuToggle = document.getElementById('menu-toggle');
+                const menuClose = document.getElementById('menu-close');
+                const sideMenu = document.getElementById('side-menu');
+        
+                menuToggle.addEventListener('click', () => {
+                    sideMenu.classList.remove('menu-hidden');
+                    sideMenu.classList.add('menu-visible');
+                });
+        
+                menuClose.addEventListener('click', () => {
+                    sideMenu.classList.remove('menu-visible');
+                    sideMenu.classList.add('menu-hidden');
+                });
+        
+            </script>
+                <div id="side-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-800 text-white menu-hidden transition-transform duration-300">
+                    <div class="flex justify-end p-4">
+                        <button id="menu-close" class="headericon"><img src="image/close.png" alt="img"><i></i></button>
+                    </div>
+                    <nav class="flex flex-col space-y-4 p-4">
+                        <h1 style="text-align: center; font-family: modam; font-size: 20px;">بوکیتو</h1>
+                        <a id="links" href="everybook.html" class="text-white text-lg">همه کتاب های</a>
+                        <a id="links" href="category.html" class="text-white text-lg">دسته بندی</a>
+                        <a id="links" href="shopping-cart.html" class="text-white text-lg">سبد خرید</a>
+                        <a id="links" href="#" class="text-white text-lg">درباره ما</a>
+                    </nav>
+                </div>
+
+
+</head>
+
+<div class="category-section">
+    <h2 class="category-title">همه کتاب ها</h2>
+ </div>
+
+<body>
+    <div class="filter-container">
+        <select id="sort-options">
+            <option value="newest">فیلتر </option>
+            <option value="newest">جدیدترین</option>
+            <option value="bestseller">پرفروش‌ترین</option>
+            <option value="cheapest">ارزان‌ترین</option>
+            <option value="expensive">گران‌ترین</option>
+        </select>
+
+        <select id="sort-options">
+            <option value="newest">فیلتر </option>
+            <option value="newest">جدیدترین</option>
+            <option value="bestseller">پرفروش‌ترین</option>
+            <option value="cheapest">ارزان‌ترین</option>
+            <option value="expensive">گران‌ترین</option>
+        </select>
+
+        <select id="sort-options">
+            <option value="newest">فیلتر </option>
+            <option value="newest">جدیدترین</option>
+            <option value="bestseller">پرفروش‌ترین</option>
+            <option value="cheapest">ارزان‌ترین</option>
+            <option value="expensive">گران‌ترین</option>
+        </select>
+    </div>
+    
+    <div class="book-list" id="book-list">
+        <!-- کتاب‌ها اینجا نمایش داده می‌شوند -->
+
+        <div class="card">
+            <a href="detale.html">
+            <img src="image/bookcover.jpg" alt="کتاب">
+            <div class="info">
+                <div id="right"> عذاب شبانه</div>
+                <div id="right"> مارکه لوکاس رینفلد</div>
+                <div id="left"> <s>195000</s></div>
+                <div id="left"> 155000</div>
+                <div class="discount">20%</div>
+            </div>
+            </a>
+        </div>
+
+    </div>
+    
+    <script>
+
+function filterBooks() {
+    let searchQuery = document.getElementById("search").value.toLowerCase();
+    let selectedCategory = document.getElementById("category").value;
+    let minPrice = document.getElementById("minPrice").value;
+    let maxPrice = document.getElementById("maxPrice").value;
+
+    let books = document.querySelectorAll(".book");
+
+    books.forEach(book => {
+        let title = book.querySelector("h3").innerText.toLowerCase();
+        let category = book.getAttribute("data-category");
+        let price = parseInt(book.getAttribute("data-price"));
+
+        let matchesSearch = title.includes(searchQuery);
+        let matchesCategory = selectedCategory === "all" || category === selectedCategory;
+        let matchesMinPrice = minPrice === "" || price >= parseInt(minPrice);
+        let matchesMaxPrice = maxPrice === "" || price <= parseInt(maxPrice);
+
+        if (matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice) {
+            book.style.display = "block";
+        } else {
+            book.style.display = "none";
+        }
+    });
+}
+
+
+    </script>
+</body>
+
+
+
+</html>

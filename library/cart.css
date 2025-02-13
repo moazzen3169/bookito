@@ -1,0 +1,135 @@
+
+
+/* کانتینر سبد خرید */
+.cart-container {
+    width: 80%;
+    margin: 30px auto;
+
+}
+
+/* استایل هدر */
+.cart-container h2 {
+    text-align: right;
+    font-size: 24px;
+}
+
+/* استایل بخش سبد خرید */
+.cart {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    direction: ltr;
+    
+}
+
+
+/* لیست آیتم‌های سبد خرید */
+.cart-items {
+    flex: 2;
+}
+
+/* آیتم‌های سبد خرید */
+.cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+    width: 60px;
+    height: 80px;
+    border-radius: 5px;
+}
+
+.item-details {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.item-details h4 {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.item-details p {
+    font-size: 14px;
+    color: gray;
+}
+
+.item-price {
+    font-weight: bold;
+}
+
+/* دکمه حذف */
+.remove-btn {
+    color: red;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* استایل بخش خلاصه سفارش */
+.order-summary {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary h3 {
+    margin-bottom: 10px;
+}
+
+.order-summary p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.order-summary h4 {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* دکمه پرداخت */
+.checkout-btn {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: modam;
+}
+.cart-items input{
+    padding: 5px;
+    text-align: center;
+    margin: 0px 10px;
+    max-width: 50px;
+}
+        /* استایل بخش دسته‌بندی */
+
+
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .cart {
+        flex-direction: column;
+    }
+    .order-summary {
+        margin-top: 20px;
+    }
+}

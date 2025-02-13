@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارت کتاب</title>
+    <style>
+        body {
+            font-family: modam;
+            text-align: center;
+            background-color: #f8f8f8;
+            margin: 0;
+        }
+
+        .header {
+            background-color: #27272a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 50px;
+            position: relative;
+            height:50px;
+            z-index: 1000;
+            direction:ltr;
+            font-family: modam;
+
+        }
+        .icons{
+            width:120px;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+
+        .header .icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .header .icons i {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .search-box {
+            width: 100%;
+            margin-top: 0px;
+            padding: 10px;
+            text-align: center;
+            background-color: #27272a;
+        }
+
+        .search-box input {
+            width: 60%;
+            height:35px;
+            font-family: modam;
+            padding: 10px;
+            font-size: 12px;
+            border-radius: 5px;
+            border: none;
+            text-align:right;
+        }
+
+        .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .nav-menu {
+            display: none;
+            flex-direction: column;
+            background-color: #27272a;
+            position: absolute;
+            position: fixed;
+            top: 50px;
+            right: 0;
+            width: 200px;
+            height:100%;
+            text-align: right;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            display: block;
+            padding: 8px 0;
+            text-align:center;
+        }
+        .nav-menu a:hover{
+            background-color: #313131;
+            border-radius:5px;
+        }
+
+
+
+        .nav-menu.active {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding:10px;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .search-box {
+                order: 3;
+                width: 100%;
+                margin:0px auto;
+                margin-top: 0px;
+            }
+            .search-box input{
+                width:80%;
+            }
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            document.getElementById("nav-menu").classList.toggle("active");
+        }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="icons">
+            <i class="user"><a href="register.php"><img src="image/profile.png" alt="img" width="30px"></a></i>
+            <i class="cart1"><a href="shopping-cart.php"><img src="image/buybag.png" alt="img" width="30px"></a></i>
+            <i class="instagram"><a href="https://www.instagram.com/bookito.o/"><img src="image/insta.png" alt="img" width="30px"></a></i>
+        </div>
+        <div class="logo">بوکیتو</div>
+        <div class="menu-btn" onclick="toggleMenu()">☰</div>
+        <nav class="nav-menu" id="nav-menu">
+            <h1 style="text-align:center;">بوکیتو</h1>
+            <a href="index.php">صفحه اصلی</a>
+            <a href="everybook.php">همه کتابها</a>
+            <a href="category.php">دسته بندی</a>
+            <a href="shopping-cart.php">سبد خرید</a>
+        </nav>
+    </header>
+    <div class="search-box">
+        <input type="text" placeholder="نام کتاب یا نویسنده را وارد کنید">
+    </div>
+</body>
+</html>

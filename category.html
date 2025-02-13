@@ -1,0 +1,146 @@
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوکیتو</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="library/script1.js"></script>
+    <link rel="stylesheet" href="library/style1.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+    <style>
+        body{
+            background: #e8e8e8;
+            margin:0%;
+            padding: 0%;
+        }
+        header{
+            direction: ltr;
+        }
+        #link{
+            background-color: #1763cc00;
+            transition: ease 0.3s;
+        }
+        #link:hover{
+            background-color: #1F2937;
+            color: #e8e8e8;
+        }
+        #main{
+            max-width: 1200px;
+            margin-right: 200px;
+            margin: 10px auto;
+
+        }
+        #listitem{
+            border: 1px dashed #1F2937;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #1F2937;
+            color: #e8e8e8;
+        }
+
+
+                /* استایل بخش دسته‌بندی */
+                .category-section {
+                    margin-top: 0px;
+            width: 100%;
+            height: 100px; /* ارتفاع مناسب */
+            background-image: url('image/categorybanner.jpg'); /* تصویر پس‌زمینه */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+
+        }
+
+        /* استایل متن */
+        .category-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0a0a0a;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+
+        @media (max-width:480px) {
+            #link{ 
+                padding: 10px 6px;
+            }
+        }
+
+    </style>
+
+        <?php include"header.php";?>
+
+
+<div class="category-section">
+    <h2 class="category-title">دسته‌بندی</h2>
+</div>
+<main id="main" class="p-4">
+
+        <section class="mb-8">
+            <h3 id="listitem" class="text-xl mb-2">انواع ژانر</h3>
+            <div class="flex flex-wrap gap-2">
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">کلاسیک</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">فانتزی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">روانشناسی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">فلسفی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">سیاسی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">نمایشنامه</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">ادبیات مدرن</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">تاریخی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">عاشقانه</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">کارآگاهی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">کمدی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">درام</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">حماسی</a>
+                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">جنگی</a>
+            </div>
+        </section>
+        <section class="mb-8">
+            <h3 id="listitem" class="text-xl mb-2">ادبیات کشور ها</h3>
+            <div class="flex flex-wrap gap-2">
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">ایران</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">فرانسه</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">روسیه</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">ایتالیا</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">آمریکا</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">کانادا</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">آلمان</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">انگلیس</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">چین</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">کره جنوبی</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">ژاپن</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">استرالیا</a>
+                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">اروپا</a>
+            </div>
+        </section>
+        <section>
+            <h3 id="listitem" class="text-xl mb-2">انتشارات</h3>
+            <div class="flex flex-wrap gap-2">
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">چشمه</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">نیلوفر</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">ماهی</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">جامی</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">نو</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">مرکز</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">نگاه</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">مجازی</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">مجید</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">امیرکبیر</a>
+                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">میکان</a>
+            </div>
+        </section>
+    </main>
+</body>
+
+<?php include"footer.php";?>
+
+
+</html>

@@ -1,0 +1,217 @@
+<html dir="rtl" lang="fa">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Book Details
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="library/script1.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+</head>
+
+<?php include"header.php";?>
+
+
+<body class="bg-gray-100">
+   
+
+
+
+ <style>
+    body{
+        background-color: #e8e8e8;
+        font-family: modam;
+    }
+    #bookcover{
+        width: auto;
+        height: 415px;
+        border-radius: 10px;
+    }
+    #detile{
+        min-width: 550px;
+        direction: rtl;
+        text-align:right;
+    }
+    #buybutton{
+        width: 180px;
+        height: 40px;
+        background-color: rgba(0, 128, 0, 0);
+        color: green;
+        font-family: modam;
+        padding: 5px 10px;
+        margin-bottom: 20px;
+        border: 1px dashed green;
+        border-radius: 5px;
+        transition: 0.2s ease;
+        
+    }
+    #buybutton:hover{
+        background-color: green;
+        color: #e8e8e8;
+    }
+
+
+
+    @media (max-width:480px) {
+
+
+        #detile{
+        min-width: 350px;
+        direction: rtl;
+        }
+        #name{
+            text-align: center;
+        }
+        #buybutton{
+            width: 100%;
+        }
+
+    }
+
+ </style>
+
+
+
+
+
+
+
+
+
+ <body  class=" flex justify-center items-center min-h-screen">
+  <div style="margin: 0px auto;" class=" p-6 rounded-lg  max-w-4xl">
+   <div  style="direction: ltr; margin: 10px auto;" class="flex flex-col md:flex-row items-center md:items-start">
+    <div id="detile" class="flex-1">
+     <h1 id="name" class="text-xl font-bold mb-2">
+      آفتاب گردان های کور
+     </h1>
+     <p  class="text-gray-500 mb-4">
+      آلبرتو مندس
+      <br/>
+      نشر خوب
+     </p>
+
+     <button id="buybutton" onclick="location.href='shopping-cart.php'">افزودن به سبد خرید</button>
+
+     <div  class="border border-gray-300 p-4 rounded-lg">
+      <p class="mb-2">
+       مترجم:
+       <span class="float-left">
+        اصغر
+       </span>
+      </p>
+      <p class="mb-2">
+       زبان:
+       <span class="float-left">
+        ایتالیایی
+       </span>
+      </p>
+      <p class="mb-2">
+       نوع جلد:
+       <span class="float-left">
+        شومیز
+       </span>
+      </p>
+      <p class="mb-2">
+       قطع:
+       <span class="float-left">
+        جیبی
+       </span>
+      </p>
+      <p class="mb-2">
+       تعداد صفحه:
+       <span class="float-left">
+        150
+       </span>
+      </p>
+      <p class="mb-2">
+       موجود در انبار:
+       <span class="float-left">
+        3 عدد
+       </span>
+      </p>
+      <p class="mb-2">
+       امتیاز کتاب:
+       <span class="float-left">
+        3.8 از 5
+       </span>
+      </p>
+     </div>
+    </div>
+    <div class="flex-1 mt-6 md:mt-0 md:ml-6">
+     <img id="bookcover" alt="Book cover image" class="w-full h-auto"  src="image/bookcover.jpg" />
+    </div>
+   </div>
+   <div class="mt-6 border border-gray-300 p-4 rounded-lg">
+    <h2 class="text-lg font-bold mb-2">
+     خلاصه کتاب و توضیحات
+    </h2>
+    <p class="text-gray-700 leading-relaxed">
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </p>
+   </div>
+  </div>
+
+
+  <h1 style="font-size: 20px;margin-right: 50px; padding: 20px; font-family: modam; font-weight: bold;">کتاب های پیشنهادی</h1>
+
+  <?php include"book-slider.php";?>
+
+
+ </body>
+
+ <footer>
+    <div class="footer-container">
+        <!-- بخش درباره ما -->
+        <div id="about" class="footer-section about-us">
+            <h2>درباره ما</h2>
+            <p>کتاب‌فروشی ما با هدف ترویج فرهنگ کتاب‌خوانی و ارائه بهترین کتاب‌ها در زمینه‌های مختلف فعالیت می‌کند.</p>
+        </div>
+        <!-- بخش دسته‌بندی‌ها -->
+        <div id="categories" class="footer-section categories">
+            <h2>دسته‌بندی‌ها</h2>
+            <ul>
+                <li><a href="#">ادبیات</a></li>
+                <li><a href="#">تاریخ</a></li>
+                <li><a href="#">علمی</a></li>
+                <li><a href="#">فلسفه</a></li>
+                <li><a href="#">هنر</a></li>
+            </ul>
+        </div>
+        <!-- بخش تماس با ما -->
+        <div class="footer-section contact-us">
+            <h2>تماس با ما</h2>
+            <ul>
+                <li>تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</li>
+                <li>ایمیل: info@bookstore.com</li>
+                <li>آدرس: تهران، خیابان مثال، پلاک ۱۲۳</li>
+            </ul>
+        </div>
+        <!-- بخش شبکه‌های اجتماعی -->
+        <div class="footer-section social-media">
+            <h2>ما را دنبال کنید</h2>
+            <ul>
+                <li><a href="#"><i class="fab fa-instagram"></i> اینستاگرام</a></li>
+                <li><a href="#"><i class="fab fa-telegram"></i> تلگرام</a></li>
+
+            </ul>
+        </div>
+        <!-- بخش خبرنامه -->
+        <div class="footer-section newsletter">
+            <h2>عضویت در خبرنامه</h2>
+            <form action="#" method="post">
+                <input type="email" name="email" placeholder="ایمیل خود را وارد کنید">
+                <button type="submit">ثبت‌نام</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; ۲۰۲۵ کتاب‌فروشی ما. تمامی حقوق محفوظ است.</p>
+    </div>
+</footer>
+
+
+</html>

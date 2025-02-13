@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سبد خرید کتاب</title>
+<?php include"header.php";?>
+
+    <link rel="stylesheet" href="library/cart.css">
+    <script defer src="library/cart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<div class="category-section">
+   <h2 class="category-title">سبد خرید</h2>
+</div>
+
+<body>
+    <div class="cart-container">
+
+
+
+      <div class="cart">
+            <div class="cart-items">
+                <!-- آیتم‌های سبد خرید اینجا اضافه می‌شوند -->
+            </div>
+            <div class="order-summary">
+                <h3>🔹 خلاصه سفارش</h3>
+                <p>مجموع قیمت: <span id="subtotal">0 تومان</span></p>
+                <p>هزینه ارسال: <span id="shipping">10,000 تومان</span></p>
+                <p>مالیات: <span id="tax">15,000 تومان</span></p>
+                <h4>مبلغ نهایی: <span id="total">0 تومان</span></h4>
+                <button class="checkout-btn">🛒 تکمیل خرید</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+<?php include"footer.php";?>
+
+
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود به سیستم</title>
+</head>
+<body>
+    <h2>ورود به سیستم</h2>
+    <form id="loginForm">
+        <label for="username">نام کاربری:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        
+        <label for="password">رمز عبور:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        
+        <button type="submit">ورود</button>
+    </form>
+
+    <script>
+        // ارسال درخواست ورود به API
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // دریافت نام کاربری و رمز عبور از فرم
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                // ارسال درخواست POST به API
+                const response = await fetch('http://localhost:8000/accounts/simplelogin/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    })
+                });
+
+                if (response.ok) {
+                    // دریافت توکن‌ها از پاسخ
+                    const data = await response.json();
+                    if (data.access && data.refresh) {
+                        // ذخیره کردن توکن‌ها در localStorage
+                        localStorage.setItem('access_token', data.access);
+                        localStorage.setItem('refresh_token', data.refresh);
+
+                        alert('ورود موفقیت‌آمیز بود!');
+                    } else {
+                        alert('توکن‌ها دریافت نشد.');
+                    }
+                } else {
+                    alert('ورود ناموفق. لطفاً دوباره تلاش کنید.');
+                }
+            } catch (error) {
+                alert('خطا در ارسال درخواست. لطفاً دوباره تلاش کنید.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرم ورود و عضویت</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: modam;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 400px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h3 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            font-family: modam;
+
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            font-family: modam;
+
+            width: 99%;
+            padding: 10px;
+            background: gold;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: orange;
+        }
+        .toggle-btn {
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        
+        }
+        .container a{
+            text-align:center;
+            color:blue;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="login-form">
+            <form action="login.php" method="POST">
+                <h3>فرم ورود</h3>
+                <div class="form-group">
+                    <label>نام کاربری:</label>
+                    <input type="text" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label>رمز عبور:</label>
+                    <input type="password" name="password" required>
+                </div>
+                <button type="submit" class="btn">ورود</button>
+            </form>
+            <div class="toggle-btn" onclick="toggleForm()">عضویت</div>
+        </div>
+        <div id="register-form" style="display: none;">
+            <form action="register.php" method="POST">
+                <h3>فرم عضویت</h3>
+                <div class="form-group">
+                    <label>نام کاربری:</label>
+                    <input type="text" name="new_username" required>
+                </div>
+                <div class="form-group">
+                    <label>ایمیل:</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>رمز عبور:</label>
+                    <input type="password" name="new_password" required>
+                </div>
+                <button type="submit" class="btn">عضویت</button>
+            </form>
+            <div class="toggle-btn" onclick="toggleForm()">ورود</div>
+        </div>
+        <a href="index.php">رفتن به صفحه اصلی</a>
+
+    </div>
+    <script>
+        function toggleForm() {
+            var loginForm = document.getElementById('login-form');
+            var registerForm = document.getElementById('register-form');
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+
+</html>
