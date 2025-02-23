@@ -21,177 +21,73 @@
 
         <style>
             body {
-                font-family: Arial, sans-serif;
+                font-family:modam;
                 text-align: center;
-                background-color: #f8f8f8;
+                background-color: #f0f1f7;
             }
 
-    
-    
-            .filter-container {
-                margin: 20px auto;
-                display: flex;
-                justify-content: center;
-                width: 500px;
-                align-items: center;
-                gap: 10px;
-                padding: 10px;
-                font-family: modam;
-                background-color: #bbb;
-            }
-    
-            .filter-container input, .filter-container select, .filter-container button {
-                padding: 3px;
-                font-size: 16px;
-            }
-            .filter-container select{
-                border-radius: 3px;
-                cursor: pointer;
-                border: none;
-                font-family: modam;
-                text-align: center;
-                width: 200px;
-            }
-    
-            .book-list {
+            .bookshow{
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-            }
-    
-            .card {
-                width: 180px;
-                height: 350px;
-                background: white;
+                align-items: center;
                 padding: 10px;
+                margin: 10px auto;
+            }
+
+            .book-container{
+                cursor: pointer;
+                width: 190px;
+                height: 350px;
+                background-color: #ffff;
                 border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.116);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 5px;
                 text-align: center;
-                margin: 30px 10px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                transition: transform 0.3s ease;
+                margin:  10px;
+                transition: 0.3s ease;
             }
-            .card a{
-                text-decoration: none;
-                color: black;
+            .book-container:hover{
+                 transform: translateY(-5px);
+                 background-color: #313131;
+                 color: #f0f1f7;
+
             }
-    
-            .card img {
+            .book-container img{
                 width: 100%;
-                height: 230px;
-                border-radius: 10px;
-            }
-    
-            .info div {
-                margin: 5px 0;
-            }
-    
-            .card .discount {
-                color: white;
-                background: #419f4e;
-                padding: 5px 10px;
+                min-height: 260px;
+                max-height: 260px;
+                
+                object-fit: cover;
                 border-radius: 5px;
-                width: 50px;
-                text-align: center;
-                float: right;
-                margin-top: -35px;
             }
-    
-            #right{
-                text-align: right;
-                font-family: modam;
-                font-size: 13px;
-                margin-top: 0px;
+            
+            .view-details {
+                display: block;
+                background-color: #27272a;
+                color: #fff;
+                text-decoration: none;
+                font-size: 12px;
+                padding: 10px 10px;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+                margin-bottom: 3px;
+            }           
+            #discount{
+                text-decoration: line-through;
             }
-    
-            #left{
-                text-align: left;
-                font-family: modam;
-                font-size: 13px;
-                margin-top: 0px;
-            }
-    
-            /* ریسپانسیو */
-            @media (max-width: 1024px) {
-                .card {
-                    width: 140px;
-                    height: 280px;
-                }
-    
-                .card img {
-                    height: 190px;
-                }
-            }
-    
-            @media (max-width: 768px) {
-                .filters {
-                    flex-direction: column;
-                    align-items: center;
-                }
-        
-                .book-list {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                }
-        
-                .card {
-                    width: 120px;
-                    height: 250px;
-                }
-    
-                .card img {
-                    height: 170px;
-                }
-            }
-    
-            @media (max-width: 480px) {
-                .book-list {
-                    display: grid;
-                    grid-template-columns: repeat(2, 1fr);
-                    gap: 10px;
-                }
-    
-                .card {
-                    width: 130px;
-                    height: 240px;
-                    margin: 10px auto;
-                }
-    
-                .card img {
-                    height: 150px;
-                }
-            }
-
-
             
         </style>
-            <script>
-                const menuToggle = document.getElementById('menu-toggle');
-                const menuClose = document.getElementById('menu-close');
-                const sideMenu = document.getElementById('side-menu');
-        
-                menuToggle.addEventListener('click', () => {
-                    sideMenu.classList.remove('menu-hidden');
-                    sideMenu.classList.add('menu-visible');
-                });
-        
-                menuClose.addEventListener('click', () => {
-                    sideMenu.classList.remove('menu-visible');
-                    sideMenu.classList.add('menu-hidden');
-                });
-        
-            </script>
-                <div id="side-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-800 text-white menu-hidden transition-transform duration-300">
-                    <div class="flex justify-end p-4">
-                        <button id="menu-close" class="headericon"><img src="image/close.png" alt="img"><i></i></button>
-                    </div>
-                    <nav class="flex flex-col space-y-4 p-4">
-                        <h1 style="text-align: center; font-family: modam; font-size: 20px;">بوکیتو</h1>
-                        <a id="links" href="everybook.html" class="text-white text-lg">همه کتاب های</a>
-                        <a id="links" href="category.html" class="text-white text-lg">دسته بندی</a>
-                        <a id="links" href="shopping-cart.html" class="text-white text-lg">سبد خرید</a>
-                        <a id="links" href="#" class="text-white text-lg">درباره ما</a>
-                    </nav>
-                </div>
+
+
+<script src="header.js"></script>
+
+
 
 
 </head>
@@ -201,82 +97,55 @@
  </div>
 
 <body>
-    <div class="filter-container">
-        <select id="sort-options">
-            <option value="newest">فیلتر </option>
-            <option value="newest">جدیدترین</option>
-            <option value="bestseller">پرفروش‌ترین</option>
-            <option value="cheapest">ارزان‌ترین</option>
-            <option value="expensive">گران‌ترین</option>
-        </select>
 
-        <select id="sort-options">
-            <option value="newest">فیلتر </option>
-            <option value="newest">جدیدترین</option>
-            <option value="bestseller">پرفروش‌ترین</option>
-            <option value="cheapest">ارزان‌ترین</option>
-            <option value="expensive">گران‌ترین</option>
-        </select>
-
-        <select id="sort-options">
-            <option value="newest">فیلتر </option>
-            <option value="newest">جدیدترین</option>
-            <option value="bestseller">پرفروش‌ترین</option>
-            <option value="cheapest">ارزان‌ترین</option>
-            <option value="expensive">گران‌ترین</option>
-        </select>
-    </div>
-    
-    <div class="book-list" id="book-list">
-        <!-- کتاب‌ها اینجا نمایش داده می‌شوند -->
-
-        <div class="card">
-            <a href="detale.html">
-            <img src="image/bookcover.jpg" alt="کتاب">
-            <div class="info">
-                <div id="right"> عذاب شبانه</div>
-                <div id="right"> مارکه لوکاس رینفلد</div>
-                <div id="left"> <s>195000</s></div>
-                <div id="left"> 155000</div>
-                <div class="discount">20%</div>
-            </div>
-            </a>
+        <div class="bookshow">
+            <!-- داده‌های محصولات اینجا اضافه می‌شود -->
         </div>
 
-    </div>
     
     <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const apiUrl = "http://127.0.0.1:8000/books/"; // لینک API را جایگزین کنید
+            const swiperWrapper = document.querySelector(".bookshow");  
 
-function filterBooks() {
-    let searchQuery = document.getElementById("search").value.toLowerCase();
-    let selectedCategory = document.getElementById("category").value;
-    let minPrice = document.getElementById("minPrice").value;
-    let maxPrice = document.getElementById("maxPrice").value;
+            try {
+                const response = await fetch(apiUrl);
+                const products = await response.json();
 
-    let books = document.querySelectorAll(".book");
+                products.forEach(product => {
+                    const productCard = `
+                        <div class="book-container">
+                            <div class="product-card">
+                                <img src="${product.cover_image}" alt="${product.title}">
+                                <p id="discount">${product.discount} تومان</p>
+                                <p>${product.price} تومان</p>
+                                <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
 
-    books.forEach(book => {
-        let title = book.querySelector("h3").innerText.toLowerCase();
-        let category = book.getAttribute("data-category");
-        let price = parseInt(book.getAttribute("data-price"));
+                            </div>
+                        </div>
+                    `;
+                    swiperWrapper.innerHTML += productCard;
+                });
 
-        let matchesSearch = title.includes(searchQuery);
-        let matchesCategory = selectedCategory === "all" || category === selectedCategory;
-        let matchesMinPrice = minPrice === "" || price >= parseInt(minPrice);
-        let matchesMaxPrice = maxPrice === "" || price <= parseInt(maxPrice);
+                // مقداردهی اولیه Swiper بعد از لود شدن داده‌ها
+                new Swiper(".swiper", {
+                    slidesPerView: "auto",
+                    spaceBetween: 1,
+                    loop: true,
 
-        if (matchesSearch && matchesCategory && matchesMinPrice && matchesMaxPrice) {
-            book.style.display = "block";
-        } else {
-            book.style.display = "none";
-        }
-    });
-}
+                });
 
-
+            } catch (error) {
+                console.error("خطا در دریافت محصولات:", error);
+            }
+        });
     </script>
+
+    
+
+
 </body>
 
-
-
+    <div id="footer"></div>
+    <script src="footer.js"></script>
 </html>

@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>جزئیات کتاب</title>
+
+    <!-- در صورت نیاز به Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- استایل سفارشی -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- سایر لینک‌ها -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -24,23 +30,24 @@
             color: #333;
         }
 
-        .book-detail {
+        /* کانتینر کلی جزئیات کتاب */
+        .book-detail-container {
             width: 80%;
             margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .book-image {
-            width: 150px;
-            height: 200px;
+        /* تصویر کتاب */
+        .book-cover {
+            width: 400px;
+            height: auto;
             object-fit: cover;
             border-radius: 8px;
-            margin-right: 20px;
+            margin:20px;
         }
 
+        /* بخش اطلاعات کتاب */
         .book-info {
             margin-left: 20px;
         }
@@ -64,10 +71,12 @@
             color: #ffcc00;
         }
 
-        .summary {
+        /* بخش خلاصه */
+        .summary-container {
             margin-top: 20px;
         }
 
+        /* لینک بازگشت */
         .back-link {
             text-decoration: none;
             color: #007bff;
@@ -80,22 +89,25 @@
             color: #0056b3;
         }
 
-        .author-info, .translator-info, .publisher-info {
+        /* بخش نویسنده، مترجم، ناشر */
+        .author-section, .translator-section, .publisher-section {
             margin-top: 20px;
         }
 
-        .author-info img, .translator-info img {
+        .author-section img,
+        .translator-section img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
         }
 
-        .author-info p, .translator-info p {
+        .author-section p,
+        .translator-section p {
             margin: 5px 0;
             color: #555;
         }
 
-        .publisher-info img {
+        .publisher-section img {
             width: 100px;
             height: 100px;
             border-radius: 8px;
@@ -103,12 +115,12 @@
 
         /* برای موبایل بهینه‌سازی */
         @media (max-width: 768px) {
-            .book-detail {
+            .book-detail-container {
                 width: 100%;
                 padding: 10px;
             }
 
-            .book-image {
+            .book-cover {
                 width: 120px;
                 height: 160px;
                 margin-right: 10px;
@@ -123,16 +135,16 @@
 <body>
     <h2>جزئیات کتاب</h2>
 
-    <!-- نمایش جزئیات کتاب -->
-    <div id="book-detail" class="book-detail"></div>
+    <!-- اینجا محتوای کتاب را با جاوااسکریپت پر می‌کنیم -->
+    <div id="book-detail-section" class="book-detail-container"></div>
 
     <script>
         // گرفتن آیدی کتاب از URL
         const urlParams = new URLSearchParams(window.location.search);
-        const bookId = urlParams.get('id');  // دریافت آیدی کتاب از URL
+        const bookId = urlParams.get('id');  // دریافت آیدی کتاب از پارامتر URL
 
         if (!bookId) {
-            document.getElementById('book-detail').innerHTML = 'آیدی کتاب پیدا نشد.';
+            document.getElementById('book-detail-section').innerHTML = 'آیدی کتاب پیدا نشد.';
         }
 
         // گرفتن توکن از localStorage
@@ -141,10 +153,10 @@
         if (!accessToken) {
             alert('توکن یافت نشد! لطفاً وارد شوید.');
             // در صورت عدم وجود توکن، به صفحه ورود هدایت می‌شود
-            window.location.href = '/login';
+            window.location.href = '/login.html';
         }
 
-        // ارسال درخواست GET به API برای دریافت جزئیات کتاب
+        // تابع دریافت و نمایش جزئیات کتاب
         async function fetchBookDetail() {
             try {
                 const response = await fetch(`http://localhost:8000/books/detail/${bookId}/`, {
@@ -158,62 +170,98 @@
                 if (response.ok) {
                     const data = await response.json();
 
-                    // نمایش داده‌ها در HTML
-                    const bookDetailDiv = document.getElementById('book-detail');
-                    bookDetailDiv.innerHTML = `
-                        <div class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg p-6">
-                            <div class="md:w-1/3 flex justify-center items-center">
-                                <img src="${data.data.cover_image || 'default-book-cover.jpg'}" alt="${data.data.title}" class="book-image">
+                    // ساخت محتوای HTML با داده‌های دریافتی
+                    const bookDetailContainer = document.getElementById('book-detail-section');
+                    
+                    bookDetailContainer.innerHTML = `
+                        <!-- کارت اصلی جزئیات کتاب -->
+                        <div class="book-detail-card flex flex-col md:flex-row bg-white rounded-lg shadow-lg p-6">
+
+                            <!-- بخش کاور کتاب -->
+                            <div class="book-cover-container md:w-1/3 flex justify-center items-center">
+                                <img src="http://localhost:8000${data.data.cover_image || 'default-book-cover.jpg'}"
+                                     alt="${data.data.title}"
+                                     class="book-cover" />
                             </div>
-                            <div class="md:w-2/3 md:mr-6">
+
+                            <!-- بخش اطلاعات کتاب -->
+                            <div class="book-info-container md:w-2/3 md:mr-6">
                                 <h3 class="text-xl font-bold text-gray-800">${data.data.title}</h3>
-                                <p class="text-gray-600 mt-2"><strong>نویسنده:</strong> ${data.data.authors.map(author => `${author.first_name} ${author.last_name}`).join(', ') || 'موجود نیست'}</p>
-                                <p class="text-gray-600"><strong>مترجم:</strong> ${data.data.translators.map(translator => `${translator.first_name} ${translator.last_name}`).join(', ') || 'موجود نیست'}</p>
-                                <p class="text-gray-600"><strong>ناشر:</strong> ${data.data.publisher.name || 'موجود نیست'}</p>
-                                <p class="text-gray-600"><strong>تاریخ انتشار:</strong> ${data.data.publication_date}</p>
-                                <p class="text-gray-600"><strong>صفحات:</strong> ${data.data.page_count || 'موجود نیست'}</p>
-                                <p class="price"><strong>قیمت:</strong> ${data.data.price}</p>
-                                <p class="rating"><strong>امتیاز:</strong> ${data.data.rating}</p>
+                                <p class="text-gray-600 mt-2">
+                                    <strong>نویسنده:</strong>
+                                    ${data.data.authors.map(author => `${author.first_name} ${author.last_name}`).join(', ') || 'موجود نیست'}
+                                </p>
+                                <p class="text-gray-600">
+                                    <strong>مترجم:</strong>
+                                    ${data.data.translators.map(translator => `${translator.first_name} ${translator.last_name}`).join(', ') || 'موجود نیست'}
+                                </p>
+                                <p class="text-gray-600">
+                                    <strong>ناشر:</strong>
+                                    ${data.data.publisher.name || 'موجود نیست'}
+                                </p>
+                                <p class="text-gray-600">
+                                    <strong>تاریخ انتشار:</strong>
+                                    ${data.data.publication_date}
+                                </p>
+                                <p class="text-gray-600">
+                                    <strong>صفحات:</strong>
+                                    ${data.data.page_count || 'موجود نیست'}
+                                </p>
+                                <p class="price">
+                                    <strong>قیمت:</strong> ${data.data.price}
+                                </p>
+                                <p class="rating">
+                                    <strong>امتیاز:</strong> ${data.data.rating}
+                                </p>
 
-                                <div class="summary mt-4">
-                                    <strong>خلاصه:</strong>
-                                    <p class="text-gray-700">${data.data.summary || 'خلاصه‌ای برای این کتاب موجود نیست.'}</p>
-                                </div>
-
+         
                                 <!-- اطلاعات نویسنده -->
-                                <div class="author-info mt-6">
+                                <div class="author-section mt-6">
                                     <h4 class="font-bold">نویسنده:</h4>
-                                    <img src="${data.data.authors[0].profile_picture || 'default-author.jpg'}" alt="${data.data.authors[0].first_name}" class="rounded-full">
+                                  
+                                        
                                     <p>${data.data.authors[0].first_name} ${data.data.authors[0].last_name}</p>
                                 </div>
 
                                 <!-- اطلاعات مترجم -->
-                                <div class="translator-info mt-6">
+                                <div class="translator-section mt-6">
                                     <h4 class="font-bold">مترجم:</h4>
-                                    <img src="${data.data.translators[0].profile_picture || 'default-translator.jpg'}" alt="${data.data.translators[0].first_name}" class="rounded-full">
+                                    
                                     <p>${data.data.translators[0].first_name} ${data.data.translators[0].last_name}</p>
                                 </div>
 
                                 <!-- اطلاعات ناشر -->
-                                <div class="publisher-info mt-6">
+                                <div class="publisher-section mt-6">
                                     <h4 class="font-bold">ناشر:</h4>
-                                    <img src="${data.data.publisher.logo || 'default-publisher-logo.jpg'}" alt="${data.data.publisher.name}" class="rounded-md">
+                                    
                                     <p>${data.data.publisher.name}</p>
-                                    <p><strong>آدرس:</strong> ${data.data.publisher.address}</p>
-                                    <p><strong>کشور:</strong> ${data.data.publisher.country}</p>
-                                    <a href="${data.data.publisher.website}" target="_blank" class="text-blue-500 hover:text-blue-700">وب‌سایت ناشر</a>
+                                   
                                 </div>
                                 
-                                <a href="http://127.0.0.1:5500/simple/index.html" class="back-link">بازگشت به لیست کتاب‌ها</a>
+                                <a href="http://127.0.0.1:5500/simple/index.html" class="back-link">
+                                    بازگشت به لیست کتاب‌ها
+                                </a>
+
+
+                                
+                       <!-- خلاصه کتاب -->
+                                <div class="summary-container mt-4">
+                                    <strong>خلاصه:</strong>
+                                    <p class="text-gray-700">
+                                        ${data.data.summary || 'خلاصه‌ای برای این کتاب موجود نیست.'}
+                                    </p>
+                                </div>
+
+
                             </div>
                         </div>
                     `;
                 } else {
                     const errorData = await response.json();
-                    document.getElementById('book-detail').innerHTML = `خطا: ${errorData.message}`;
+                    document.getElementById('book-detail-section').innerHTML = `خطا: ${errorData.message}`;
                 }
             } catch (error) {
-                document.getElementById('book-detail').innerHTML = 'خطا در ارسال درخواست. لطفاً دوباره تلاش کنید.';
+                document.getElementById('book-detail-section').innerHTML = 'خطا در ارسال درخواست. لطفاً دوباره تلاش کنید.';
             }
         }
 

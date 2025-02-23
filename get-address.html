@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دریافت لیست استان‌ها و شهرها</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; direction: rtl; }
+        label { font-size: 16px; margin-top: 10px; display: block; }
+        select, input { width: 200px; padding: 5px; margin: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>انتخاب استان و شهر</h2>
+
+    <!-- فیلدهای استان و شهر -->
+    <label for="provinceSelect">استان:</label>
+    <select id="provinceSelect" onchange="getCities()">
+        <option value="">یک استان را انتخاب کنید</option>
+    </select>
+
+    <label for="citySelect">شهر:</label>
+    <select id="citySelect">
+        <option value="">یک شهر را انتخاب کنید</option>
+    </select>
+
+    <h3>اطلاعات آدرس جدید</h3>
+
+    <!-- فیلدهای جدید -->
+    <label for="streetAddress">آدرس خیابان:</label>
+    <input type="text" id="streetAddress" placeholder="آدرس خیابان">
+
+    <label for="houseNumber">شماره خانه:</label>
+    <input type="text" id="houseNumber" placeholder="شماره خانه">
+
+    <label for="postalCode">کد پستی:</label>
+    <input type="text" id="postalCode" placeholder="کد پستی">
+
+    <label for="floor">طبقه:</label>
+    <input type="number" id="floor" placeholder="طبقه">
+
+    <label for="unitNumber">شماره واحد:</label>
+    <input type="number" id="unitNumber" placeholder="شماره واحد">
+
+    <label for="residenceType">نوع سکونت:</label>
+    <select id="residenceType">
+        <option value="1">آپارتمان</option>
+        <option value="2">خانه</option>
+    </select>
+
+    <button onclick="submitAddress()">ارسال آدرس</button>
+
+    <script>
+        const apiKey = "postex_3ad32603b6d540c2kU5qqm2GcUkUHqsvPOTE6fjZEnx5L";
+
+        // دریافت لیست استان‌ها
+        async function getProvinces() {
+            const apiUrl = "https://api.postex.ir/api/v1/locality/provinces";
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: { "x-api-key": apiKey }
+                });
+
+                if (!response.ok) throw new Error(`خطا در دریافت استان‌ها: ${response.statusText}`);
+
+                const provinces = await response.json();
+                const provinceSelect = document.getElementById("provinceSelect");
+
+                provinces.forEach(province => {
+                    const option = document.createElement("option");
+                    option.value = province.province_code; // مقدار کد استان
+                    option.textContent = province.province_name; // نام استان
+                    provinceSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error("خطا:", error);
+            }
+        }
+
+        // دریافت لیست شهرهای مربوط به یک استان
+        async function getCities() {
+            const provinceCode = document.getElementById("provinceSelect").value;
+            const citySelect = document.getElementById("citySelect");
+            citySelect.innerHTML = '<option value="">در حال دریافت...</option>'; // پیام موقت
+
+            if (!provinceCode) {
+                citySelect.innerHTML = '<option value="">ابتدا یک استان را انتخاب کنید</option>';
+                return;
+            }
+
+            // اصلاح شده: جایگزینی {province-code} با کد استان
+            const apiUrl = `https://api.postex.ir/api/v1/locality/cities/${provinceCode}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: { "x-api-key": apiKey }
+                });
+
+                if (!response.ok) throw new Error(`خطا در دریافت شهرها: ${response.statusText}`);
+
+                const cities = await response.json();
+                citySelect.innerHTML = '<option value="">یک شهر را انتخاب کنید</option>';
+
+                cities.forEach(city => {
+                    const option = document.createElement("option");
+                    option.value = city.city_code; // مقدار کد شهر
+                    option.textContent = city.city_name; // نام شهر
+                    citySelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error("خطا:", error);
+                citySelect.innerHTML = '<option value="">خطا در دریافت شهرها</option>';
+            }
+        }
+
+        // ارسال آدرس به API
+        async function submitAddress() {
+            const provinceCode = document.getElementById("provinceSelect").value;
+            const cityCode = document.getElementById("citySelect").value;
+            const streetAddress = document.getElementById("streetAddress").value;
+            const houseNumber = document.getElementById("houseNumber").value;
+            const postalCode = document.getElementById("postalCode").value;
+            const floor = document.getElementById("floor").value;
+            const unitNumber = document.getElementById("unitNumber").value;
+            const residenceType = document.getElementById("residenceType").value;
+
+            // دریافت access token از localStorage
+            const accessToken = localStorage.getItem('access_token');
+
+            // بررسی اینکه فیلدها تکمیل شده باشند
+            if (!provinceCode || !cityCode || !streetAddress || !houseNumber || !postalCode) {
+                alert("لطفاً تمام فیلدها را پر کنید");
+                return;
+            }
+
+            const addressData = {
+                province: document.getElementById("provinceSelect").selectedOptions[0].textContent, // نام استان
+                province_code: provinceCode,
+                city: document.getElementById("citySelect").selectedOptions[0].textContent, // نام شهر
+                city_code: cityCode,
+                street_address: streetAddress,
+                house_number: houseNumber,
+                postal_code: postalCode,
+                floor: floor ? parseInt(floor) : null,
+                unit_number: unitNumber ? parseInt(unitNumber) : null,
+                residence_type: residenceType
+            };
+
+            try {
+                const response = await fetch("http://localhost:8000/address/addresses/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${accessToken}` // ارسال access token در هدر
+                    },
+                    body: JSON.stringify(addressData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`خطا در ارسال آدرس: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                alert("آدرس با موفقیت ثبت شد");
+                console.log(result);
+            } catch (error) {
+                console.error("خطا:", error);
+                alert("خطا در ارسال آدرس");
+            }
+        }
+
+        // اجرای تابع دریافت استان‌ها در هنگام بارگذاری صفحه
+        window.onload = getProvinces;
+    </script>
+
+</body>
+</html>

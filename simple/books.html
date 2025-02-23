@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لیست کتاب‌ها</title>
+
+    <script>
+        // گرفتن توکن از URL و ذخیره در localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const tokenFromUrl = urlParams.get('token');
+        if (tokenFromUrl) {
+            localStorage.setItem('access_token', tokenFromUrl);
+        }
+    </script>
+
     <style>
         /* استایل صفحه */
         body {
@@ -20,190 +30,111 @@
             color: #333;
         }
 
-        #book-list {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        /* استایل برای هر کارت کتاب */
-        .book-card {
-            display: flex;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .book-card:hover {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .book-image {
-            width: 150px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-right: 20px;
-        }
-
-        .book-details {
-            flex: 1;
-        }
-
-        .book-details h3 {
-            margin: 0;
-            color: #333;
-            font-size: 20px;
-        }
-
-        .book-details p {
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .book-details .price {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .book-details .rating {
-            color: #ffcc00;
-        }
-
-        /* دکمه خرید */
-        .buy-button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .buy-button:hover {
-            background-color: #218838;
-        }
-
-        /* استایل برای عدم وجود کتاب */
-        .no-books {
-            text-align: center;
-            font-size: 18px;
-            color: #ff4d4d;
-        }
-
-        .book-link {
-            text-decoration: none;
-            color: #007bff;
-            font-size: 16px;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .book-link:hover {
-            color: #0056b3;
-        }
-
+        .book-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+    
+            .card {
+                width: 180px;
+                height: 350px;
+                background: white;
+                padding: 10px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.116);
+                text-align: center;
+                margin: 30px 10px;
+            }
+            .card a{
+                text-decoration: none;
+                color: black;
+            }
+    
+            .card img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+            }
+    
+            .info div {
+                margin: 5px 0;
+            }
+    
+            .card .discount {
+                color: white;
+                background: #419f4e;
+                padding: 5px 10px;
+                border-radius: 5px;
+                width: 50px;
+                text-align: center;
+                float: right;
+                margin-top: -35px;
+            }
+    
+            #right{
+                text-align: right;
+                font-family: modam;
+                font-size: 13px;
+                margin-top: 0px;
+            }
+    
+            #left{
+                text-align: left;
+                font-family: modam;
+                font-size: 13px;
+                margin-top: 0px;
+            }
+    
     </style>
 </head>
 <body>
     <h2>لیست کتاب‌ها</h2>
-    
-    <!-- بخش نمایش کتاب‌ها -->
-    <div id="book-list"></div>
+    <div class="book-list" id="book-list"></div>
 
     <script>
-        // گرفتن توکن از localStorage
-        const accessToken = localStorage.getItem('access_token');
-
-        if (!accessToken) {
-            alert('توکن یافت نشد! لطفاً وارد شوید.');
-            // در صورت عدم وجود توکن، به صفحه ورود هدایت می‌شود
-            window.location.href = '/login';
-        }
-
-        // ارسال درخواست GET به API برای دریافت لیست کتاب‌ها
-        async function fetchBooks() {   
+        async function fetchBooks() {
             try {
-                const response = await fetch('http://localhost:8000/books/', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`, // ارسال توکن در هدر
-                        'Content-Type': 'application/json',
-                    }
-                });
-
+                const response = await fetch('http://localhost:8000/books/');
                 if (response.ok) {
-                    // دریافت داده‌ها به صورت JSON
                     const data = await response.json();
 
                     if (data.length > 0) {
-                        // نمایش داده‌ها در HTML به صورت کارت‌های کتاب
                         const bookListDiv = document.getElementById('book-list');
-                        bookListDiv.innerHTML = data.map(book => `
-                            <div class="book-card">
-                                <img src="${book.cover_image}" alt="${book.title}" class="book-image">
-                                <div class="book-details">
-                                    <h3>${book.title}</h3>
-                                    <p><strong>نویسنده:</strong> ${book.authors.join(', ') || 'موجود نیست'}</p>
-                                    <p><strong>ناشر:</strong> ${book.publisher.name || 'موجود نیست'}</p>
-                                    <p><strong>تاریخ انتشار:</strong> ${book.publication_date}</p>
-                                    <p><strong>صفحات:</strong> ${book.page_count}</p>
-                                    <p><strong>قیمت:</strong> <span class="price">${book.price}</span></p>
-                                    <p><strong>امتیاز:</strong> <span class="rating">${book.rating}</span></p>
-                                    <p><strong>خلاصه:</strong> ${book.summary}</p>
-                                    <!-- دکمه خرید -->
-                                    <button class="buy-button" onclick="addToCart(${book.id})">افزودن به سبد خرید</button>
-                                    <!-- لینک جزئیات کتاب -->
-                                    <a href="http://127.0.0.1:5500/simple/detail.html?id=${book.id}" class="book-link">مشاهده جزئیات کتاب</a>
+                        bookListDiv.innerHTML = data.map(book => {
+                            const originalPrice = book.price;
+                            const discountPrice = book.discounted_price || originalPrice;
+                            const discountPercentage = originalPrice > discountPrice
+                                ? Math.round(((originalPrice - discountPrice) / originalPrice) * 100)
+                                : 0;
+
+                            return `
+                                <div class="card">
+                                    <a href="detail.html?id=${book.id}">
+                                        <img src="${book.cover_image}" alt="${book.title}">
+                                        <div class="info">
+                                            <div id="right">${book.title}</div>
+                                            <div id="right">${book.authors.join(', ') || 'نامشخص'}</div>
+                                            <div id="left">
+                                                <s>${originalPrice}</s> ${discountPrice}
+                                            </div>
+                                            ${discountPercentage > 0 ? `<div class="discount">${discountPercentage}%</div>` : ''}
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                        `).join(''); // داده‌ها را به صورت کارت کتاب‌ها نمایش می‌دهیم
+                            `;
+                        }).join('');
                     } else {
                         document.getElementById('book-list').innerHTML = '<div class="no-books">هیچ کتابی یافت نشد.</div>';
                     }
                 } else {
-                    const errorData = await response.json();
-                    document.getElementById('book-list').innerHTML = `خطا: ${errorData.error}`;
+                    document.getElementById('book-list').innerHTML = 'خطا در دریافت اطلاعات.';
                 }
             } catch (error) {
-                document.getElementById('book-list').innerHTML = 'خطا در ارسال درخواست. لطفاً دوباره تلاش کنید.';
+                document.getElementById('book-list').innerHTML = 'خطا در ارتباط با سرور.';
             }
         }
 
-        // ارسال درخواست POST برای افزودن کتاب به سبد خرید
-        async function addToCart(bookId) {
-            const quantity = 1;  // به طور پیش‌فرض تعداد 1 برای هر کتاب در نظر گرفته می‌شود
-            try {
-                const response = await fetch('http://localhost:8000/customers/cart/add/', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${accessToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        book_id: bookId,
-                        quantity: quantity
-                    })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    alert(data.message);
-                } else {
-                    const errorData = await response.json();
-                    alert(`خطا: ${errorData.message}`);
-                }
-            } catch (error) {
-                alert('خطا در ارسال درخواست. لطفاً دوباره تلاش کنید.');
-            }
-        }
-
-        // فراخوانی تابع دریافت کتاب‌ها
         fetchBooks();
     </script>
 </body>

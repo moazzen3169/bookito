@@ -1,0 +1,62 @@
+<section class="mb-8">
+    <h3 class="text-xl mb-2">لیست کتاب‌ها</h3>
+    <div id="books-container" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <!-- کتاب‌ها اینجا نمایش داده می‌شوند -->
+    </div>
+    
+    <!-- دکمه‌های صفحه‌بندی -->
+    <div id="pagination-controls" class="flex justify-center mt-4 gap-2">
+        <button id="prev-page" class="hidden bg-gray-300 px-4 py-2 rounded">صفحه قبل</button>
+        <span id="current-page" class="px-4 py-2">صفحه 1</span>
+        <button id="next-page" class="hidden bg-gray-300 px-4 py-2 rounded">صفحه بعد</button>
+    </div>
+</section>
+
+<script>
+    let currentPage = 1;
+    const apiBaseUrl = "http://127.0.0.1:8000/api/books/";
+
+    async function fetchBooks(page = 1) {
+        try {
+            const response = await fetch(`${apiBaseUrl}?page=${page}`);
+            const data = await response.json();
+
+            // نمایش لیست کتاب‌ها
+            const container = document.getElementById("books-container");
+            container.innerHTML = "";
+            data.results.forEach(book => {
+                const bookElement = document.createElement("div");
+                bookElement.className = "border p-4 rounded shadow";
+                bookElement.innerHTML = `<h4 class="text-lg font-semibold">${book.title}</h4>
+                                         <p class="text-sm text-gray-600">${book.author}</p>`;
+                container.appendChild(bookElement);
+            });
+
+            // مدیریت دکمه‌های صفحه‌بندی
+            document.getElementById("current-page").textContent = `صفحه ${page}`;
+            const prevBtn = document.getElementById("prev-page");
+            const nextBtn = document.getElementById("next-page");
+
+            if (data.previous) {
+                prevBtn.classList.remove("hidden");
+                prevBtn.onclick = () => fetchBooks(page - 1);
+            } else {
+                prevBtn.classList.add("hidden");
+            }
+
+            if (data.next) {
+                nextBtn.classList.remove("hidden");
+                nextBtn.onclick = () => fetchBooks(page + 1);
+            } else {
+                nextBtn.classList.add("hidden");
+            }
+
+            currentPage = page;
+        } catch (error) {
+            console.error("خطا در دریافت داده‌ها:", error);
+        }
+    }
+
+    // بارگذاری اولیه صفحه
+    document.addEventListener("DOMContentLoaded", () => fetchBooks());
+</script>

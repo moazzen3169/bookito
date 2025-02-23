@@ -16,18 +16,14 @@
         
         <button type="submit">ورود</button>
     </form>
-
     <script>
-        // ارسال درخواست ورود به API
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
             event.preventDefault();
-
-            // دریافت نام کاربری و رمز عبور از فرم
+    
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-
+    
             try {
-                // ارسال درخواست POST به API
                 const response = await fetch('http://localhost:8000/accounts/simplelogin/', {
                     method: 'POST',
                     headers: {
@@ -38,16 +34,17 @@
                         password: password
                     })
                 });
-
+    
                 if (response.ok) {
-                    // دریافت توکن‌ها از پاسخ
                     const data = await response.json();
                     if (data.access && data.refresh) {
-                        // ذخیره کردن توکن‌ها در localStorage
                         localStorage.setItem('access_token', data.access);
                         localStorage.setItem('refresh_token', data.refresh);
-
+                        sessionStorage.setItem('username', username);  // ذخیره نام کاربری در sessionStorage
+    
+                        console.log("نام کاربری ذخیره شد:", sessionStorage.getItem('username')); // بررسی ذخیره شدن نام کاربری
                         alert('ورود موفقیت‌آمیز بود!');
+                        window.location.href = 'index.html'; // هدایت به صفحه اصلی
                     } else {
                         alert('توکن‌ها دریافت نشد.');
                     }
@@ -59,5 +56,6 @@
             }
         });
     </script>
+    
 </body>
 </html>

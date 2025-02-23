@@ -1,194 +1,281 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Page</title>
-    <script src="library/script1.js"></script>
+    <title>بوکیتو | فروشگاه کتاب</title>
+
+    <!-- استایل‌ها -->
     <link rel="stylesheet" href="library/style1.css">
     <link rel="stylesheet" href="style.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-</head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 
 
+    <!-- اسکریپت‌ها -->
+    <script src="library/script1.js" defer></script>
+    <script src="header.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 
     <style>
-        .slider {
-    position: relative;
-    height: auto;
-    width: 97%;
-    min-height:0%;
-    margin: 18px auto;
-    overflow: hidden;
-    margin-bottom: 0px;
-}
+        /* استایل بنر */
+        .banner {
+            width: 100%;
+            margin: 0px auto;
+            text-align: center;
+        }
 
-.slides {
-    display: flex;
-    transition: transform 0.5s ease;
-}
+        .banner img {
+            width: 100%;
+            display: block;
+        }
 
-.slide {
-    min-width: 100%;
-    box-sizing: border-box;
-}
-.slider img {
-    border-radius: 10px;
-    height: 100%;
-    width: 100%;
-    display: block;
-}
+        /* استایل سکشن‌ها */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 97%;
+            margin: 20px auto;
+            direction: rtl;
+        }
 
+        .view-all {
+            color: #e8e8e8;
+            text-decoration: none;
+            font-size: 15px;
+            transition: 0.3s ease;
+            background-color: #27272a;
+            padding: 10px;
+            border-radius: 5px;
+        }
 
+        .view-all:hover {
+            background-color: #313131;
+        }
 
+        @media (max-width: 480px) {
+            .section-header h2 {
+                font-size: 10px;
+            }
+        }
 
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    width:97%;
-    margin:20px auto;
-    direction:rtl;
-}
+           /* استایل پایه برای بدنه صفحه */
 
-.section-header h2 {
-    font-size: 10px;
-    margin: 0;
-}
-
-.view-all {
-    color: #e8e8e8;
-    text-decoration: none;
-    font-size: 9px;
-    transition:  0.3s ease;
-    background-color: #27272a;
-    padding:10px;
-}
-
-.view-all:hover {
-    background-color: #313131;
-    border-radius:10px;
-}
-@media (max-width:480px) {
-
-    .section-header hr {
-        display:none;
+    /* استایل کانتینر اسلایدر */
+    .swiper-container {
+      width: 97%;
+      height: 380px;
+      margin: 10px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-    .section-header h2 {
-        font-size:10px;
+    
+    /* استایل Wrapper و اسلایدها */
+    .swiper-wrapper {
+      display: flex;
+      justify-content: center;
     }
+    
+    .swiper-slide {
+      width: 170px !important;
+      height: 330px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #ffffff00;
+    }
+    
+    /* استایل کارت محصول */
+    .product-card {
+      width: 170px;
+      height: 320px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 5px;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s ease;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .product-card img {
+      width: auto;
+      max-height: 220px;
+      min-height: 150px;
 
-}
+      object-fit: cover;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+    
 
-
-
-
-    </style>
-
+    .product-card p {
+      font-size: 12px;
+      color: #555;
+      margin: 2px 0;
+    }
+    
+    .view-details {
+      display: block;
+      background-color: #27272a;
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      margin-bottom: 3px;
+    }
+    
+    .view-details:hover {
+      background-color: #313131;
+    }
+    #discount{
+        text-decoration:line-through;
+    }
+</style>
+</head>
 
 <body class="bg-gray-100">
 
-<header >
 
-</header>
 
-    <div class="slider">
-        <div class="slides">
-            <div class="slide active">
-                <img src="image/slide1.jpg" alt="تصویر 1">
-            </div>
-            <div class="slide">
-                <img src="image/slide2.jpg" alt="تصویر 2">
-            </div>
-            <div class="slide">
-                <img src="image/slide3.jpg" alt="تصویر 3">
-            </div>
-        </div>
+    <!-- بنر اصلی به جای اسلایدر -->
+    <div class="banner">
+        <img src="image/slide1.jpg" alt="بنر فروشگاه">
     </div>
-
-
-
 
 
 
     <div class="section-header">
-        <h2>جدیدترین کتاب‌های بوکیتو</h2>
-        <a href="everybook.php" class="view-all">مشاهده همه</a>
+        <h2 style="font-size: 20px;">جدیدترین کتاب‌های بوکیتو</h2>
+        <a href="everybook.html" class="view-all">مشاهده همه</a>
     </div>
+    
 
-  
-    <div class="section-header">
-        <h2>پرفروش‌ترین کتاب‌های بوکیتو</h2>
-        <a href="everybook.php" class="view-all">مشاهده همه</a>
+    <div class="swiper-container">
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <!-- داده‌های محصولات اینجا اضافه می‌شود -->
+
     </div>
-
-
-
-
-   <div class="slider">
-    <div class="slides">
-        <div class="slide active">
-            <img src="image/slide2.jpg" alt="تصویر 1">
-        </div>
     </div>
 </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const apiUrl = "http://127.0.0.1:8000/books/"; // لینک API را جایگزین کنید
+            const swiperWrapper = document.querySelector(".swiper-wrapper");
 
-<div class="section-header">
-        <h2>پرفروش‌ترین کتاب‌های بوکیتو</h2>
-        <hr style="border: think .5px solid #000 ;width:70%; ">
-        <a href="everybook.php" class="view-all">مشاهده همه</a>
-    </div>
+            try {
+                const response = await fetch(apiUrl);
+                const products = await response.json();
 
+                products.forEach(product => {
+                    const productCard = `
+                        <div class="swiper-slide">
+                            <div class="product-card">
+                                <img src="${product.cover_image}" alt="${product.title}">
+                                <p id="discount">${product.discount} تومان</p>
+                                <p>${product.price} تومان</p>
+                                <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
 
+                            </div>
+                        </div>
+                    `;
+                    swiperWrapper.innerHTML += productCard;
+                });
 
-<script> let currentIndex = 0;
-    const slides = document.querySelectorAll('.slide');
-    const totalSlides = slides.length;
-    
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.remove('active');
-            if (i === index) {
-                slide.classList.add('active');
+                // مقداردهی اولیه Swiper بعد از لود شدن داده‌ها
+                new Swiper(".swiper", {
+                    slidesPerView: "auto",
+                    spaceBetween: 1,
+                    loop: true,
+
+                });
+
+            } catch (error) {
+                console.error("خطا در دریافت محصولات:", error);
             }
         });
-        const offset = -index * 100;
-        document.querySelector('.slides').style.transform = `translateX(${offset}%)`;
-    }
+    </script>
+
+
+
+
+
     
-    function nextSlide() {
-        currentIndex = (currentIndex + 1) % totalSlides;
-        showSlide(currentIndex);
-    }
+
+    <!-- بخش‌های مختلف -->
+    <div class="section-header">
+        <h2>جدیدترین کتاب‌های بوکیتو</h2>
+        <a href="everybook.html" class="view-all">مشاهده همه</a>
+    </div>
+
     
-    setInterval(nextSlide, 3000); // تغییر تصویر هر 3 ثانیه</script>
 
+    <div class="section-header">
+        <h2>پرفروش‌ترین کتاب‌های بوکیتو</h2>
+        <a href="everybook.html" class="view-all">مشاهده همه</a>
+    </div>
 
+    <div class="banner">
+        <img src="image/slide2.jpg" alt="بنر فروشگاه">
+    </div>
 
+    <div class="section-header">
+        <h2>منتخب‌های بوکیتو</h2>
+        <hr style="border: 0.5px solid #000; width: 70%;">
+        <a href="everybook.html" class="view-all">مشاهده همه</a>
+    </div>
+
+    <!-- جاوااسکریپت -->
     <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const menuClose = document.getElementById('menu-close');
-        const sideMenu = document.getElementById('side-menu');
+        document.addEventListener("DOMContentLoaded", function () {
+            /*** 📌 بارگذاری هدر ***/
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                    setupMenu();
+                })
+                .catch(error => console.error("خطا در بارگذاری هدر:", error));
 
-        menuToggle.addEventListener('click', () => {
-            sideMenu.classList.remove('menu-hidden');
-            sideMenu.classList.add('menu-visible');
+            /*** 📌 تنظیمات منو ***/
+            function setupMenu() {
+                let menu = document.getElementById("nav-menu");
+                let menuBtn = document.querySelector(".menu-btn");
+                let closeBtn = document.querySelector(".close-btn");
+
+                if (menuBtn && closeBtn) {
+                    menuBtn.addEventListener("click", () => {
+                        menu.classList.toggle("active");
+                        document.body.style.overflow = menu.classList.contains("active") ? "hidden" : "auto";
+                    });
+
+                    closeBtn.addEventListener("click", () => {
+                        menu.classList.remove("active");
+                        document.body.style.overflow = "auto";
+                    });
+                }
+            }
         });
-
-        menuClose.addEventListener('click', () => {
-            sideMenu.classList.remove('menu-visible');
-            sideMenu.classList.add('menu-hidden');
-        });
-
     </script>
 </body>
 
 
+<div id="footer"></div>
+<script src="./footer.js"></script> <!-- مسیر درست را قرار دهید -->
+
+
 </html>
-
-
-
-

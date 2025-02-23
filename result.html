@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتایج جستجو</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            padding: 20px;
+        }
+        .book-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .book-item h3 {
+            margin: 0;
+        }
+        .book-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>نتایج جستجو</h1>
+
+<div id="results-container"></div>
+
+<script>
+    // گرفتن پارامتر جستجو از URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search'); // اینجا فرض می‌کنیم که کلمه جستجو شده به عنوان query param در URL قرار دارد
+
+    // ساخت URL برای درخواست API
+    const apiUrl = `http://127.0.0.1:8000/books?q=${searchQuery}`;
+
+    // درخواست به API
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            const resultsContainer = document.getElementById('results-container');
+            if (data.items) {
+                // نمایش نتایج
+                data.items.forEach(item => {
+                    const book = item.volumeInfo;
+                    const bookItem = document.createElement('div');
+                    bookItem.classList.add('book-item');
+
+                    const title = book.title || 'عنوانی برای این کتاب موجود نیست';
+                    const authors = book.authors ? book.authors.join(', ') : 'نویسنده‌ای برای این کتاب موجود نیست';
+                    const description = book.description || 'توضیحاتی برای این کتاب موجود نیست';
+
+                    bookItem.innerHTML = `
+                        <h3>${title}</h3>
+                        <p><strong>نویسنده:</strong> ${authors}</p>
+                        <p><strong>توضیحات:</strong> ${description}</p>
+                    `;
+                    resultsContainer.appendChild(bookItem);
+                });
+            } else {
+                resultsContainer.innerHTML = '<p>نتیجه‌ای برای جستجوی شما پیدا نشد.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('خطا در دریافت اطلاعات از API:', error);
+            document.getElementById('results-container').innerHTML = '<p>خطا در ارتباط با API.</p>';
+        });
+</script>
+
+</body>
+</html>

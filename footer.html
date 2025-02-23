@@ -1,4 +1,116 @@
 
+
+<style>
+    /* استایل کلی فوتر */
+footer {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+    font-family: modam;
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin: 10px;
+}
+
+.footer-section h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ffcc00;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 10px 0;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section ul li a:hover {
+    color: #ffcc00;
+}
+
+/* استایل بخش تماس و شبکه‌های اجتماعی */
+.footer-section.contact-us ul li,
+.footer-section.social-media ul li {
+    display: flex;
+    align-items: center;
+}
+
+.footer-section.social-media ul li i {
+    margin-left: 8px;
+    font-size: 18px;
+}
+
+/* استایل بخش خبرنامه */
+.footer-section.newsletter input {
+    width: 80%;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+.footer-section.newsletter button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #ffcc00;
+    color: #222;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.footer-section.newsletter button:hover {
+    background-color: #e6b800;
+}
+
+/* استایل بخش پایانی فوتر */
+.footer-bottom {
+    text-align: center;
+    padding: 10px;
+    background-color: #111;
+    font-size: 14px;
+}
+
+/* استایل ریسپانسیو */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .footer-section {
+        width: 100%;
+    }
+    .footer-section.newsletter input {
+        width: 100%;
+    }
+}
+</style>
+
+
 <footer>
     <div class="footer-container">
         <!-- بخش درباره ما -->
