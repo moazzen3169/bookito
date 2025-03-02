@@ -29,6 +29,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin: 0 1rem; /* معادل mx-4 */
   margin: 10px auto;
+  direction: rtl;
 }
 
 /* استایل خطا */
@@ -276,24 +277,35 @@
                 <h1 class="book-title">${data.data.title}</h1>
                 <p class="book-info">
 
-                  <strong>نویسنده:</strong> 
-                  ${data.data.authors.map(authors => 
-                      `<a href="authors.html?name=${encodeURIComponent(authors.first_name + ' ' + authors.last_name)}">
-                          ${authors.first_name} ${authors.last_name}
-                      </a>`
-                  ).join(', ') || 'نامشخص'}
+<strong>نویسنده:</strong> 
+${data.data.authors.map(author => 
+    `<a href="authors.html?id=${author.id}">
+        ${author.first_name} ${author.last_name}
+    </a>`
+).join(', ') || 'نامشخص'}
 
 
-                </p>
-                <p class="book-info">
-                  <strong>مترجم:</strong> ${data.data.translators.map(translator => `${translator.first_name} ${translator.last_name}`).join(', ') || 'ندارد'}
-                </p>
-                <p class="book-info">
-                  <strong>ناشر:</strong> ${data.data.publisher.name || 'نامشخص'}
-                </p>
-                <p class="book-info">
-                  <strong>تاریخ انتشار:</strong> ${data.data.publication_date}
-                </p>
+<p class="book-info">
+  <strong>مترجم:</strong> 
+  ${data.data.translators.length > 0 
+    ? data.data.translators.map(translator => 
+        `<a href="translator.html?id=${translator.id || ''}">
+          ${translator.first_name} ${translator.last_name}
+        </a>`
+      ).join(', ') 
+    : 'ندارد'}
+</p>
+
+
+
+<p class="book-info">
+  <strong>ناشر:</strong> 
+  <a href="publisher.html?id=${data.data.publisher.id || ''}">
+    ${data.data.publisher.name || 'نامشخص'}
+  </a>
+</p>
+
+
                 <p class="book-info">
                   <strong>تعداد صفحات:</strong> ${data.data.page_count || 'نامشخص'}
                 </p>

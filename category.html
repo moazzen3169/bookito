@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -11,141 +12,226 @@
     <link rel="stylesheet" href="style.css">
     <script src="header.js" defer></script>
 
-</head>
-
     <style>
-        body{
+        body {
             background: #e8e8e8;
-            margin:0%;
-            padding: 0%;
+            margin: 0;
+            padding: 0;
         }
-        header{
-            direction: ltr;
+
+        #main {
+            width: 90%;
+            margin: 10px auto;
+            z-index: 1;
+
         }
-        #link{
-            background-color: #1763cc00;
-            transition: ease 0.3s;
+
+        #genre-list{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: right;
+            width: 100%;
+            height: auto;
+            margin: 10px auto;
         }
-        #link:hover{
-            background-color: #1F2937;
+        #genre-list li{
+            border: 1px solid #9CA3AF; /* معادل border-gray-400 */
+            border-radius: 6px; /* معادل rounded-md */
+            padding: 7px 20px; /* معادل px-10 (40px) و py-3 (12px) */
+            display: block;
+            text-align: center; /* برای وسط‌چین شدن متن */
+            background-color: white;
+            color: black;
+            margin:   2px ;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            scale: 1;
+        }
+        #genre-list li:hover{
+            background-color: #303030;
             color: #e8e8e8;
         }
-        #main{
-            max-width: 1200px;
-            margin-right: 200px;
-            margin: 10px auto;
 
-        }
-        #listitem{
+          
+
+        #listitem {
             border: 1px dashed #1F2937;
             padding: 10px;
             border-radius: 5px;
             background-color: #1F2937;
             color: #e8e8e8;
+        text-align: right;
         }
 
 
-                /* استایل بخش دسته‌بندی */
-                .category-section {
-                    margin-top: 0px;
-            width: 100%;
-            height: 100px; /* ارتفاع مناسب */
-            background-image: url('image/categorybanner.jpg'); /* تصویر پس‌زمینه */
-            background-size: cover;
-            background-position: center;
+        #publisher-list{
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            justify-content: right;
+            width: 100%;
+            height: auto;
+            margin: 10px auto;
+        }
+        #publisher-list li{
+            border: 1px solid #9CA3AF; /* معادل border-gray-400 */
+            border-radius: 6px; /* معادل rounded-md */
+            padding: 7px 20px; /* معادل px-10 (40px) و py-3 (12px) */
+            display: block;
+            text-align: center; /* برای وسط‌چین شدن متن */
+            background-color: white;
+            color: black;
+            margin:   2px ;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            scale: 1;
+        }
+        #publisher-list li:hover{
+            background-color: #303030;
+        }
 
+         a:hover{
+            text-decoration: none;
+            color: #ffffff;
 
         }
 
-        /* استایل متن */
-        .category-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #0a0a0a;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-
-        @media (max-width:480px) {
-            #link{ 
-                padding: 10px 6px;
-            }
-        }
 
     </style>
 
-
-
-<div class="category-section">
-    <h2 class="category-title">دسته‌بندی</h2>
-</div>
-<main id="main" class="p-4">
-
-        <section class="mb-8">
-            <h3 id="listitem" class="text-xl mb-2">انواع ژانر</h3>
-            <div class="flex flex-wrap gap-2">
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">کلاسیک</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">فانتزی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">روانشناسی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">فلسفی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">سیاسی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">نمایشنامه</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">ادبیات مدرن</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">تاریخی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">عاشقانه</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">کارآگاهی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">کمدی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">درام</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">حماسی</a>
-                <a id="link" href="ژانر" class="border border-gray-400 rounded-md px-10 py-3 block">جنگی</a>
-            </div>
-        </section>
-        <section class="mb-8">
-            <h3 id="listitem" class="text-xl mb-2">ادبیات کشور ها</h3>
-            <div class="flex flex-wrap gap-2">
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">ایران</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">فرانسه</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">روسیه</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">ایتالیا</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">آمریکا</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">کانادا</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">آلمان</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">انگلیس</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">چین</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">کره جنوبی</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">ژاپن</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">استرالیا</a>
-                <a id="link" href="country" class="border border-gray-400 rounded-md px-10 py-3 block">اروپا</a>
-            </div>
-        </section>
-        <section>
-            <h3 id="listitem" class="text-xl mb-2">انتشارات</h3>
-            <div class="flex flex-wrap gap-2">
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">چشمه</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">نیلوفر</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">ماهی</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">جامی</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">نو</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">مرکز</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">نگاه</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">مجازی</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">مجید</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">امیرکبیر</a>
-                <a id="link" href="pup" class="border border-gray-400 rounded-md px-10 py-3 block">میکان</a>
-            </div>
-        </section>
-    </main>
-</body>
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      await authenticateAndFetchData("genres", "genre-list");
+      await authenticateAndFetchData("publishers", "publisher-list");
+  });
+  
+  async function authenticateAndFetchData(endpoint, listId) {
+      let token = localStorage.getItem("access_token");
+      if (!token) {
+          console.warn("توکن احراز هویت یافت نشد، تلاش برای دریافت مجدد...");
+          const refreshed = await refreshToken();
+          if (!refreshed) {
+              alert("لطفاً وارد شوید.");
+              window.location.href = "login.html";
+              return;
+          }
+          token = localStorage.getItem("access_token");
+      }
+  
+      fetchData(endpoint, listId, token);
+  }
+  
+  async function refreshToken() {
+      const refreshToken = localStorage.getItem("refresh_token");
+      if (!refreshToken) {
+          return false;
+      }
+  
+      try {
+          const response = await fetch("http://127.0.0.1:8000/accounts/token/refresh/", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ refresh: refreshToken })
+          });
+  
+          if (!response.ok) {
+              throw new Error("رفرش توکن ناموفق بود.");
+          }
+  
+          const data = await response.json();
+          localStorage.setItem("access_token", data.access);
+          return true;
+      } catch (error) {
+          console.error("خطا در رفرش توکن:", error);
+          return false;
+      }
+  }
+  
+  function fetchData(endpoint, listId, token) {
+      fetch(`http://127.0.0.1:8000/${endpoint}/`, {
+          headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => {
+          if (response.status === 401) {
+              throw new Error("توکن منقضی شده است.");
+          }
+          if (!response.ok) {
+              throw new Error("خطا در دریافت داده‌ها");
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log(`داده‌های دریافتی از ${endpoint}:`, data);
+  
+          const listElement = document.getElementById(listId);
+          if (!listElement) {
+              console.error(`المان با id=${listId} پیدا نشد!`);
+              return;
+          }
+          
+          listElement.innerHTML = ""; 
+          
+          data.forEach(item => {
+              console.log("آیتم دریافتی:", item); 
+  
+              const listItem = document.createElement("li");
+  
+              // ایجاد لینک برای هر ژانر یا انتشارات
+              const link = document.createElement("a");
+              const targetPage = endpoint === "genres" ? "genre.html" : "publisher.html";
+              // برای صفحه ناشر از id استفاده می‌کنیم
+              link.href = `${targetPage}?id=${encodeURIComponent(item.id)}`;
+              link.textContent = item.name || "نام موجود نیست";
+              link.classList.add("text-gray-700", "border-b", "py-2");
+  
+              listItem.appendChild(link);
+              listElement.appendChild(listItem);
+          });
+      })
+      .catch(async error => {
+          console.error(`خطا در دریافت داده‌های ${endpoint}:`, error);
+          if (error.message === "توکن منقضی شده است.") {
+              const refreshed = await refreshToken();
+              if (refreshed) {
+                  fetchData(endpoint, listId, localStorage.getItem("access_token"));
+              } else {
+                  alert("دسترسی شما منقضی شده است، لطفاً دوباره وارد شوید.");
+                  window.location.href = "login.html";
+              }
+          }
+      });
+  }
+  </script>
+  
+  </head>
+  <body>
+  
+  <div class="category-section">
+      <h2 class="category-title">دسته‌بندی</h2>
+  </div>
+  
+  <main id="main" class="p-4">
+      <section class="mb-8">
+          <h3 id="listitem" class="text-xl mb-2">انواع ژانر</h3>
+          <ul id="genre-list"></ul>
+      </section>
+  
+      <section class="mb-8">
+          <h3 id="listitem" class="text-xl mb-2">انتشارات</h3>
+          <ul id="publisher-list"></ul>
+      </section>
+  </main>
+  
 
 
 <div id="footer"></div>
 <script src="footer.js"></script>
 
-
-
-
+</body>
 </html>

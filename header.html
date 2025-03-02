@@ -3,178 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>کارت کتاب</title>
-    <style>
-        @font-face {
-            font-family: 'modam';
-            src: url('fonts/modam.woff2') format('woff2'),
-                 url('fonts/modam.woff') format('woff');
-        }
+    <link rel="stylesheet" href="css/header.css">
 
-        body {
-            font-family: modam;
-            margin: 0;
-            background-color: #f8f8f8;
-        }
-
-        .header {
-            background-color: #27272a;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            position: relative;
-            height: 50px;
-            z-index: 9999;
-            direction: ltr;
-        }
-
-        .icons {
-            width: 120px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .header .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .menu-btn {
-            font-size: 24px;
-            cursor: pointer;
-            padding: 10px;
-            color: white;
-        }
-
-        /* منوی ناوبری */
-        .nav-menu {
-            display: flex;
-            flex-direction: column;
-            background-color: #27272a;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 250px;
-            height: 100%;
-            text-align: right;
-            padding: 20px;
-            border-radius: 5px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .nav-menu.active {
-            transform: translateX(0);
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            display: block;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .nav-menu a:hover {
-            background-color: #313131;
-            border-radius: 5px;
-        }
-
-        .close-btn {
-            font-size: 20px;
-            color: white;
-            cursor: pointer;
-            text-align: right;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 10px;
-            background-color: #27272a;
-            text-align: center;
-        }
-
-        .search-box input {
-            width: 60%;
-            height: 35px;
-            font-family: modam;
-            padding: 10px;
-            font-size: 14px;
-            border-radius: 5px;
-            border: none;
-            text-align: right;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 10px;
-                flex-wrap: wrap;
-                justify-content: space-between;
-            }
-
-            .search-box input {
-                width: 90%;
-            }
-        }
-
-
-        
-    </style>
-    <script>
-        function toggleMenu() {
-            let menu = document.getElementById("nav-menu");
-            let body = document.body;
-            menu.classList.toggle("active");
-
-            if (menu.classList.contains("active")) {
-                body.style.overflow = "hidden";
-            } else {
-                body.style.overflow = "auto";
-            }
-        }
-
-        function closeMenu() {
-            let menu = document.getElementById("nav-menu");
-            let body = document.body;
-            menu.classList.remove("active");
-            body.style.overflow = "auto";
-        }
-    </script>
 </head>
 <body>
-
     <header class="header">
-        <div class="icons">
-            <a href="login.html"><img src="image/profile.png" alt="Profile" width="30px"></a>
-            <a href="shopping-cart.html"><img src="image/buybag.png" alt="Shopping Cart" width="30px"></a>
-            <a href="https://www.instagram.com/bookito.o/"><img src="image/insta.png" alt="Instagram" width="30px"></a>
+        <div class="items-container">
+            <div class="menu" id="menuBtn"><img src="image/menu.png" alt="menu" width="25px"></div>
+            <div class="logo"><a href="index.html"><img src="image/logo.png" alt="logo" width="100px"></a></div>
+            <div class="icons">
+                <button id="searchBtn">جستجو</button>
+                <div class="search-container" id="searchContainer">
+                    <input type="text" placeholder="جستجو کنید...">
+                    <button>برو</button>
+                </div>
+            </div>
         </div>
-
-
-
-
-
-        <div class="logo">بوکیتو</div>
-        <div class="menu-btn" onclick="toggleMenu()">☰</div>
     </header>
 
-    <nav class="nav-menu" id="nav-menu">
-        <span class="close-btn" onclick="closeMenu()">✖</span>
-        <h1 style="text-align:center;">بوکیتو</h1>
-        <a href="index.html">صفحه اصلی</a>
-        <a href="everybook.html">همه کتابها</a>
-        <a href="category.html">دسته بندی</a>
-        <a href="shopping-cart.html">سبد خرید</a>
-    </nav>
-    <form method="post" class="search-box" action="result.html">
-        <input type="search" id="search-input" placeholder="نام کتاب یا نویسنده را وارد کنید">
-    </form>
-    
+    <div class="overlay" id="overlay"></div>
 
+    <div class="sidebar" id="sidebar">
+        <button class="close-btn" id="closeBtn">×</button>
+        <div class="logo">بوکیتو</div>
+        <ul>
+            <li><a href="index.html">صفحه اصلی</a></li>
+            <li><a href="category.html">دسته بندی</a></li>
+            <li><a href="everybook.html">همه کتاب ها</a></li>
+            <li><a href="#">تماس با ما</a></li>
+            <div class="instagram-id"><a href="https://www.instagram.com/bookito_/">@bookito_</a></div>
+            
+        </ul>
+    </div>
+
+<script src="header.js"></script>
 </body>
 </html>

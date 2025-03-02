@@ -1,0 +1,183 @@
+/* تنظیمات کلی */
+
+body {
+    padding-top: 60px;
+    direction: ltr;
+    font-family: modam;
+}
+
+/* هدر */
+.header {
+    background: #efefef;
+    color: #070707;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.items-container {
+    max-width: 1400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto;
+    direction: rtl;
+    width: 100%;
+    padding: 0 20px;
+}
+
+/* بخش جستجو */
+.search-container {
+    display: none;
+    width: 400px;
+    padding:  10px;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    margin: 10px auto;
+    background-color: #efefef;
+    direction: ltr;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-left: none;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.search-container input {
+    text-align: right;
+    width:80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    font-family: modam;
+
+}
+
+.search-container button {
+    font-family: modam;
+    padding: 8px 20px;
+    cursor: pointer;
+    background-color: #313131;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.search-container button:hover {
+    background-color: #0056b3;
+}
+
+
+#searchBtn{
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #323232;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: modam;
+}
+
+
+
+.menu {
+    cursor: pointer;
+
+    
+}
+.sidebar {
+    position: fixed;
+    top: 50;
+    right: -250px;
+    width: 250px;
+    height: 100%;
+    background: #efefef;
+    transition: 0.3s;
+    padding-top: 20px;
+    z-index: 1001;
+}
+.sidebar.active {
+    right: 0;
+}
+.sidebar .close-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: none;
+    border: none;
+    color: #313131;
+    font-size: 40px;
+    cursor: pointer;
+}
+.sidebar .logo {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #313131;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    text-align: right;
+}
+.sidebar ul li {
+    padding: 10px 20px;
+    border-bottom: 1px solid #9d9d9d;
+
+    
+}
+.sidebar ul li a {
+    color: #313131;
+    text-decoration: none;
+    display: block;
+}
+.instagram-id{
+    position: relative;
+    top: 0px;
+    right:0px;
+    padding: 15px 0px;
+    text-align: center; 
+    font-size: 20px;
+    width: 250px;
+    color: #fff;
+    background: linear-gradient(45deg, #ff7300, #ff10b3, #b028ff, #0015ff);
+background-size: 100% 100%;
+animation: gradientAnimation 15s ease infinite;
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+    z-index: 999;
+}
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
+}

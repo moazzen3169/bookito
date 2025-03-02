@@ -4,86 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اطلاعات نویسنده</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; direction: rtl; }
-        img { max-width: 200px; border-radius: 10px; margin: 10px; display: none; }
-    </style>
+    <link rel="stylesheet" href="css/author.css">
 </head>
 <body>
 
-    <h2>نویسنده: <span id="author-name"></span></h2>
-    <img id="author-image" src="" alt="تصویر نویسنده">
-    <p id="author-bio"></p>
-    <p><strong>محل تولد:</strong> <span id="author-birth-place"></span></p>
-    <p><strong>تاریخ تولد:</strong> <span id="author-birth-date"></span></p>
-    <p><strong>تاریخ وفات:</strong> <span id="author-death-date"></span></p>
-    <p><strong>ملیت:</strong> <span id="author-nationality"></span></p>
-    <p><strong>جوایز:</strong> <span id="author-awards"></span></p>
-    <p><strong>وب‌سایت:</strong> <a id="author-website" href="#" target="_blank">مشاهده</a></p>
-    <p><strong>تعداد کتاب‌ها:</strong> <span id="author-books"></span></p>   
+    <div class="author-container">
+        <div class="author-image">
+            <h2>نویسنده: <span id="author-name">در حال بارگذاری...</span></h2>
+            <img id="author-image" src="" alt="تصویر نویسنده">
+        </div>
+        <div class="author-info">
+            <div class="author-items">
+                <p><strong>تاریخ تولد:</strong> <span id="author-birth-date"></span></p>
+                <p><strong>محل تولد:</strong> <span id="author-birth-place"></span></p>
+                <p><strong>وضعیت:</strong> <span id="author-status"></span></p>
+            </div>
+            <div class="author-items">
+                <p><strong>تعداد کتاب‌ها:</strong> <span id="author-books"></span></p>
+                <p><strong>ژانرها:</strong> <span id="author-genres"></span></p>
+            </div>
+            <div class="author-items">
+                <p><strong>ملیت:</strong> <span id="author-nationality"></span></p>
+                <p><strong>جوایز:</strong> <span id="author-awards"></span></p>
+                <p><strong>وب‌سایت:</strong> <a id="author-website" href="#" target="_blank"></a></p>
+            </div>
+            <p id="author-bio"></p>
 
-    <script>
-        async function loadAuthorData() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const authorName = urlParams.get('name');
+        </div>
+        
 
-            if (!authorName) {
-                document.body.innerHTML = "<h2>نام نویسنده مشخص نشده است!</h2>";
-                return;
-            }
+    </div>
 
-            try {
-                const response = await fetch(`http://127.0.0.1:8000/authors/?name=${encodeURIComponent(authorName)}`);
+    <ul id="author-books-list"></ul>
+    
+    <script src="js/author.js"></script>
+    
 
-                if (!response.ok) {
-                    throw new Error(`خطا در دریافت اطلاعات: ${response.status}`);
-                }
-
-                const data = await response.json();
-
-                if (!data || data.length === 0) {
-                    document.body.innerHTML = "<h2>اطلاعاتی برای این نویسنده یافت نشد.</h2>";
-                    return;
-                }
-
-                const author = data[0];
-
-                document.getElementById('author-name').textContent = `${author.first_name || ''} ${author.last_name || ''}`.trim();
-                document.getElementById('author-bio').textContent = author.biography || "بیوگرافی موجود نیست.";
-                document.getElementById('author-birth-place').textContent = author.birth_place || "نامشخص";
-                document.getElementById('author-birth-date').textContent = author.birth_date || "نامشخص";
-                document.getElementById('author-death-date').textContent = author.is_alive ? "زنده" : (author.date_of_death || "نامشخص");
-                document.getElementById('author-nationality').textContent = author.nationality || "نامشخص";
-                document.getElementById('author-awards').textContent = author.awards || "بدون جایزه";
-                document.getElementById('author-books').textContent = author.number_of_books || "نامشخص";
-
-                // نمایش تصویر نویسنده در صورت موجود بودن
-                const profileImage = document.getElementById('author-image');
-                if (author.profile_picture) {
-                    profileImage.src = author.profile_picture;
-                    profileImage.style.display = 'block';
-                } else {
-                    profileImage.style.display = 'none';
-                }
-
-                // تنظیم لینک وب‌سایت در صورت موجود بودن
-                const websiteLink = document.getElementById('author-website');
-                if (author.website) {
-                    websiteLink.href = author.website;
-                    websiteLink.textContent = "مشاهده وب‌سایت";
-                    websiteLink.style.display = 'inline';
-                } else {
-                    websiteLink.style.display = 'none';
-                }
-
-            } catch (error) {
-                console.error("خطا در دریافت اطلاعات نویسنده:", error);
-                document.body.innerHTML = `<h2>خطا در دریافت اطلاعات: ${error.message}</h2>`;
-            }
-        }
-
-        loadAuthorData();
-    </script>
 
 </body>
 </html>

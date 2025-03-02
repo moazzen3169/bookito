@@ -1,62 +1,236 @@
-<section class="mb-8">
-    <h3 class="text-xl mb-2">لیست کتاب‌ها</h3>
-    <div id="books-container" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <!-- کتاب‌ها اینجا نمایش داده می‌شوند -->
-    </div>
-    
-    <!-- دکمه‌های صفحه‌بندی -->
-    <div id="pagination-controls" class="flex justify-center mt-4 gap-2">
-        <button id="prev-page" class="hidden bg-gray-300 px-4 py-2 rounded">صفحه قبل</button>
-        <span id="current-page" class="px-4 py-2">صفحه 1</span>
-        <button id="next-page" class="hidden bg-gray-300 px-4 py-2 rounded">صفحه بعد</button>
-    </div>
-</section>
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوکیتو</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="library/script1.js"></script>
+    <link rel="stylesheet" href="library/style1.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="header.js" defer></script>
+
+    <style>
+        body {
+            background: #e8e8e8;
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            width: 90%;
+            margin: 10px auto;
+            z-index: 1;
+
+        }
+
+        #genre-list{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: right;
+            width: 100%;
+            height: auto;
+            margin: 10px auto;
+        }
+        #genre-list li{
+            border: 1px solid #9CA3AF; /* معادل border-gray-400 */
+            border-radius: 6px; /* معادل rounded-md */
+            padding: 7px 20px; /* معادل px-10 (40px) و py-3 (12px) */
+            display: block;
+            text-align: center; /* برای وسط‌چین شدن متن */
+            background-color: white;
+            color: black;
+            margin:   2px ;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            scale: 1;
+        }
+        #genre-list li:hover{
+            background-color: #303030;
+            color: #e8e8e8;
+        }
+
+          
+
+        #listitem {
+            border: 1px dashed #1F2937;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #1F2937;
+            color: #e8e8e8;
+        }
+
+
+        #publisher-list{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: right;
+            width: 100%;
+            height: auto;
+            margin: 10px auto;
+        }
+        #publisher-list li{
+            border: 1px solid #9CA3AF; /* معادل border-gray-400 */
+            border-radius: 6px; /* معادل rounded-md */
+            padding: 7px 20px; /* معادل px-10 (40px) و py-3 (12px) */
+            display: block;
+            text-align: center; /* برای وسط‌چین شدن متن */
+            background-color: white;
+            color: black;
+            margin:   2px ;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            cursor: pointer;
+            scale: 1;
+        }
+        #publisher-list li:hover{
+            background-color: #303030;
+            color: #e8e8e8;
+        }
+
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+
+
+    </style>
 
 <script>
-    let currentPage = 1;
-    const apiBaseUrl = "http://127.0.0.1:8000/api/books/";
+    document.addEventListener("DOMContentLoaded", async function () {
+      await authenticateAndFetchData("genres", "genre-list");
+      await authenticateAndFetchData("publishers", "publisher-list");
+  });
+  
+  async function authenticateAndFetchData(endpoint, listId) {
+      let token = localStorage.getItem("access_token");
+      if (!token) {
+          console.warn("توکن احراز هویت یافت نشد، تلاش برای دریافت مجدد...");
+          const refreshed = await refreshToken();
+          if (!refreshed) {
+              alert("لطفاً وارد شوید.");
+              window.location.href = "login.html";
+              return;
+          }
+          token = localStorage.getItem("access_token");
+      }
+  
+      fetchData(endpoint, listId, token);
+  }
+  
+  async function refreshToken() {
+      const refreshToken = localStorage.getItem("refresh_token");
+      if (!refreshToken) {
+          return false;
+      }
+  
+      try {
+          const response = await fetch("http://127.0.0.1:8000/accounts/token/refresh/", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ refresh: refreshToken })
+          });
+  
+          if (!response.ok) {
+              throw new Error("رفرش توکن ناموفق بود.");
+          }
+  
+          const data = await response.json();
+          localStorage.setItem("access_token", data.access);
+          return true;
+      } catch (error) {
+          console.error("خطا در رفرش توکن:", error);
+          return false;
+      }
+  }
+  
+  function fetchData(endpoint, listId, token) {
+      fetch(`http://127.0.0.1:8000/${endpoint}/`, {
+          headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+          }
+      })
+      .then(response => {
+          if (response.status === 401) {
+              throw new Error("توکن منقضی شده است.");
+          }
+          if (!response.ok) {
+              throw new Error("خطا در دریافت داده‌ها");
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log(`داده‌های دریافتی از ${endpoint}:`, data);
+  
+          const listElement = document.getElementById(listId);
+          if (!listElement) {
+              console.error(`المان با id=${listId} پیدا نشد!`);
+              return;
+          }
+          
+          listElement.innerHTML = ""; 
+          
+          data.forEach(item => {
+              console.log("آیتم دریافتی:", item); 
+  
+              const listItem = document.createElement("li");
+  
+              // ایجاد لینک برای هر ژانر یا انتشارات
+              const link = document.createElement("a");
+              const targetPage = endpoint === "genres" ? "genre.html" : "publisher.html";
+              // برای صفحه ناشر از id استفاده می‌کنیم
+              link.href = `${targetPage}?id=${encodeURIComponent(item.id)}`;
+              link.textContent = item.name || "نام موجود نیست";
+              link.classList.add("text-gray-700", "border-b", "py-2");
+  
+              listItem.appendChild(link);
+              listElement.appendChild(listItem);
+          });
+      })
+      .catch(async error => {
+          console.error(`خطا در دریافت داده‌های ${endpoint}:`, error);
+          if (error.message === "توکن منقضی شده است.") {
+              const refreshed = await refreshToken();
+              if (refreshed) {
+                  fetchData(endpoint, listId, localStorage.getItem("access_token"));
+              } else {
+                  alert("دسترسی شما منقضی شده است، لطفاً دوباره وارد شوید.");
+                  window.location.href = "login.html";
+              }
+          }
+      });
+  }
+  </script>
+  
+  </head>
+  <body>
+  
+  <div class="category-section">
+      <h2 class="category-title">دسته‌بندی</h2>
+  </div>
+  
+  <main id="main" class="p-4">
+      <section class="mb-8">
+          <h3 id="listitem" class="text-xl mb-2">انواع ژانر</h3>
+          <ul id="genre-list"></ul>
+      </section>
+  
+      <section class="mb-8">
+          <h3 id="listitem" class="text-xl mb-2">انتشارات</h3>
+          <ul id="publisher-list"></ul>
+      </section>
+  </main>
+  
 
-    async function fetchBooks(page = 1) {
-        try {
-            const response = await fetch(`${apiBaseUrl}?page=${page}`);
-            const data = await response.json();
 
-            // نمایش لیست کتاب‌ها
-            const container = document.getElementById("books-container");
-            container.innerHTML = "";
-            data.results.forEach(book => {
-                const bookElement = document.createElement("div");
-                bookElement.className = "border p-4 rounded shadow";
-                bookElement.innerHTML = `<h4 class="text-lg font-semibold">${book.title}</h4>
-                                         <p class="text-sm text-gray-600">${book.author}</p>`;
-                container.appendChild(bookElement);
-            });
+<div id="footer"></div>
+<script src="footer.js"></script>
 
-            // مدیریت دکمه‌های صفحه‌بندی
-            document.getElementById("current-page").textContent = `صفحه ${page}`;
-            const prevBtn = document.getElementById("prev-page");
-            const nextBtn = document.getElementById("next-page");
-
-            if (data.previous) {
-                prevBtn.classList.remove("hidden");
-                prevBtn.onclick = () => fetchBooks(page - 1);
-            } else {
-                prevBtn.classList.add("hidden");
-            }
-
-            if (data.next) {
-                nextBtn.classList.remove("hidden");
-                nextBtn.onclick = () => fetchBooks(page + 1);
-            } else {
-                nextBtn.classList.add("hidden");
-            }
-
-            currentPage = page;
-        } catch (error) {
-            console.error("خطا در دریافت داده‌ها:", error);
-        }
-    }
-
-    // بارگذاری اولیه صفحه
-    document.addEventListener("DOMContentLoaded", () => fetchBooks());
-</script>
+</body>
+</html>

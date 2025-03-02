@@ -5,69 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نتایج جستجو</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            direction: rtl;
-            padding: 20px;
-        }
-        .book-item {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-        }
-        .book-item h3 {
-            margin: 0;
-        }
-        .book-item p {
-            margin: 5px 0;
-        }
+        body { font-family: Arial, sans-serif; direction: rtl; text-align: right; }
+        .book { border: 1px solid #ccc; padding: 10px; margin: 10px; border-radius: 5px; padding: 10px; }
     </style>
 </head>
 <body>
+    <h2>نتایج جستجو</h2>
+    <div id="results">در حال دریافت اطلاعات...</div>
 
-<h1>نتایج جستجو</h1>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get("search");
 
-<div id="results-container"></div>
+        if (query) {
+            fetch(`http://127.0.0.1:8000/books/`)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById("results");
+                    resultsDiv.innerHTML = ""; // پاک کردن پیام اولیه
 
-<script>
-    // گرفتن پارامتر جستجو از URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search'); // اینجا فرض می‌کنیم که کلمه جستجو شده به عنوان query param در URL قرار دارد
+                    // **فیلتر کردن داده‌ها برای نمایش فقط موارد مرتبط**
+                    let filteredData = data.filter(book => 
+                        book.title.includes(query) || book.author.includes(query)
+                    );
 
-    // ساخت URL برای درخواست API
-    const apiUrl = `http://127.0.0.1:8000/books?q=${searchQuery}`;
-
-    // درخواست به API
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            const resultsContainer = document.getElementById('results-container');
-            if (data.items) {
-                // نمایش نتایج
-                data.items.forEach(item => {
-                    const book = item.volumeInfo;
-                    const bookItem = document.createElement('div');
-                    bookItem.classList.add('book-item');
-
-                    const title = book.title || 'عنوانی برای این کتاب موجود نیست';
-                    const authors = book.authors ? book.authors.join(', ') : 'نویسنده‌ای برای این کتاب موجود نیست';
-                    const description = book.description || 'توضیحاتی برای این کتاب موجود نیست';
-
-                    bookItem.innerHTML = `
-                        <h3>${title}</h3>
-                        <p><strong>نویسنده:</strong> ${authors}</p>
-                        <p><strong>توضیحات:</strong> ${description}</p>
-                    `;
-                    resultsContainer.appendChild(bookItem);
+                    if (filteredData.length === 0) {
+                        resultsDiv.innerHTML = "<p>نتیجه‌ای یافت نشد!</p>";
+                    } else {
+                        filteredData.forEach(book => {
+                            let bookDiv = document.createElement("div");
+                            bookDiv.classList.add("book");
+                            bookDiv.innerHTML = `
+                                <h3>${book.title}</h3>
+                                <p>نویسنده: ${book.author}</p>
+                                <p>سال انتشار: ${book.year}</p>
+                                <p>${book.description}</p>
+                            `;
+                            resultsDiv.appendChild(bookDiv);
+                        });
+                    }
+                })
+                .catch(error => {
+                    document.getElementById("results").innerHTML = `<p>خطا در دریافت اطلاعات: ${error.message}</p>`;
+                    console.error("Error fetching data:", error);
                 });
-            } else {
-                resultsContainer.innerHTML = '<p>نتیجه‌ای برای جستجوی شما پیدا نشد.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('خطا در دریافت اطلاعات از API:', error);
-            document.getElementById('results-container').innerHTML = '<p>خطا در ارتباط با API.</p>';
-        });
-</script>
+        } else {
+            document.getElementById("results").innerHTML = "<p>هیچ جستجویی انجام نشده است.</p>";
+        }
 
+
+
+        
+    </script>
 </body>
 </html>
+

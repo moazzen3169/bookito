@@ -1,27 +1,38 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     fetch("header.html")
         .then(response => response.text())
         .then(data => {
             document.body.insertAdjacentHTML("afterbegin", data);
-            setupMenu(); // بعد از بارگذاری، رویدادها تنظیم شوند
+
+            // پس از لود شدن هدر، المان‌ها را دریافت کنید
+            const searchBtn = document.getElementById("searchBtn");
+            const searchContainer = document.getElementById("searchContainer");
+            const menuBtn = document.getElementById("menuBtn");
+            const closeBtn = document.getElementById("closeBtn");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+
+            // ایونت کلیک برای نمایش و مخفی کردن نوار جستجو
+            searchBtn.addEventListener("click", function() {
+                searchContainer.style.display = searchContainer.style.display === "block" ? "none" : "block";
+            });
+
+            // ایونت کلیک برای نمایش و مخفی کردن سایدبار
+            menuBtn.addEventListener("click", function() {
+                sidebar.classList.add("active");
+                overlay.classList.add("active");
+            });
+
+            closeBtn.addEventListener("click", function() {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            });
+
+            overlay.addEventListener("click", function() {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            });
         })
-        .catch(error => console.error("Error loading header:", error));
+        .catch(error => console.error("خطا در بارگذاری هدر:", error));
 });
-
-function setupMenu() {
-    let menu = document.getElementById("nav-menu");
-    let menuBtn = document.querySelector(".menu-btn");
-    let closeBtn = document.querySelector(".close-btn");
-
-    if (menuBtn && closeBtn) { 
-        menuBtn.addEventListener("click", () => {
-            menu.classList.toggle("active");
-            document.body.style.overflow = menu.classList.contains("active") ? "hidden" : "auto";
-        });
-
-        closeBtn.addEventListener("click", () => {
-            menu.classList.remove("active");
-            document.body.style.overflow = "auto";
-        });
-    }
-}
+        
