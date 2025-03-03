@@ -1,11 +1,3 @@
-<div class="search-container" id="searchContainer">
-    <input type="text" id="searchInput" placeholder="جستجو کنید...">
-    <button id="searchButton">برو</button>
-</div>  
-<div class="search-show" id="searchShow"></div>
-
-
-<script>
 
 document.getElementById('searchButton').addEventListener('click', function() {
     const query = document.getElementById('searchInput').value.trim(); // حذف فاصله‌های اضافی
@@ -75,33 +67,3 @@ function displayResults(data, query) {
         searchShow.textContent = 'کتابی با این نام یافت نشد.';
     }
 }
-
-</script>
-
-
-<style>
-    .book-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 16px auto;
-}
-
-.book-image {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-h2 {
-    font-size: 1.5em;
-    margin: 16px 0 8px;
-}
-
-p {
-    font-size: 1em;
-    color: #555;
-}
-</style>

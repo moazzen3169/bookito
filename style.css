@@ -281,7 +281,6 @@ footer {
 
     width: 100%;
     height: 100px; /* ارتفاع مناسب */
-    background-image: url('image/categorybanner.jpg');
     background-size: cover;
     background-position: center;
     display: flex;
@@ -302,6 +301,151 @@ footer {
 
 
 
+ /* استایل بنر */
+
+ 
+.banner  {
+    width: 100%;
+    height: 400px;
+    background-size: cover; /* یا contain */
+    background-position: center;
+    background-image: url('../image/slide5.jpg');
+}
 
 
+@media (max-width:720px) {
 
+    .banner  {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    display: block;
+    background-image: url(image/slide3.jpg);
+}
+}
+
+/* استایل سکشن‌ها */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 97%;
+    margin: 20px auto;
+    direction: rtl;
+}
+
+.view-all {
+    color: #e8e8e8;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.3s ease;
+    background-color: #27272a;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.view-all:hover {
+    background-color: #313131;
+}
+
+@media (max-width: 480px) {
+    .section-header h2 {
+        font-size: 10px;
+    }
+}
+
+   /* استایل پایه برای بدنه صفحه */
+
+/* استایل کانتینر اسلایدر */
+.swiper-container {
+width: 97%;
+height: 380px;
+margin: 10px auto;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* استایل Wrapper و اسلایدها */
+.swiper-wrapper {
+display: flex;
+justify-content: center;
+}
+
+.swiper-slide {
+width: 170px !important;
+height: 330px;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #ffffff00;
+}
+
+/* استایل کارت محصول */
+.product-card {
+width: 170px;
+height: 320px;
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+padding: 5px;
+text-align: center;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+transform: translateY(-5px);
+}
+
+.product-card img {
+width: auto;
+max-height: 220px;
+min-height: 150px;
+object-fit: cover;
+border-radius: 5px;
+margin-top: 0px;
+}
+
+
+.product-card p {
+font-size: 12px;
+color: #555;
+margin: 2px 0;
+}
+
+.view-details {
+display: block;
+background-color: #27272a;
+color: #fff;
+text-decoration: none;
+font-size: 12px;
+padding: 5px 10px;
+border-radius: 5px;
+transition: background-color 0.3s ease;
+margin-bottom: 3px;
+}
+
+.view-details:hover {
+background-color: #313131;
+}
+#discount{
+text-decoration:line-through;
+}
+
+
+.search-show{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    
+}
+
+.search-show h3{
+    color: #313131;
+
+}

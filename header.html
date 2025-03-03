@@ -12,14 +12,20 @@
             <div class="menu" id="menuBtn"><img src="image/menu.png" alt="menu" width="25px"></div>
             <div class="logo"><a href="index.html"><img src="image/logo.png" alt="logo" width="100px"></a></div>
             <div class="icons">
-                <button id="searchBtn">جستجو</button>
-                <div class="search-container" id="searchContainer">
-                    <input type="text" placeholder="جستجو کنید...">
-                    <button>برو</button>
-                </div>
+                <button id="searchBtn"><img src="image/search.png" alt="search" width="30px"></button>
+                <a href="shopping-cart.html"><img src="image/buybag.png" alt="buy bag" width="30px"></a>
+                <a href="register.html"><img src="image/profile.png" alt="profile" width="30px"></a>
             </div>
         </div>
     </header>
+
+    <div class="search-container" id="searchContainer">
+        <form action="search-result.html" method="GET">
+            <input type="text" id="searchInput" name="q" placeholder="جستجو کنید...">
+            <button type="submit">برو</button>
+        </form>
+    </div>
+    
 
     <div class="overlay" id="overlay"></div>
 

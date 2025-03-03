@@ -22,6 +22,8 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+
+
 .items-container {
     max-width: 1400px;
     display: flex;
@@ -72,26 +74,19 @@ body {
 }
 
 .search-container button:hover {
-    background-color: #0056b3;
+    background-color: #474747;
 }
 
 
 #searchBtn{
-    border: none;
-    border-radius: 10px;
-    padding: 10px;
-    background-color: #323232;
-    color: #ffffff;
     cursor: pointer;
-    font-family: modam;
+    border: none;
 }
 
 
 
 .menu {
     cursor: pointer;
-
-    
 }
 .sidebar {
     position: fixed;
@@ -139,6 +134,12 @@ body {
     text-decoration: none;
     display: block;
 }
+.instagram-id a{
+    text-decoration: none;
+    color: #fff;
+
+
+}
 .instagram-id{
     position: relative;
     top: 0px;
@@ -147,7 +148,6 @@ body {
     text-align: center; 
     font-size: 20px;
     width: 250px;
-    color: #fff;
     background: linear-gradient(45deg, #ff7300, #ff10b3, #b028ff, #0015ff);
 background-size: 100% 100%;
 animation: gradientAnimation 15s ease infinite;
@@ -180,4 +180,69 @@ animation: gradientAnimation 15s ease infinite;
 .overlay.active {
     visibility: visible;
     opacity: 1;
+}
+.icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.icons a img{
+    margin: 0px 10px;
+
+}
+@media (max-width:700px) {
+
+    .items-container{
+        margin-right: 30px;
+
+    }
+
+    .icons a img{
+        scale: 0.8;
+        margin: 0px;
+    }
+
+    #searchBtn{
+        cursor: pointer;
+        border: none;
+        scale: 0.8;
+    }
+    .logo{
+        scale: 0.8;
+        
+    }
+    .menu{
+        scale: 0.8;
+    }
+
+
+}
+
+
+
+.book-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 16px auto;
+    z-index: 12000;
+}
+
+.book-image {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 16px 0 8px;
+}
+
+p {
+    font-size: 1em;
+    color: #555;
 }
