@@ -155,20 +155,10 @@ async function loadAuthorData() {
         document.getElementById('author-bio').textContent = author.biography || "بیوگرافی موجود نیست.";
         document.getElementById('author-birth-date').textContent = author.birth_date || "نامشخص";
         document.getElementById('author-birth-place').textContent = author.birth_place || "نامشخص";
-        document.getElementById('author-status').textContent = author.is_alive ? "زنده" : `درگذشته (${author.date_of_death || "تاریخ نامشخص"})`;
-        document.getElementById('author-books').textContent = author.number_of_books || "0";
         document.getElementById('author-genres').textContent = author.genres.length > 0 ? author.genres.join(', ') : "مشخص نشده";
-        document.getElementById('author-nationality').textContent = author.nationality || "مشخص نشده";
         document.getElementById('author-awards').textContent = author.awards || "ندارد";
 
-        const websiteElement = document.getElementById('author-website');
-        if (author.website) {
-            websiteElement.href = author.website;
-            websiteElement.textContent = author.website;
-        } else {
-            websiteElement.textContent = "ندارد";
-            websiteElement.removeAttribute("href");
-        }
+
 
         const profileImage = document.getElementById('author-image');
         if (author.profile_picture) {

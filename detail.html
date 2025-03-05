@@ -315,9 +315,9 @@ ${data.data.authors.map(author =>
                 <p class="book-rating">
                   <strong>امتیاز:</strong> ${data.data.rating} از ۵
                 </p>
-                <button id="buybutton" onclick="addToCart('${data.data.id}')" class="buy-button">
-                  افزودن به سبد خرید
-                </button>
+                  <button id="buybutton" onclick="handleBuyClick('${data.data.id}')" class="buy-button">
+                    افزودن به سبد خرید
+                  </button>
               </div>
             </div>
             <!-- خلاصه کتاب -->
@@ -336,10 +336,61 @@ ${data.data.authors.map(author =>
       }
     }
 
-    // افزودن کتاب به سبد خرید
-    function addToCart(bookId) {
-      alert(`کتاب با شناسه ${bookId} به سبد خرید اضافه شد.`);
+
+    function isUserLoggedIn() {
+    // بررسی اینکه آیا توکن کاربر در localStorage هست یا نه
+    return localStorage.getItem('userToken') !== null;
+  }
+
+  function redirectToLogin() {
+    // ذخیره صفحه فعلی برای بازگشت بعد از ورود
+    localStorage.setItem('redirectAfterLogin', window.location.href);
+    window.location.href = "/register.html"; // تغییر به آدرس صفحه ورود
+  }
+
+  function addToCart(productId) {
+    // دریافت توکن کاربر برای ارسال درخواست به API
+    const token = localStorage.getItem('userToken');
+    
+    fetch('/api/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // ارسال توکن برای احراز هویت
+      },
+      body: JSON.stringify({ productId: productId })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('محصول با موفقیت به سبد خرید اضافه شد!');
+      } else {
+        alert('مشکلی پیش آمد، دوباره تلاش کنید.');
+      }
+    })
+    .catch(error => {
+      console.error('خطا در افزودن به سبد خرید:', error);
+    });
+  }
+
+  function handleBuyClick(productId) {
+    if (isUserLoggedIn()) {
+      addToCart(productId);
+    } else {
+      redirectToLogin();
     }
+  }
+
+  // در صورت ورود موفق، به صفحه قبلی بازگردد
+  window.addEventListener('load', function () {
+    const redirectUrl = localStorage.getItem('redirectAfterLogin');
+    if (redirectUrl) {
+      localStorage.removeItem('redirectAfterLogin');
+      window.location.href = redirectUrl;
+    }
+  });
+
+    
 
     // فراخوانی تابع برای دریافت جزئیات کتاب
     fetchBookDetail();

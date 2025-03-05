@@ -34,7 +34,6 @@ async function loadTranslatorData() {
         document.getElementById('translator-bio').textContent = data.biography || "توضیحات موجود نیست.";
         document.getElementById('translator-nationality').textContent = data.nationality || "نامشخص";
         document.getElementById('translator-birth-date').textContent = data.birth_date || "نامشخص";
-        document.getElementById('translator-rating').textContent = data.rating || "نامشخص";
 
         // نمایش زبان‌ها
         if (data.languages && data.languages.length > 0) {

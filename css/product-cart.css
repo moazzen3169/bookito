@@ -1,0 +1,132 @@
+
+/* استایل‌های اصلی */
+.slider-container {
+    font-family: modam;
+    position: relative;
+    width: 95%;
+    height: auto;
+    margin: 20px auto;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    overflow-x: scroll;
+    user-select: none;
+    padding: 10px;
+    width: 100%;
+    height: auto;
+    direction: rtl;
+
+}
+
+.product-card {
+    min-width: 160px;
+    max-width: 160px;
+    height: 320px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease;
+}
+    
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-card img {
+    width: auto;
+    max-height: 220px;
+    min-height: 220px;
+    max-width: 160px;
+    min-width: 160px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-top: 0px;
+}
+
+.product-card p {
+    font-size: 12px;
+    color: #555;
+    margin: 2px 0;
+}
+
+.view-details {
+    display: block;
+    background-color: #27272a;
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-bottom: 3px;
+}
+
+.view-details:hover {
+    background-color: #313131;
+}
+
+#discount {
+    text-decoration: line-through;
+}
+
+.slider::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-btn {
+
+    margin: 10px;
+    padding: 10px;
+    border: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    }
+
+/* دکمه‌ها را خارج از اسلایدر قرار می‌دهیم */
+.prev-btn {
+left: 0;
+}
+
+.next-btn {
+right: 0;
+}
+
+
+
+@media (max-width:480px){
+    .nav-btn {
+        display: none
+    }
+}
+
+
+
+
+.search-show{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    
+}
+
+.search-show h3{
+    color: #313131;
+
+}

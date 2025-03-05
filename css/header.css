@@ -40,9 +40,9 @@ body {
     display: none;
     width: 400px;
     padding:  10px;
-    position: absolute;
+    position: fixed;
     top: 50px;
-    left: 0px;
+    z-index: 1000;
     margin: 10px auto;
     background-color: #efefef;
     direction: ltr;
@@ -219,7 +219,7 @@ animation: gradientAnimation 15s ease infinite;
 
 }
 
-
+search-container
 
 .book-card {
     border: 1px solid #ddd;

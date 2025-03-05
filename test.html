@@ -1,107 +1,83 @@
-<div class="search-container" id="searchContainer">
-    <input type="text" id="searchInput" placeholder="جستجو کنید...">
-    <button id="searchButton">برو</button>
-</div>  
-<div class="search-show" id="searchShow"></div>
 
+
+
+<link rel="stylesheet" href="css/product-cart.css">
+<div class="slider-container">
+    <button class="nav-btn prev-btn" onclick="scrollSlider(-1)">⬅</button>
+    <div class="slider" id="book-slider"></div>
+    <button class="nav-btn next-btn" onclick="scrollSlider(1)">➡</button>
+</div>
+
+    
 
 <script>
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    const slider = document.getElementById('book-slider');
 
-document.getElementById('searchButton').addEventListener('click', function() {
-    const query = document.getElementById('searchInput').value.trim(); // حذف فاصله‌های اضافی
-    if (query) {
-        searchBooks(query);
-    } else {
-        alert("لطفاً نام کتاب را وارد کنید.");
-    }
-});
+    async function fetchBooks() {
+        try {
+            let response = await fetch('http://127.0.0.1:8000/books/');
+            let books = await response.json();
+            let repeatedBooks = [...books, ...books];
 
-function searchBooks(query) {
-    const url = `http://127.0.0.1:8000/books/`; // آدرس API که تمام کتاب‌ها را برمی‌گرداند
-
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('خطا در دریافت اطلاعات از سرور.');
-            }
-            return response.json();
-        })
-        .then(data => {
-            displayResults(data, query);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('searchShow').textContent = 'خطا در دریافت اطلاعات.';
-        });
-}
-
-function displayResults(data, query) {
-    const searchShow = document.getElementById('searchShow');
-    searchShow.innerHTML = ''; // پاک کردن نتایج قبلی
-
-    // فیلتر کردن کتاب‌ها بر اساس نام دقیق
-    const foundBook = data.find(book => book.title.toLowerCase() === query.toLowerCase());
-
-    if (foundBook) {
-        // ایجاد کارت برای نمایش اطلاعات کتاب
-        const card = document.createElement('div');
-        card.className = 'book-card';
-
-        // نمایش عکس کتاب
-        const image = document.createElement('img');
-        image.src = foundBook.cover_image; // فرض می‌کنیم API فیلد `image` را برمی‌گرداند
-        image.alt = foundBook.title;
-        image.className = 'book-image';
-        card.appendChild(image);
-
-        // نمایش نام کتاب
-        const title = document.createElement('h2');
-        title.textContent = foundBook.title;
-        card.appendChild(title);
-
-        // نمایش نام نویسنده(ها)
-        const author = document.createElement('p');
-        if (Array.isArray(foundBook.authors)) {
-            const authorsList = foundBook.authors.map(author => `${author.first_name} ${author.last_name}`).join('، ');
-            author.textContent = `نویسنده(ها): ${authorsList}`;
-        } else {
-            author.textContent = `نویسنده: ${foundBook.authors}`;
+            slider.innerHTML = ''; // ابتدا محتوای قبلی پاک می‌شود
+            repeatedBooks.forEach(product => {
+                let productDiv = document.createElement('div');
+                productDiv.classList.add('product-card');
+                productDiv.innerHTML = `
+                    <img src="${product.cover_image}" alt="${product.title}" style="width: 100px; height: 150px;">
+                    <p id="discount">${product.discount} تومان</p>
+                    <p>${product.price} تومان</p>
+                    <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
+                `;
+                slider.appendChild(productDiv);
+            });
+        } catch (error) {
+            console.error('خطا در دریافت داده‌ها:', error);
         }
-        card.appendChild(author);
-
-        // اضافه کردن کارت به بخش نمایش نتایج
-        searchShow.appendChild(card);
-    } else {
-        searchShow.textContent = 'کتابی با این نام یافت نشد.';
     }
-}
 
+    function scrollSlider(direction) {
+        let scrollAmount = 500;
+        slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
+
+    function checkInfiniteScroll() {
+        let totalWidth = slider.scrollWidth;
+        let currentScroll = slider.scrollLeft;
+    }
+
+    slider.addEventListener('scroll', checkInfiniteScroll);
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.classList.add('active');
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+        slider.style.cursor = "grabbing";
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.classList.remove('active');
+        slider.style.cursor = "grab";
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.classList.remove('active');
+        slider.style.cursor = "grab";
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return; // اگر ماوس را پایین نگه نداریم، حرکت نخواهد کرد
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX); // مقدار حرکت ماوس برای جابجایی اسلایدر
+        slider.scrollLeft = scrollLeft - walk; // جابجایی اسلایدر به اندازه حرکت ماوس
+    });
+
+    fetchBooks();
 </script>
-
-
-<style>
-    .book-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 16px auto;
-}
-
-.book-image {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-h2 {
-    font-size: 1.5em;
-    margin: 16px 0 8px;
-}
-
-p {
-    font-size: 1em;
-    color: #555;
-}
-</style>

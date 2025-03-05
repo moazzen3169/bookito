@@ -29,11 +29,6 @@ async function loadPublisherData() {
         const publisher = await response.json();
 
         document.getElementById('publisher-name').textContent = publisher.name || "نام مشخص نیست";
-        document.getElementById('publisher-foundation-date').textContent = publisher.established_date || "نامشخص";
-
-        document.getElementById('publisher-books').textContent = publisher.number_of_books || "0";
-        document.getElementById('publisher-bio').textContent = publisher.description || "توضیحات موجود نیست.";
-
 
 
         const profileImage = document.getElementById('publisher-image');

@@ -5,36 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اطلاعات نویسنده</title>
     <link rel="stylesheet" href="css/author.css">
+    <script src="header.js"></script>
 </head>
 <body>
 
     <div class="author-container">
         <div class="author-image">
-            <h2>نویسنده: <span id="author-name">در حال بارگذاری...</span></h2>
             <img id="author-image" src="" alt="تصویر نویسنده">
         </div>
+
         <div class="author-info">
             <div class="author-items">
+                <p><span id="author-name">در حال بارگذاری...</span></p>
                 <p><strong>تاریخ تولد:</strong> <span id="author-birth-date"></span></p>
                 <p><strong>محل تولد:</strong> <span id="author-birth-place"></span></p>
-                <p><strong>وضعیت:</strong> <span id="author-status"></span></p>
-            </div>
-            <div class="author-items">
-                <p><strong>تعداد کتاب‌ها:</strong> <span id="author-books"></span></p>
                 <p><strong>ژانرها:</strong> <span id="author-genres"></span></p>
-            </div>
-            <div class="author-items">
-                <p><strong>ملیت:</strong> <span id="author-nationality"></span></p>
                 <p><strong>جوایز:</strong> <span id="author-awards"></span></p>
-                <p><strong>وب‌سایت:</strong> <a id="author-website" href="#" target="_blank"></a></p>
+                <p id="author-bio"></p>
             </div>
-            <p id="author-bio"></p>
-
         </div>
-        
-
     </div>
 
+    
+
+    
     <ul id="author-books-list"></ul>
     
     <script src="js/author.js"></script>

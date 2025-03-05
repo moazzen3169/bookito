@@ -74,41 +74,40 @@
 <body>
     <div class="container">
         <div id="login-form">
-            <form action="login.php" method="POST">
+            <form onsubmit="loginUser(event)">
                 <h3>فرم ورود</h3>
                 <div class="form-group">
                     <label>نام کاربری:</label>
-                    <input type="text" name="username" required>
+                    <input type="text" id="login-username" required>
                 </div>
                 <div class="form-group">
                     <label>رمز عبور:</label>
-                    <input type="password" name="password" required>
+                    <input type="password" id="login-password" required>
                 </div>
                 <button type="submit" class="btn">ورود</button>
             </form>
             <div class="toggle-btn" onclick="toggleForm()">عضویت</div>
         </div>
         <div id="register-form" style="display: none;">
-            <form action="register.php" method="POST">
+            <form onsubmit="registerUser(event)">
                 <h3>فرم عضویت</h3>
                 <div class="form-group">
                     <label>نام کاربری:</label>
-                    <input type="text" name="new_username" required>
+                    <input type="text" id="register-username" required>
                 </div>
                 <div class="form-group">
                     <label>ایمیل:</label>
-                    <input type="email" name="email" required>
+                    <input type="email" id="register-email" required>
                 </div>
                 <div class="form-group">
                     <label>رمز عبور:</label>
-                    <input type="password" name="new_password" required>
+                    <input type="password" id="register-password" required>
                 </div>
                 <button type="submit" class="btn">عضویت</button>
             </form>
             <div class="toggle-btn" onclick="toggleForm()">ورود</div>
         </div>
         <a href="index.html">رفتن به صفحه اصلی</a>
-
     </div>
     <script>
         function toggleForm() {
@@ -122,8 +121,44 @@
                 registerForm.style.display = 'block';
             }
         }
+
+        async function loginUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            const response = await fetch('http://127.0.0.1:8000/accounts/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            alert(data.message || 'ورود موفقیت‌آمیز بود!');
+        }
+
+        async function registerUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            const response = await fetch('http://127.0.0.1:8000/accounts/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, email, password })
+            });
+            
+            const data = await response.json();
+            alert(data.message || 'عضویت موفقیت‌آمیز بود!');
+        }
     </script>
 </body>
+
 
 
 </html>
