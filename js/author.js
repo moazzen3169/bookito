@@ -2,8 +2,8 @@ async function loadAuthorData() {
     const urlParams = new URLSearchParams(window.location.search);
     const authorId = urlParams.get('id');
 
-    if (!authorId) {
-        document.body.innerHTML = "<h2>شناسه نویسنده مشخص نشده است!</h2>";
+    if (!authorId || isNaN(authorId)) {
+        document.body.innerHTML = "<h2>شناسه نویسنده معتبر نیست!</h2>";
         return;
     }
 
@@ -15,7 +15,8 @@ async function loadAuthorData() {
             return;
         }
 
-        const response = await fetch(`http://127.0.0.1:8000/authors/${authorId}/`, {
+        // دریافت اطلاعات نویسنده
+        const response = await fetch(`http://127.0.0.1:8000/authors/${encodeURIComponent(authorId)}/`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -33,20 +34,8 @@ async function loadAuthorData() {
         document.getElementById('author-bio').textContent = author.biography || "بیوگرافی موجود نیست.";
         document.getElementById('author-birth-date').textContent = author.birth_date || "نامشخص";
         document.getElementById('author-birth-place').textContent = author.birth_place || "نامشخص";
-        document.getElementById('author-status').textContent = author.is_alive ? "زنده" : `درگذشته (${author.date_of_death || "تاریخ نامشخص"})`;
-        document.getElementById('author-books').textContent = author.number_of_books || "0";
-        document.getElementById('author-genres').textContent = author.genres.length > 0 ? author.genres.join(', ') : "مشخص نشده";
-        document.getElementById('author-nationality').textContent = author.nationality || "مشخص نشده";
+        document.getElementById('author-genres').textContent = author.genres.length > 0 ? author.genres.map(genre => genre.name).join(', ') : "مشخص نشده";
         document.getElementById('author-awards').textContent = author.awards || "ندارد";
-
-        const websiteElement = document.getElementById('author-website');
-        if (author.website) {
-            websiteElement.href = author.website;
-            websiteElement.textContent = author.website;
-        } else {
-            websiteElement.textContent = "ندارد";
-            websiteElement.removeAttribute("href");
-        }
 
         const profileImage = document.getElementById('author-image');
         if (author.profile_picture) {
@@ -54,19 +43,18 @@ async function loadAuthorData() {
             profileImage.style.display = 'block';
         }
 
-        // دریافت و نمایش کتاب‌های نویسنده
-        await loadAuthorBooks(authorId, token);
+        await loadPublishers(token);
+        await loadBooksForAuthor(authorId, token);
+
     } catch (error) {
         console.error("خطا در دریافت اطلاعات نویسنده:", error);
         document.body.innerHTML = `<h2>خطا در دریافت اطلاعات: ${error.message}</h2>`;
     }
 }
 
-
-
-async function loadAuthorBooks(authorId, token) {
+async function loadPublishers(token) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/books/filter/?author_id=${authorId}`, {
+        const response = await fetch("http://127.0.0.1:8000/publishers/", {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -74,108 +62,83 @@ async function loadAuthorBooks(authorId, token) {
         });
 
         if (!response.ok) {
-            // چاپ کد وضعیت و متن پاسخ برای کمک به شناسایی دقیق‌تر مشکل
-            const errorText = await response.text();
-            throw new Error(`خطا در دریافت لیست کتاب‌ها: ${response.status} - ${errorText}`);
+            throw new Error(`خطا در دریافت لیست انتشارات: ${response.status}`);
         }
 
-        const result = await response.json();
-        console.log("API Response: ", result);  // چاپ پاسخ API برای بررسی ساختار
-
-        // بررسی اینکه آیا داده‌ها موجود هستند
-        if (result && result.data && Array.isArray(result.data)) {
-            let books = result.data;
-
-            // فیلتر دقیق کتاب‌هایی که نویسنده آن‌ها با authorId یکسان است
-            books = books.filter(book => book.author_id == authorId);
-            
-            const booksContainer = document.getElementById('author-books-list');
-            booksContainer.innerHTML = '';
-
-            if (books.length === 0) {
-                booksContainer.innerHTML = "<p>کتابی یافت نشد.</p>";
-                return;
-            }
-
-            books.forEach(book => {
-                const bookElement = document.createElement('div');
-                bookElement.classList.add('book-item');
-                bookElement.innerHTML = `
-                    <div class="book-details">
-                        <h3>${book.title}</h3>
-                        <p><strong>سال انتشار:</strong> ${book.publication_year || "نامشخص"}</p>
-                        <p><strong>ژانر:</strong> ${book.genre || "نامشخص"}</p>
-                        <p><strong>تعداد صفحات:</strong> ${book.pages || "نامشخص"}</p>
-                    </div>
-                `;
-                booksContainer.appendChild(bookElement);
-            });
-        } else {
-            console.error("داده‌ها به درستی بارگذاری نشده‌اند.");
-            document.getElementById('author-books-list').innerHTML = "<p>خطا در دریافت کتاب‌ها</p>";
-        }
+        const publishers = await response.json();
+        const publisherSelect = document.getElementById('publisher');
+        publishers.forEach(publisher => {
+            const option = document.createElement('option');
+            option.value = publisher.id;
+            option.textContent = publisher.name;
+            publisherSelect.appendChild(option);
+        });
     } catch (error) {
-        console.error("خطا در دریافت کتاب‌های نویسنده:", error);
-        document.getElementById('author-books-list').innerHTML = `<p>خطا در دریافت کتاب‌ها: ${error.message}</p>`;
+        console.error("خطا در دریافت لیست انتشارات:", error);
     }
 }
 
-async function loadAuthorData() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const authorId = urlParams.get('id');
-
-    if (!authorId) {
-        document.body.innerHTML = "<h2>شناسه نویسنده مشخص نشده است!</h2>";
-        return;
-    }
-
+async function loadBooksForAuthor(authorId, token) {
     try {
-        const token = localStorage.getItem("access_token");
-        if (!token) {
-            alert("لطفاً وارد شوید.");
-            window.location.href = "login.html";
-            return;
-        }
-
-        const response = await fetch(`http://127.0.0.1:8000/authors/${authorId}/`, {
+        const booksResponse = await fetch("http://127.0.0.1:8000/books/", {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
         });
 
-        if (!response.ok) {
-            throw new Error(`خطا در دریافت اطلاعات: ${response.status}`);
+        if (!booksResponse.ok) {
+            throw new Error(`خطا در دریافت لیست کتاب‌ها: ${booksResponse.status}`);
         }
 
-        const result = await response.json();
-        const author = result.data;
-
-        document.getElementById('author-name').textContent = `${author.first_name} ${author.last_name}`;
-        document.getElementById('author-bio').textContent = author.biography || "بیوگرافی موجود نیست.";
-        document.getElementById('author-birth-date').textContent = author.birth_date || "نامشخص";
-        document.getElementById('author-birth-place').textContent = author.birth_place || "نامشخص";
-        document.getElementById('author-genres').textContent = author.genres.length > 0 ? author.genres.join(', ') : "مشخص نشده";
-        document.getElementById('author-awards').textContent = author.awards || "ندارد";
-
-
-
-        const profileImage = document.getElementById('author-image');
-        if (author.profile_picture) {
-            profileImage.src = author.profile_picture;
-            profileImage.style.display = 'block';
+        const books = await booksResponse.json();
+        if (!Array.isArray(books)) {
+            throw new Error("داده‌های دریافت‌شده معتبر نیستند.");
         }
 
-        // دریافت و نمایش کتاب‌های نویسنده
-        await loadAuthorBooks(authorId, token);
+        displayBooks(books, authorId);
     } catch (error) {
-        console.error("خطا در دریافت اطلاعات نویسنده:", error);
-        document.body.innerHTML = `<h2>خطا در دریافت اطلاعات: ${error.message}</h2>`;
+        console.error("خطا در دریافت کتاب‌ها:", error);
+        document.body.innerHTML += `<p class="error-message">${error.message}</p>`;
     }
 }
 
-loadAuthorData();
+function displayBooks(books, authorId) {
+    const container = document.querySelector('.books-container');
+    container.innerHTML = "";
 
+    const publisherFilter = document.getElementById('publisher').value;
+    const sortType = document.getElementById('sort').value;
 
+    let filteredBooks = books.filter(book => book.authors.some(author => Number(author.id) === Number(authorId)));
+    if (publisherFilter !== "none" && publisherFilter !== "all") {
+        filteredBooks = filteredBooks.filter(book => book.publisher.id == publisherFilter);
+    }
+
+    if (sortType === "cheap") {
+        filteredBooks.sort((a, b) => a.price - b.price);
+    } else if (sortType === "expensive") {
+        filteredBooks.sort((a, b) => b.price - a.price);
+    }
+
+    if (filteredBooks.length === 0) {
+        container.innerHTML = "<p>هیچ کتابی یافت نشد.</p>";
+    } else {
+        filteredBooks.forEach(book => {
+            const bookElement = document.createElement('div');
+            bookElement.classList.add('product-card');
+            bookElement.innerHTML = `
+                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
+                <p id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</p>
+                <p>${book.price} تومان</p>
+                <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+            `;
+            container.appendChild(bookElement);
+        });
+    }
+}
+
+document.getElementById('sort').addEventListener('change', () => loadBooksForAuthor(new URLSearchParams(window.location.search).get('id'), localStorage.getItem("access_token")));
+document.getElementById('publisher').addEventListener('change', () => loadBooksForAuthor(new URLSearchParams(window.location.search).get('id'), localStorage.getItem("access_token")));
 
 loadAuthorData();

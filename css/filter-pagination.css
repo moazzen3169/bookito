@@ -1,0 +1,101 @@
+
+
+.sort-container{
+font-family: modam;
+display: flex;
+align-items: center;
+justify-content: space-around;
+margin: 10px auto;
+background-color: #fff;
+max-width: 1300px;
+height: 50px;
+border-radius: 10px;
+direction: rtl;
+}
+
+.select-content{
+    margin-left: 450px;
+    font-size: 20px;
+    font-weight: 2;
+}
+
+.sort-container select{
+    font-family: modam;
+direction: ltr;
+width: 150px;
+height: 30px;
+gap: 20;
+text-align: center;
+padding: 2px;
+border-radius: 3px;
+cursor: pointer;
+border: 1px dashed #27272a;
+}
+
+
+
+.pagination{
+background-color: #fff;
+display: flex;
+align-items: center;
+justify-content: center;
+max-width: 1300px;
+height: 50px;
+margin: 10px auto;
+border-radius: 10px;
+gap: 10px;
+}
+
+.pagination button{
+padding: 5px;
+border: 1px dashed #27272a;
+border-radius: 5px;
+}
+
+.pagination button:hover{
+background-color: #27272a;
+color: #fff;
+border: 1px dashed #ffffff;
+
+}
+
+
+/* تنظیمات ریسپانسیو برای موبایل (عرض کمتر از 768px) */
+@media (max-width: 768px) {
+    .sort-container {
+        max-width: 90%;
+        padding:  10px;
+    }
+    .sort-container h3{
+        display: none;
+    }
+
+    .select-content {
+        font-size: 16px; /* تغییر اندازه فونت برای نمایش بهتر */
+        margin-left: 0; /* حذف فاصله سمت چپ */
+        font-weight: 500; /* تغییر وزن فونت */
+    }
+
+    .sort-container  {
+        width: 90%; /* عرض کامل */
+        font-size: 14px; /* کاهش اندازه فونت */
+    }
+
+    .pagination {
+        max-width: 90%;
+        justify-content: center;
+        padding: 10px ;
+    }
+
+    .pagination button {
+        padding: 10px;
+        font-family: modam;
+        color: #27272a;
+        font-size: 17px; /* کاهش اندازه فونت */
+    }
+
+    /* کاهش اندازه دکمه‌ها */
+    .pagination button {
+        scale: 0.8; /* کاهش اندازه دکمه‌ها */
+    }
+}

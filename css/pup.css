@@ -2,7 +2,6 @@
 body {
     font-family: modam;
     background-color: #e8e8e8;
-    height: 100vh; /* صفحه به طور کامل از نظر عمودی پر می‌شود */
     margin: 0;
     padding: 0;
 }
@@ -12,20 +11,17 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 1100px;
+    max-width: 1300px;
+    width: 100%;
     height: 100px;
     background-color: #ffffff;
     border-radius: 10px;
-    direction: ltr;
     margin: 10px auto;
-    padding: 20px;
+    padding: 20px 0;
 }
-/* بخش تصویر انتشارات */
+
 .publisher-image {
-    width: auto;
-    height: auto;
     padding: 5px;
-    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -43,40 +39,109 @@ body {
     border: 2px solid #000000;
 }
 
+/* تنظیمات برای کتاب‌ها */
+.books-container {
+    display: flex;
+    flex-wrap: wrap; /* جلوگیری از خروج آیتم‌ها از صفحه */
+    justify-content: center;
+    max-width: 1300px;
+    background-color: #fff;
+    width: 100%;
+    margin: 10px auto;
+    padding: 20px 0;
+    border-radius: 10px;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .publisher-container{
+        max-width: 90%;
+    }
+
+    .books-container {
+        gap: 10px;
+        max-width: 90%;
+    }
+
+    .product-card {
+        min-width: 160px;
+        max-width: 160px;
+        height: 310px;
+    }
+
+}
+
+/* برای نمایش در هر ردیف 2 کتاب در موبایل */
 @media (max-width: 480px) {
     .publisher-container {
-        width: 90%;
+        max-width: 90%;
         height: 100px;
         padding: 10px;
     }
-.publisher-image {
-    width: 95%;
-    height: 100px;
-}
 
-    .publisher-image img {
-        max-height: 50px;
-        max-width: 50px;
-        border-radius:10px ;
+    .publisher-image {
+        width: 80%;
+        height: auto;
     }
 
-}
+    .publisher-image img {
+        max-height: 70px;
+        max-width: 70px;
+        min-height: 70px;
+        min-width: 70px;
+        border-radius: 10px;
+    }
 
-@media (max-width: 760px) {
-    .publisher-container {
-        width: 90%;
-        height: 100px;
+    .books-container {
+        gap: 10px;
         padding: 10px;
     }
-.publisher-image {
-    width: 95%;
-    height: 100px;
-}
 
-    .publisher-image img {
-        max-height: 50px;
-        max-width: 50px;
-        border-radius:10px ;
+    .product-card {
+        min-width: 160px;
+        max-width: 160px;
+        height: 310px;
     }
-
 }
+
+/* استایل برای دکمه ها */
+.sort-container,
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px auto;
+    background-color: #fff;
+    max-width: 1300px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.sort-container select {
+    direction: ltr;
+    width: 200px;
+    text-align: center;
+    padding: 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    border: 1px dashed #27272a;
+    margin: 0px 20px;
+}
+
+/* تنظیمات برای دکمه های صفحه بندی */
+.pagination button {
+    padding: 5px;
+    border: 1px dashed #27272a;
+    border-radius: 5px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #27272a;
+    color: #fff;
+    border: 1px dashed #ffffff;
+}
+
+
+

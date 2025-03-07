@@ -1,0 +1,63 @@
+
+body{
+    font-family: modam;
+    padding: 0%;
+    margin: 0%  ;
+}
+
+.genre-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1300px;
+    height: 100px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    direction: ltr;
+    margin: 10px auto;
+    padding: 20px 0px;
+}
+
+
+
+.books-container {
+    display: flex;
+    flex-wrap: wrap; /* جلوگیری از خروج آیتم‌ها از صفحه */
+    align-items: center;
+    max-width: 1300px;
+    height: auto;
+    background-color: #fff;
+    justify-content: center;
+    margin: 10px auto;
+    padding: 20px 0px;
+    border-radius: 10px;
+    gap: 10px; /* فاصله بین کتاب‌ها */
+}
+.product-card{
+    border: 1px solid #303030;
+}
+
+
+@media (max-width: 768px) {
+    .books-container {
+        justify-content: center;
+        padding: 10px;
+        gap: 10px;
+        max-width: 90%;
+    }
+
+ 
+}
+
+
+@media (max-width: 760px) {
+    .genre-container {
+        width: 90%;
+        height: 100px;
+        padding: 10px;
+        text-align: center;
+
+    }
+
+
+}

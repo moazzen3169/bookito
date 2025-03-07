@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اطلاعات نویسنده</title>
     <link rel="stylesheet" href="css/author.css">
+    <link rel="stylesheet" href="css/product-cart.css">
+    <link rel="stylesheet" href="css/filter-pagination.css">
     <script src="header.js"></script>
 </head>
 <body>
@@ -28,11 +30,33 @@
 
     
 
+    <div class="sort-container">
+        <h3 class="select-content">کتاب های ژانر مورد علاقتون رو سریع پیدا کنید</h3>
+        <select id="sort">
+            <option value="newest">مرتب سازی</option>
+            <option value="cheap">ارزان‌ترین‌ها</option>
+            <option value="expensive">گران‌ترین‌ها</option>
+        </select>
     
-    <ul id="author-books-list"></ul>
+        <select id="publisher">
+            <option value="none">انتخاب انتشارات</option>
+            <option value="all">همه نشرها</option>
+        </select>
+    </div>
     
+    <div class="books-container">
+        <!-- داده‌های محصولات اینجا اضافه می‌شود -->
+    </div>
+    
+    <div class="pagination">
+        <button id="prevPage" disabled>صفحه قبل</button>
+        <span id="pageInfo">صفحه 1 از 1</span>
+        <button id="nextPage">صفحه بعد</button>
+    </div>
+
+
     <script src="js/author.js"></script>
-    
+
 
 
 </body>

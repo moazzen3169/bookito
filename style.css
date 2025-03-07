@@ -8,6 +8,8 @@ body {
     font-size: 14px;
     color: #000;
 }
+
+
 .headericon{
     height: 35px;
     gap: 0;
@@ -67,151 +69,6 @@ h1 {
 }
 
 
-
-
-footer {
-    background-color: #333;
-    color: #fff;
-    margin: 0%;
-    padding: 40px 0;
-    font-family:modam;
-    direction: rtl;
-}
-
-.footer-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-
-.footer-section {
-    flex: 1;
-    min-width: 200px;
-    margin: 0px;
-}
-
-.footer-section h2 {
-    font-size: 18px;
-    margin-bottom: 20px;
-}
-
-.footer-section p,
-.footer-section ul,
-.footer-section form {
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 10px;
-}
-
-.footer-section ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-section ul li a:hover {
-    color: #f0a500;
-}
-
-.footer-section form {
-    display: flex;
-}
-
-.footer-section input[type="email"] {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    border-radius: 0px 5px 5px 0 ;
-    outline: none;
-}
-
-.footer-section button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #f0a500;
-    color: #333;
-    border-radius:  5px  0px  0px 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.footer-section button:hover {
-    background-color: #d18e00;
-}
-
-.footer-bottom {
-    text-align: center;
-    padding: 20px 0;
-    border-top: 1px solid #444;
-    margin-top: 20px;
-}
-
-.footer-bottom p {
-    margin: 0;
-    font-size: 14px;
-}
-
-.footer-section .social-media ul {
-    display: flex;
-    justify-content: space-around;
-}
-
-.footer-section .social-media ul li {
-    margin: 0 10px;
-}
-
-.footer-section .social-media ul li a {
-    display: flex;
-    align-items: center;
-}
-
-.footer-section .social-media ul li a i {
-    margin-left: 8px;
-    font-size: 20px;
-}
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-    }
-    .footer-section {
-        margin: 10px 0;
-        text-align: center;
-    }
-}
-
-@media (max-width: 480px) {
-
-    #categories {
-        display: none;
-    }
-    #about{
-        display: none;
-
-    }
-
-}
-
-
-.footer-section h2 {
-    font-size: 1.2em;
-}
-.footer-section p,
-.footer-section ul,
-.footer-section form {
-    font-size: 1em;
-}
 
 
 .pricesdiscount{
@@ -274,7 +131,7 @@ footer {
     height: 400px;
     background-size: cover; /* یا contain */
     background-position: center;
-    background-image: url('../image/slide5.jpg');
+    background-image: url('../image/slide2.jpg');
 }
 
 
@@ -295,6 +152,7 @@ footer {
     justify-content: space-between;
     align-items: center;
     width: 97%;
+    max-width: 1500px;
     margin: 20px auto;
     direction: rtl;
 }

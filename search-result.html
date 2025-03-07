@@ -53,7 +53,7 @@
                 const productCard = `
                     <div class="product-card">
                         <img src="${product.cover_image}" alt="${product.title}">
-                        ${product.discount ? `<p id="discount">${product.discount} تومان</p>` : ''}
+                        ${product.discount ? `<p id="discount">${product.discount} %</p>` : ''}
                         <p>${product.price} تومان</p>
                         <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
                     </div>

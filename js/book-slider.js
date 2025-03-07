@@ -17,7 +17,7 @@ async function fetchBooks(sliderId) {
             productDiv.classList.add('product-card');
             productDiv.innerHTML = `
                 <img src="${product.cover_image}" alt="${product.title}" style="width: 100px; height: 150px;">
-                <p id="discount">${product.discount} تومان</p>
+                <p id="discount">${product.discount ? product.discount + " %" : "بوکیتو"}</p>
                 <p>${product.price} تومان</p>
                 <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
             `;

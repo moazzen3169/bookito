@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/genre.css">
+    <link rel="stylesheet" href="css/product-cart.css">
+    <link rel="stylesheet" href="css/filter-pagination.css">
+    
+    <script src="header.js"></script>
+    <title>اطلاعات ژانر</title>
+</head>
+<body>
+
+    <div class="genre-container">
+        <div class="genre-image">
+            <h2><span id="genre-name">در حال بارگذاری...</span></h2>
+        </div>
+    </div>
+
+    <div class="sort-container">
+        <h3 class="select-content">کتاب های ژانر مورد علاقتون رو سریع پیدا کنید</h3>
+        <select id="sort">
+            <option value="newest">مرتب سازی</option>
+            <option value="cheap">ارزان‌ترین‌ها</option>
+            <option value="expensive">گران‌ترین‌ها</option>
+        </select>
+    
+        <select id="publisher">
+            <option value="none">انتخاب انتشارات</option>
+            <option value="all">همه نشرها</option>
+        </select>
+    </div>
+    
+    <div class="books-container">
+        <!-- داده‌های محصولات اینجا اضافه می‌شود -->
+    </div>
+    
+    <div class="pagination">
+        <button id="prevPage" disabled>صفحه قبل</button>
+        <span id="pageInfo">صفحه 1 از 1</span>
+        <button id="nextPage">صفحه بعد</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const genreId = urlParams.get("id");
+            if (!genreId) {
+                document.body.innerHTML = "<h2>شناسه ژانر مشخص نشده است!</h2>";
+                return;
+            }
+
+            const token = localStorage.getItem("access_token");
+            if (!token) {
+                alert("لطفاً وارد شوید.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const booksApiUrl = "http://127.0.0.1:8000/books/";
+            const publishersApiUrl = "http://127.0.0.1:8000/publishers/";
+            let allBooks = [];
+            let filteredBooks = [];
+            let currentPage = 1;
+            const booksPerPage = 6;
+            
+            const booksContainer = document.querySelector(".books-container");
+            const sortSelect = document.getElementById("sort");
+            const publisherSelect = document.getElementById("publisher");
+            const prevPageBtn = document.getElementById("prevPage");
+            const nextPageBtn = document.getElementById("nextPage");
+            const pageInfo = document.getElementById("pageInfo");
+            
+            async function fetchBooks() {
+                try {
+                    const response = await fetch(booksApiUrl, {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    allBooks = await response.json();
+                    filteredBooks = allBooks.filter(book => 
+                        book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId))
+                    );
+                    renderBooks();
+                } catch (error) {
+                    console.error("❌ خطا در دریافت کتاب‌ها:", error);
+                }
+            }
+            
+            async function fetchPublishers() {
+                try {
+                    const response = await fetch(publishersApiUrl, {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
+                    const publishers = await response.json();
+                    publishers.forEach(publisher => {
+                        const option = document.createElement("option");
+                        option.value = publisher.id;
+                        option.textContent = publisher.name;
+                        publisherSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error("❌ خطا در دریافت ناشران:", error);
+                }
+            }
+            
+            function renderBooks() {
+                booksContainer.innerHTML = "";
+                const startIndex = (currentPage - 1) * booksPerPage;
+                const endIndex = startIndex + booksPerPage;
+                const booksToShow = filteredBooks.slice(startIndex, endIndex);
+    
+                booksToShow.forEach(book => {
+                    const bookCard = `
+                        <div class="product-card">
+                            <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
+                            <p id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</p>
+                            <p>${book.price} تومان</p>
+                            <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+                        </div>
+                    `;
+                    booksContainer.innerHTML += bookCard;
+                });
+    
+                updatePagination();
+            }
+            function filterBooks() {
+    const selectedPublisher = publisherSelect.value;
+    if (selectedPublisher === "all") {
+        // فیلتر بدون انتخاب ناشر خاص
+        filteredBooks = allBooks.filter(book => 
+            book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId))
+        );
+    } else {
+        // فیلتر با انتخاب ناشر خاص
+        filteredBooks = allBooks.filter(book => 
+            book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId)) &&
+            book.publisher && book.publisher.id == selectedPublisher
+        );
+    }
+    currentPage = 1; // صفحه به اول برگشت
+    sortBooks(); // بعد از فیلتر مرتب‌سازی هم انجام می‌شود
+}
+
+function sortBooks() {
+    const sortBy = sortSelect.value;
+    if (sortBy === "cheap") {
+        filteredBooks.sort((a, b) => a.price - b.price);
+    } else if (sortBy === "expensive") {
+        filteredBooks.sort((a, b) => b.price - a.price);
+    } else if (sortBy === "newest") {
+        filteredBooks.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+    renderBooks();
+}
+
+            
+            function updatePagination() {
+                const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+                pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === totalPages;
+            }
+            
+            function changePage(step) {
+                currentPage += step;
+                renderBooks();
+            }
+            
+            sortSelect.addEventListener("change", sortBooks);
+            publisherSelect.addEventListener("change", filterBooks);
+            prevPageBtn.addEventListener("click", () => changePage(-1));
+            nextPageBtn.addEventListener("click", () => changePage(1));
+            
+            await fetchPublishers();
+            await fetchBooks();
+        });
+    </script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const genreId = urlParams.get("id");
+    if (!genreId) {
+        document.body.innerHTML = "<h2>شناسه ژانر مشخص نشده است!</h2>";
+        return;
+    }
+
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+        alert("لطفاً وارد شوید.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    const genreApiUrl = `http://127.0.0.1:8000/genres/${genreId}/`; // آدرس API برای گرفتن اطلاعات ژانر
+    const genreNameElement = document.getElementById("genre-name");
+
+    try {
+        // گرفتن اطلاعات ژانر
+        const response = await fetch(genreApiUrl, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error("اطلاعات ژانر بارگذاری نشد.");
+        }
+
+        const genre = await response.json();
+        genreNameElement.textContent = genre.name; // نمایش نام ژانر در صفحه
+
+    } catch (error) {
+        genreNameElement.textContent = "خطا در بارگذاری نام ژانر"; // در صورت بروز خطا
+        console.error("❌ خطا در بارگذاری اطلاعات ژانر:", error);
+    }
+});
+
+</script>
+</body>
+
+<script src="footer.js"></script>
+</html> 

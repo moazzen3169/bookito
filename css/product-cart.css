@@ -1,5 +1,12 @@
 
 /* استایل‌های اصلی */
+
+body{
+    background-color: #e8e8e8;
+    padding: 0%;
+    margin: 0%;
+}
+
 .slider-container {
     font-family: modam;
     position: relative;
@@ -21,6 +28,7 @@
     user-select: none;
     padding: 10px;
     width: 100%;
+    max-width: 1500px;
     height: auto;
     direction: rtl;
 
@@ -29,7 +37,7 @@
 .product-card {
     min-width: 160px;
     max-width: 160px;
-    height: 320px;
+    height: 300px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -58,9 +66,10 @@
 }
 
 .product-card p {
-    font-size: 12px;
+    font-size: 14px;
     color: #555;
     margin: 2px 0;
+    text-align: left;
 }
 
 .view-details {
@@ -79,44 +88,22 @@
     background-color: #313131;
 }
 
-#discount {
-    text-decoration: line-through;
+ #discount {
+    padding: 2px;
+    background-color: #27272a;
+    color: #fff;
+    max-width: 38px;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 2px;
+    direction: rtl;
+    float: right;
+
 }
 
 .slider::-webkit-scrollbar {
     display: none;
 }
-
-.nav-btn {
-
-    margin: 10px;
-    padding: 10px;
-    border: none;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-
-    }
-
-/* دکمه‌ها را خارج از اسلایدر قرار می‌دهیم */
-.prev-btn {
-left: 0;
-}
-
-.next-btn {
-right: 0;
-}
-
-
-
-@media (max-width:480px){
-    .nav-btn {
-        display: none
-    }
-}
-
-
-
 
 .search-show{
     display: grid;

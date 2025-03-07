@@ -8,7 +8,7 @@ body {
 
 /* هدر */
 .header {
-    background: #efefef;
+    background: #fff;
     color: #070707;
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@ body {
     top: 50px;
     z-index: 1000;
     margin: 10px auto;
-    background-color: #efefef;
+    background-color: #fff;
     direction: ltr;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border-left: none;
@@ -81,6 +81,7 @@ body {
 #searchBtn{
     cursor: pointer;
     border: none;
+    background-color: #ffffff00;
 }
 
 
@@ -94,7 +95,7 @@ body {
     right: -250px;
     width: 250px;
     height: 100%;
-    background: #efefef;
+    background: #fff;
     transition: 0.3s;
     padding-top: 20px;
     z-index: 1001;

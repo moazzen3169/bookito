@@ -1,163 +1,129 @@
+<footer>
+    <div class="footer-container">
+        <div class="section1">
+            <div class="content">
+                <div class="titr">درباره بوکیتو</div>
+
+                <p>
+                    بوکیتو، فراتر از یک کتاب‌فروشی است که دنیایی از دانش، داستان و خلاقیت را در اختیار شما قرار می‌دهد. از جدیدترین رمان‌ها تا منابع تخصصی، همه را با بهترین تجربه خرید آنلاین فراهم کرده‌ایم.
+                    بوکیتو با ارسال سریع، تخفیف‌های ویژه و مجموعه‌ای بی‌نظیر از کتاب‌ها، مسیر یادگیری و لذت مطالعه را برای شما هموار کرده است.
+    
+                </p>
+            </div>
+            <div class="sociyal-mediya">
+                <div class="titr">مارا در اینستاگرام دنبال کنید</div>
+                <br>
+                <div class="instagram-acounts"><a href="#">@bookito_</a></div>
+                <div class="instagram-acounts"><a href="#">@bookito.o</a></div>
+            </div>
+            <div class="mojavez"><img src="image/mojavex.jpg" alt="مجوز" width="180px" height="250px"></div>    
+        </div>
+        <div class="section2">
+                <p>+98 9911631448</p>
+                <p>همه اطلاعات در بوکیتو محفوظ است</p>
+                <p>moazzen3169@gmail.com</p>
+        </div>
+
+    </div>
+</footer>
+
 
 
 <style>
-    /* استایل کلی فوتر */
+
 footer {
-    background-color: #222;
-    color: #fff;
-    padding: 20px 0;
-    font-family: modam;
+    background-color: #fff;
 }
 
 .footer-container {
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    background-color: #fff;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
+    margin: 10px auto;
 }
 
-.footer-section {
-    flex: 1;
-    min-width: 250px;
-    margin: 10px;
-}
-
-.footer-section h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #ffcc00;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin: 10px 0;
-}
-
-.footer-section ul li a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.footer-section ul li a:hover {
-    color: #ffcc00;
-}
-
-/* استایل بخش تماس و شبکه‌های اجتماعی */
-.footer-section.contact-us ul li,
-.footer-section.social-media ul li {
+.section1, .section2 {
+    width: 100%;
+    max-width: 1300px;
+    direction: rtl;
     display: flex;
     align-items: center;
-}
-
-.footer-section.social-media ul li i {
-    margin-left: 8px;
-    font-size: 18px;
-}
-
-/* استایل بخش خبرنامه */
-.footer-section.newsletter input {
-    width: 80%;
-    padding: 8px;
-    border: none;
-    border-radius: 5px;
-}
-
-.footer-section.newsletter button {
-    padding: 8px 15px;
-    border: none;
-    background-color: #ffcc00;
-    color: #222;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-.footer-section.newsletter button:hover {
-    background-color: #e6b800;
-}
-
-/* استایل بخش پایانی فوتر */
-.footer-bottom {
-    text-align: center;
+    justify-content: space-between;
     padding: 10px;
-    background-color: #111;
-    font-size: 14px;
+    flex-wrap: wrap;
 }
 
-/* استایل ریسپانسیو */
-@media (max-width: 768px) {
-    .footer-container {
+.mojavez {
+    border: 1px solid #000;
+    padding: 5px;
+}
+
+.content {
+    max-width: 350px;
+    height: auto;
+}
+
+.titr {
+    font-size: 20px;
+    border-bottom: 2px solid #313131;
+    padding-bottom: 10px;
+    font-weight: bold;
+    color: #313131;
+}
+
+.sociyal-mediya {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    direction: ltr;
+    gap: 10px;
+    margin-top: -50px;
+
+}
+
+
+.instagram-acounts{
+    padding: 3px;
+    background-color: #313131;
+    min-width: 220px;
+    text-align: center;
+
+}
+.instagram-acounts a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+@media (max-width: 760px) {
+    .section1, .section2 {
+        display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
     }
-    .footer-section {
-        width: 100%;
+
+    .content {
+        margin-bottom: 20px;
     }
-    .footer-section.newsletter input {
-        width: 100%;
+    .sociyal-mediya{
+        margin: 0% 0px 50px 0px;
+    }
+
+    .mojavez img {
+        width: 100px;
+        height: auto;
+        margin: 10px auto;
     }
 }
+
+
+
 </style>
-
-
-<footer>
-    <div class="footer-container">
-        <!-- بخش درباره ما -->
-        <div class="footer-section about-us">
-            <h2>درباره ما</h2>
-            <p>کتاب‌فروشی ما با هدف ترویج فرهنگ کتاب‌خوانی و ارائه بهترین کتاب‌ها در زمینه‌های مختلف فعالیت می‌کند.</p>
-        </div>
-        <!-- بخش دسته‌بندی‌ها -->
-        <div class="footer-section categories">
-            <h2>دسته‌بندی‌ها</h2>
-            <ul>
-                <li><a href="#">ادبیات</a></li>
-                <li><a href="#">تاریخ</a></li>
-                <li><a href="#">علمی</a></li>
-                <li><a href="#">فلسفه</a></li>
-                <li><a href="#">هنر</a></li>
-            </ul>
-        </div>
-        <!-- بخش تماس با ما -->
-        <div class="footer-section contact-us">
-            <h2>تماس با ما</h2>
-            <ul>
-                <li>تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</li>
-                <li>ایمیل: info@bookstore.com</li>
-                <li>آدرس: تهران، خیابان مثال، پلاک ۱۲۳</li>
-            </ul>
-        </div>
-        <!-- بخش شبکه‌های اجتماعی -->
-        <div class="footer-section social-media">
-            <h2>ما را دنبال کنید</h2>
-            <ul>
-                <li><a href="#"><i class="fab fa-instagram"></i> اینستاگرام</a></li>
-                <li><a href="#"><i class="fab fa-telegram"></i> تلگرام</a></li>
-                <li><a href="#"><i class="fab fa-twitter"></i> توییتر</a></li>
-                <li><a href="#"><i class="fab fa-facebook"></i> فیسبوک</a></li>
-            </ul>
-        </div>
-        <!-- بخش خبرنامه -->
-        <div class="footer-section newsletter">
-            <h2>عضویت در خبرنامه</h2>
-            <form action="#" method="post">
-                <input type="email" name="email" placeholder="ایمیل خود را وارد کنید">
-                <button type="submit">ثبت‌نام</button>
-            </form>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>&copy; ۲۰۲۵ کتاب‌فروشی ما. تمامی حقوق محفوظ است.</p>
-    </div>
-</footer>
