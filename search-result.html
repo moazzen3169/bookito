@@ -51,13 +51,17 @@
         if (foundBooks.length > 0) {
             foundBooks.forEach(product => {
                 const productCard = `
-                    <div class="product-card">
-                        <img src="${product.cover_image}" alt="${product.title}">
-                        ${product.discount ? `<p id="discount">${product.discount} %</p>` : ''}
-                        <p>${product.price} تومان</p>
-                        <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
-                    </div>
-                `;
+    <div class="product-card">
+        <img src="${product.cover_image}" alt="${product.title}" class="product-image">
+        <div class="product-info">
+            <p> ${product.title} </p>
+            ${product.discount ? `<span id="discount">${product.discount} %</span>` : ''}
+            <p>قیمت: ${product.price} تومان</p>
+            <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
+        </div>
+    </div>
+`;
+
                 searchShow.innerHTML += productCard;
             });
         } else {
@@ -85,4 +89,15 @@
     <div class="search-show" id="searchShow"></div>
     <script src="js/search-result.js"></script>
 </body>
+
+
+<style>
+     .search-show h3{
+        text-align: center;
+        direction: rtl;
+        color: rgb(0, 0, 0);
+        padding-bottom: 10px;
+        border-bottom: 1px solid #000;
+    }
+</style>
 </html>

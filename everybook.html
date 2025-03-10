@@ -29,8 +29,6 @@
         </select>
     
         <select id="publisher">
-            <option value="none">انتخاب انتشارات</option>
-            <option value="all">همه نشرها</option>
         </select>
     </div>
     
@@ -45,123 +43,156 @@
     </div>
     
     <script>
-        document.addEventListener("DOMContentLoaded", async function () {
-            const booksApiUrl = "http://127.0.0.1:8000/books/";  
-            const publishersApiUrl = "http://127.0.0.1:8000/publishers/";  
-            const booksContainer = document.querySelector(".books-container");
-            const sortSelect = document.getElementById("sort");
-            const publisherSelect = document.getElementById("publisher");
-            const prevPageBtn = document.getElementById("prevPage");
-            const nextPageBtn = document.getElementById("nextPage");
-            const pageInfo = document.getElementById("pageInfo");
-    
-            let allBooks = [];  
-            let filteredBooks = [];  
-            let publishers = [];  
-            let currentPage = 1;  
-            const booksPerPage = 6;  
-    
-            // دریافت کتاب‌ها
-            async function fetchBooks() {
-                try {
-                    const response = await fetch(booksApiUrl);
-                    allBooks = await response.json();
-                    filteredBooks = [...allBooks]; 
-                    renderBooks();
-                } catch (error) {
-                    console.error("❌ خطا در دریافت کتاب‌ها:", error);
+   document.addEventListener("DOMContentLoaded", async function () {
+    const booksApiUrl = "http://127.0.0.1:8000/books/";  
+    const publishersApiUrl = "http://127.0.0.1:8000/publishers/";  
+    const token = localStorage.getItem("access_token");  // توکن برای احراز هویت
+    const booksContainer = document.querySelector(".books-container");
+    const sortSelect = document.getElementById("sort");
+    const publisherSelect = document.getElementById("publisher");
+    const prevPageBtn = document.getElementById("prevPage");
+    const nextPageBtn = document.getElementById("nextPage");
+    const pageInfo = document.getElementById("pageInfo");
+
+    let allBooks = [];  
+    let filteredBooks = [];  
+    let publishers = [];  
+    let currentPage = 1;  
+    const booksPerPage = 6;
+
+    // اگر توکن موجود نیست، کاربر را به صفحه ورود هدایت کن
+    if (!token) {
+        alert("لطفاً وارد شوید.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    // دریافت کتاب‌ها
+    async function fetchBooks() {
+        try {
+            const response = await fetch(booksApiUrl, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
                 }
-            }
-    
-            // دریافت ناشران
-            async function fetchPublishers() {
-                try {
-                    const response = await fetch(publishersApiUrl);
-                    publishers = await response.json();
-    
-                    publishers.forEach(publisher => {
-                        const option = document.createElement("option");
-                        option.value = publisher.id;
-                        option.textContent = publisher.name;
-                        publisherSelect.appendChild(option);
-                    });
-                } catch (error) {
-                    console.error("❌ خطا در دریافت ناشران:", error);
+            });
+            if (!response.ok) throw new Error(`Error fetching books: ${response.status}`);
+            allBooks = await response.json();
+            filteredBooks = [...allBooks];  // برای فیلترهای بعدی، یک نسخه از تمام کتاب‌ها ذخیره می‌شود
+            renderBooks();
+        } catch (error) {
+            console.error("❌ خطا در دریافت کتاب‌ها:", error);
+        }
+    }
+
+    // دریافت ناشران
+    async function fetchPublishers() {
+        try {
+            const response = await fetch(publishersApiUrl, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
                 }
-            }
-    
-            // نمایش کتاب‌ها با صفحه‌بندی
-            function renderBooks() {
-                booksContainer.innerHTML = "";  
-                const startIndex = (currentPage - 1) * booksPerPage;
-                const endIndex = startIndex + booksPerPage;
-                const booksToShow = filteredBooks.slice(startIndex, endIndex);
-    
-                booksToShow.forEach(book => {
-                    const bookCard = `
-                        <div class="product-card">
-                            <img src="${book.cover_image}" alt="${book.title}">
-                            <p id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</p>
-                            <p>${book.price} تومان</p>
-                            <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
-                        </div>
-                    `;
-                    booksContainer.innerHTML += bookCard;
-                });
-    
-                updatePagination();
-            }
-    
-            // فیلتر کردن کتاب‌ها بر اساس ناشر
-            function filterBooks() {
-                const selectedPublisher = publisherSelect.value;
-                if (selectedPublisher === "all") {
-                    filteredBooks = [...allBooks];
-                } else {
-                    filteredBooks = allBooks.filter(book => book.publisher.id == selectedPublisher);
-                }
-                currentPage = 1;  
-                sortBooks();
-            }
-    
-            // مرتب‌سازی کتاب‌ها
-            function sortBooks() {
-                const sortBy = sortSelect.value;
-                if (sortBy === "cheap") {
-                    filteredBooks.sort((a, b) => a.price - b.price);
-                } else if (sortBy === "expensive") {
-                    filteredBooks.sort((a, b) => b.price - a.price);
-                } else if (sortBy === "newest") {
-                    filteredBooks.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-                }
-                renderBooks();
-            }
-    
-            // به‌روزرسانی وضعیت صفحه‌بندی
-            function updatePagination() {
-                const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
-                pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
-    
-                prevPageBtn.disabled = currentPage === 1;
-                nextPageBtn.disabled = currentPage === totalPages;
-            }
-    
-            // تغییر صفحه
-            function changePage(step) {
-                currentPage += step;
-                renderBooks();
-            }
-    
-            // افزودن Event Listener برای فیلتر، مرتب‌سازی و صفحه‌بندی
-            sortSelect.addEventListener("change", sortBooks);
-            publisherSelect.addEventListener("change", filterBooks);
-            prevPageBtn.addEventListener("click", () => changePage(-1));
-            nextPageBtn.addEventListener("click", () => changePage(1));
-    
-            // اجرای درخواست‌ها
-            await fetchPublishers();
-            await fetchBooks();
+            });
+            if (!response.ok) throw new Error(`Error fetching publishers: ${response.status}`);
+            publishers = await response.json();
+
+            const fragment = document.createDocumentFragment();
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "all";
+            defaultOption.textContent = "انتخاب انتشارات";
+            fragment.appendChild(defaultOption);
+
+            publishers.forEach(publisher => {
+                const option = document.createElement("option");
+                option.value = publisher.id;
+                option.textContent = publisher.name;
+                fragment.appendChild(option);
+            });
+
+            publisherSelect.appendChild(fragment);
+        } catch (error) {
+            console.error("❌ خطا در دریافت ناشران:", error);
+        }
+    }
+
+    // نمایش کتاب‌ها با صفحه‌بندی
+    function renderBooks() {
+        booksContainer.innerHTML = "";  
+        const startIndex = (currentPage - 1) * booksPerPage;
+        const endIndex = startIndex + booksPerPage;
+        const booksToShow = filteredBooks.slice(startIndex, endIndex);
+
+        const fragment = document.createDocumentFragment();
+        booksToShow.forEach(book => {
+            const bookCard = document.createElement("div");
+bookCard.classList.add("product-card");
+bookCard.innerHTML = `
+    <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
+    <div class="product-info">
+        <p>${book.title}</p>
+        ${book.discount ? `<span id="discount">${book.discount} %</span>` : ''}
+        <p>قیمت: ${book.price} تومان</p>
+        <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+    </div>
+`;
+
+            fragment.appendChild(bookCard);
         });
+
+        booksContainer.appendChild(fragment);
+        updatePagination();
+    }
+
+    // فیلتر کردن کتاب‌ها بر اساس ناشر
+    function filterBooks() {
+        const selectedPublisher = publisherSelect.value;
+        filteredBooks = selectedPublisher === "all"
+            ? [...allBooks]
+            : allBooks.filter(book => book.publisher.id == selectedPublisher);
+        currentPage = 1;  // پس از تغییر فیلتر به صفحه اول برمی‌گردیم
+        sortBooks();
+    }
+
+    // مرتب‌سازی کتاب‌ها
+    function sortBooks() {
+        const sortBy = sortSelect.value;
+        filteredBooks.sort((a, b) => {
+            if (sortBy === "cheap") return a.price - b.price;
+            if (sortBy === "expensive") return b.price - a.price;
+            if (sortBy === "newest") return new Date(b.created_at) - new Date(a.created_at);
+            return 0;
+        });
+        renderBooks();
+    }
+
+    // به‌روزرسانی وضعیت صفحه‌بندی
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+        pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
+
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+    }
+
+    // تغییر صفحه
+    function changePage(step) {
+        currentPage += step;
+        renderBooks();
+    }
+
+    // افزودن Event Listener برای فیلتر، مرتب‌سازی و صفحه‌بندی
+    sortSelect.addEventListener("change", sortBooks);
+    publisherSelect.addEventListener("change", filterBooks);
+    prevPageBtn.addEventListener("click", () => changePage(-1));
+    nextPageBtn.addEventListener("click", () => changePage(1));
+
+    // اجرای درخواست‌ها
+    await fetchPublishers();
+    await fetchBooks();
+});
+
+
     </script>
     
     

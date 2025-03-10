@@ -10,16 +10,18 @@ async function fetchBooks(sliderId) {
 
         // دو برابر کردن لیست کتاب‌ها برای ایجاد افکت بی‌نهایت
         let repeatedBooks = [...books, ...books];
-
         slider.innerHTML = '';
         repeatedBooks.forEach(product => {
             let productDiv = document.createElement('div');
             productDiv.classList.add('product-card');
             productDiv.innerHTML = `
-                <img src="${product.cover_image}" alt="${product.title}" style="width: 100px; height: 150px;">
-                <p id="discount">${product.discount ? product.discount + " %" : "بوکیتو"}</p>
-                <p>${product.price} تومان</p>
-                <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
+                <img src="${product.cover_image}" alt="${product.title}" class="product-image">
+                <div class="product-info">
+                    <p>${product.title}</p>
+                    <span id="discount">${product.discount ? product.discount + " %" : "بوکیتو"}</span>
+                    <p>قیمت: ${product.price} تومان</p>
+                    <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
+                </div>
             `;
             slider.appendChild(productDiv);
         });

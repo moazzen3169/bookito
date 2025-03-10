@@ -128,13 +128,17 @@ function displayBooks(books, authorId) {
             const bookElement = document.createElement('div');
             bookElement.classList.add('product-card');
             bookElement.innerHTML = `
-                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
-                <p id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</p>
-                <p>${book.price} تومان</p>
-                <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
+                <div class="product-info">
+                    <p>${book.title}</p>
+                    <span id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</span>
+                    <p>قیمت: ${book.price} تومان</p>
+                    <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+                </div>
             `;
             container.appendChild(bookElement);
         });
+        
     }
 }
 

@@ -74,13 +74,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         booksToShow.forEach(book => {
             const bookCard = `
-                <div class="product-card">
-                    <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
-                    <p id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</p>
-                    <p>${book.price} تومان</p>
+            <div class="product-card">
+                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
+                <div class="product-info">
+                    <p>${book.title}</p>
+                    <span id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</span>
+                    <p>قیمت: ${book.price} تومان</p>
                     <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
                 </div>
-            `;
+            </div>
+        `;
+        
             booksContainer.innerHTML += bookCard;
         });
 
