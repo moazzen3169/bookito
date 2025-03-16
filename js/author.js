@@ -9,19 +9,14 @@ async function loadAuthorData() {
 
     try {
         const token = localStorage.getItem("access_token");
-        if (!token) {
-            alert("لطفاً وارد شوید.");
-            window.location.href = "login.html";
-            return;
-        }
 
         // دریافت اطلاعات نویسنده
-        const response = await fetch(`http://127.0.0.1:8000/authors/${encodeURIComponent(authorId)}/`, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(`http://127.0.0.1:8000/authors/${encodeURIComponent(authorId)}/`, { headers });
 
         if (!response.ok) {
             throw new Error(`خطا در دریافت اطلاعات: ${response.status}`);
@@ -54,12 +49,12 @@ async function loadAuthorData() {
 
 async function loadPublishers(token) {
     try {
-        const response = await fetch("http://127.0.0.1:8000/publishers/", {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const response = await fetch("http://127.0.0.1:8000/publishers/", { headers });
 
         if (!response.ok) {
             throw new Error(`خطا در دریافت لیست انتشارات: ${response.status}`);
@@ -80,12 +75,12 @@ async function loadPublishers(token) {
 
 async function loadBooksForAuthor(authorId, token) {
     try {
-        const booksResponse = await fetch("http://127.0.0.1:8000/books/", {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
+        const headers = { "Content-Type": "application/json" };
+        if (token) {
+            headers["Authorization"] = `Bearer ${token}`;
+        }
+
+        const booksResponse = await fetch("http://127.0.0.1:8000/books/", { headers });
 
         if (!booksResponse.ok) {
             throw new Error(`خطا در دریافت لیست کتاب‌ها: ${booksResponse.status}`);
@@ -138,7 +133,6 @@ function displayBooks(books, authorId) {
             `;
             container.appendChild(bookElement);
         });
-        
     }
 }
 

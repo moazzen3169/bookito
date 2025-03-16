@@ -1,0 +1,295 @@
+/* تنظیمات پایه برای بدنه صفحه */
+.page-body {
+    background-color: #e8e8e8;
+    font-family: modam, sans-serif;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  
+  }
+  
+  /* استایل کانتینر اصلی جزئیات کتاب */
+  .book-detail-container {
+    max-width: 1024px; /* معادل max-w-4xl در Tailwind */
+    width: 100%;
+    padding: 1.5rem; /* معادل p-6 */
+    background-color: #ffffff;
+    border-radius: 0.5rem; /* معادل rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0 1rem; /* معادل mx-4 */
+    margin: 10px auto;
+    direction: rtl;
+  }
+  
+  /* استایل خطا */
+  .error-text {
+    color: #e3342f;
+    text-align: center;
+  }
+  
+  /* ساختار فلکسی برای جزئیات کتاب */
+  .book-detail-flex {
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: column;
+    background-color: #556d97;
+    padding: 20px;
+    border-radius: 10px;
+
+  }
+  
+  @media (min-width: 768px) {
+    .book-detail-flex {
+      flex-direction: row;
+    }
+  }
+  
+  /* استایل بخش تصویر کتاب */
+  .book-image-container {
+    width: 100%;
+    max-width: 33.33%; /* برای دسکتاپ: یک‌سوم عرض */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .book-image-container img{
+    border-radius: 0%;
+    
+  }
+
+
+  .book-image-container {
+    perspective: 350px; /* مقدار پرسپکتیو را تنظیم کنید */
+  }
+  
+  .book-image-container img {
+    transform: rotateY(-20deg); /* چرخش در محور Y برای ایجاد عمق */
+    transition: transform 0.5s ease;
+  }
+  
+  .book-image-container img:hover {
+    transform: rotateY(0deg); /* هنگام هاور شدن تصویر را به حالت عادی برگردانید */
+  }
+  
+
+
+  @media (max-width:480px) {
+    .book-image-container {
+      perspective: 0px; /* مقدار پرسپکتیو را تنظیم کنید */
+    }
+    
+    .book-image-container img {
+      transform: rotateY(0deg); /* چرخش در محور Y برای ایجاد عمق */
+    }
+    
+    .book-image-container img:hover {
+      transform: rotateY(0deg); /* هنگام هاور شدن تصویر را به حالت عادی برگردانید */
+    }
+
+
+
+  }
+
+  
+  .book-image {
+    width: 220px; /* معادل w-48 */
+    height: auto;
+    border-radius: 0; /* rounded-lg */
+    
+  }
+  
+  /* استایل بخش اطلاعات کتاب */
+  .book-info-container {
+    width: 100%;
+    max-width: 66.66%; /* برای دسکتاپ: دو‌سوم عرض */
+    margin-top: 2rem;
+  }
+  
+  .book-title {
+    font-size: 1.5rem; /* معادل text-2xl */
+    font-weight: bold;
+    color: #ffffff; /* معادل text-gray-800 */
+    margin-top: 20px;
+  }
+  
+  .book-info {
+    color: #e6e6e6; /* معادل text-gray-600 */
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: thin;
+  }
+  
+  .book-price {
+    color: #bed6ff; /* معادل text-green-600 */
+    font-weight: bold;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  .book-rating {
+    color: #d69e2e; /* معادل text-yellow-500 */
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  /* استایل دکمه خرید */
+  .buy-button {
+    width: 180px;
+    height: 40px;
+    background-color: #e8e8e8;
+    color: #556d97;
+    font-family: modam, sans-serif;
+    padding: 5px 10px;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+    border-radius: 0.3125rem; /* معادل rounded */
+    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .buy-button:hover {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #e8e8e8;
+    scale: 1.1;
+  }
+  
+  /* استایل بخش توضیحات کتاب */
+  .book-description {
+    margin-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 1rem;
+  }
+  
+  .description-title {
+    font-size: 1.125rem; /* معادل text-lg */
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description-text {
+    color: #4a5568; /* معادل text-gray-700 */
+    font-size: 1rem;
+  }
+  
+  /* استایل لینک بازگشت */
+  .back-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    color: #3182ce; /* معادل text-blue-600 */
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .back-link:hover {
+    color: #2b6cb0; /* معادل hover:text-blue-800 */
+  }
+  
+  /* تنظیمات اضافی برای موبایل */
+  @media (max-width: 767px) {
+    /* در موبایل، تصویر کامل عرض شود */
+    .book-image-container {
+      max-width: 100%;
+    }
+    
+    .book-image {
+      width: 30%;
+      border-radius: 0; /* در صورت تمایل، می‌توانید حاشیه‌های گرد را حذف کنید */
+  
+    }
+  
+    @media (max-width: 480px) {
+    /* در موبایل، تصویر کامل عرض شود */
+    .book-image-container {
+      max-width: 100%;
+    }
+    
+    .book-image {
+      width: 70%;
+      border-radius: 0; /* در صورت تمایل، می‌توانید حاشیه‌های گرد را حذف کنید */
+
+    }
+    .buy-button {
+    width: 90%;
+    background-color: #3f74d0;
+    color: #e8e8e8;
+  
+  }
+    
+    /* فاصله‌های اضافی برای بخش اطلاعات کتاب */
+    .book-info-container {
+      position: fixed;
+      bottom: 0px;
+      min-width: 100%;
+      padding:  20px;
+      text-align: right;
+      margin: 10px auto;
+
+    }
+
+
+    .book-info-container{
+      width: 500px;
+      border-top-left-radius: 50px;
+      border-top-right-radius: 50px;
+      background-color: #556d97;
+      padding-right: 50px;
+      margin: 0px;
+      box-shadow: -20px 0px 100px rgb(255, 255, 255);
+
+    }
+    
+    .book-title {
+      text-align: center;
+      color: #ffffff;
+      margin-left: 20px;
+  
+    }
+
+
+    .book-detail-flex {
+      background-color: #ffffff00;
+    }
+
+  }
+  }
+  
+  
+    /* استایل اصلی برای پیام تمام‌صفحه */
+    #fullscreen-toast {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #556d97f2; /* سبز برای موفقیت */
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease-in-out;
+  }
+
+  #fullscreen-toast.error {
+      background: rgba(200, 0, 0, 0.95); /* قرمز برای خطا */
+  }
+
+  /* نمایش پیام */
+  .show-toast {
+      opacity: 1 !important;
+      visibility: visible !important;
+  }
+
+  /* مخفی کردن پیام */
+  .hide-toast {
+      opacity: 0 !important;
+  }  
+

@@ -7,11 +7,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     const token = localStorage.getItem("access_token");
-    if (!token) {
-        alert("لطفاً وارد شوید.");
-        window.location.href = "login.html";
-        return;
-    }
 
     const booksApiUrl = `http://127.0.0.1:8000/books/`;
     const translatorApiUrl = `http://127.0.0.1:8000/translators/translator/${translatorId}/`;
@@ -36,12 +31,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Fetch translator data (name, bio, languages, etc.)
     async function fetchTranslator() {
         try {
-            const response = await fetch(translatorApiUrl, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            const headers = {
+                "Content-Type": "application/json"
+            };
+
+            // اگر توکن موجود باشد، به هدر اضافه می‌شود
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(translatorApiUrl, { headers });
             const translator = await response.json();
             const data = translator.data;
             translatorNameElement.textContent = `${data.first_name} ${data.last_name}`;
@@ -62,12 +61,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Fetch all books and filter them by translator
     async function fetchBooks() {
         try {
-            const response = await fetch(booksApiUrl, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            const headers = {
+                "Content-Type": "application/json"
+            };
+
+            // اگر توکن موجود باشد، به هدر اضافه می‌شود
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(booksApiUrl, { headers });
             allBooks = await response.json();
             filteredBooks = allBooks.filter(book =>
                 book.translators && book.translators.some(translator => translator.id === Number(translatorId))
@@ -81,12 +84,16 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Fetch publishers and populate the select dropdown
     async function fetchPublishers() {
         try {
-            const response = await fetch(publishersApiUrl, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+            const headers = {
+                "Content-Type": "application/json"
+            };
+
+            // اگر توکن موجود باشد، به هدر اضافه می‌شود
+            if (token) {
+                headers["Authorization"] = `Bearer ${token}`;
+            }
+
+            const response = await fetch(publishersApiUrl, { headers });
             const publishers = await response.json();
             populatePublisherSelect(publishers);
         } catch (error) {

@@ -2,7 +2,6 @@
 /* استایل‌های اصلی */
 
 body{
-    background-color: #e8e8e8;
     padding: 0%;
     margin: 0%;
 }
@@ -10,29 +9,38 @@ body{
 .slider-container {
     font-family: modam;
     position: relative;
-    width: 95%;
+    width: 92%;
+    max-width: 1500px;
     height: auto;
     margin: 20px auto;
     overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
+    padding: 30px 10px;
+    background-color: #6d8dc4;
+    border-radius: 10px;
 }
 
 .slider {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     align-items: center;
     justify-content: center;
     overflow-x: scroll;
     user-select: none;
-    padding: 10px;
+    padding: 10px 20px;
     width: 100%;
     max-width: 1500px;
     height: auto;
     direction: rtl;
 
 }
+
+.slider::-webkit-scrollbar {
+    display: none; /* حذف اسکرول در کروم، سافاری و سایر مرورگرهای مبتنی بر وب‌کیت */
+}
+
 
 .books-container {
     display: flex;
@@ -86,7 +94,7 @@ body{
     bottom: 0;
     left: 0;
     width: 90%;
-    background: rgba(255, 255, 255, 0.9);
+    background: #fffffffc;
     padding: 10px;
     text-align: center;
     transform: translateY(100%);
@@ -107,7 +115,7 @@ body{
 
 .view-details {
     display: block;
-    background-color: #5bab55;
+    background-color: #6d8dc4;
     color: #fff;
     text-decoration: none;
     font-size: 12px;
@@ -118,7 +126,7 @@ body{
 }
 
 .view-details:hover {
-    background-color: #313131;
+    background-color: #475b7d;
 }
 
 
@@ -134,4 +142,10 @@ body{
 .search-show h3{
     color: #313131;
 
+}
+
+@media (max-width:480px) {
+    .slider-container{
+        max-width: 90%;
+    }
 }

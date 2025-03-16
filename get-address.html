@@ -3,28 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دریافت لیست استان‌ها و شهرها</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; direction: rtl; }
-        label { font-size: 16px; margin-top: 10px; display: block; }
-        select, input { width: 200px; padding: 5px; margin: 10px; }
-    </style>
+    <title>دریافت لیست استان‌ها و شهرها</title><link rel="stylesheet" href="css/get-address.css">
+    <script src="header.js"></script>
 </head>
 <body>
+    <div class="get-address-formcontainer">
 
-    <h2>انتخاب استان و شهر</h2>
+<h2>اطلاعات خریدار</h2>
+<div class="costumer-info">
+    <input type="text" id="custumer-name" placeholder="نام و نام خانوادگی">
+    <input type="text" id="custumer-phone" placeholder="شماره تماس">
 
-    <!-- فیلدهای استان و شهر -->
-    <label for="provinceSelect">استان:</label>
+</div>
+
+<h2>انتخاب استان و شهر</h2>
+
+
+        <div class="city">
     <select id="provinceSelect" onchange="getCities()">
         <option value="">یک استان را انتخاب کنید</option>
     </select>
 
-    <label for="citySelect">شهر:</label>
     <select id="citySelect">
         <option value="">یک شهر را انتخاب کنید</option>
     </select>
 
+        </div>
+    
     <h3>اطلاعات آدرس جدید</h3>
 
     <!-- فیلدهای جدید -->
@@ -50,6 +55,9 @@
     </select>
 
     <button onclick="submitAddress()">ارسال آدرس</button>
+
+
+    </div>
 
     <script>
         const apiKey = "postex_3ad32603b6d540c2kU5qqm2GcUkUHqsvPOTE6fjZEnx5L";

@@ -33,9 +33,6 @@ body{
     border-radius: 10px;
     gap: 10px; /* فاصله بین کتاب‌ها */
 }
-.product-card{
-    border: 1px solid #303030;
-}
 
 
 @media (max-width: 768px) {

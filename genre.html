@@ -46,59 +46,49 @@
         document.addEventListener("DOMContentLoaded", async function () {
             const urlParams = new URLSearchParams(window.location.search);
             const genreId = urlParams.get("id");
+    
             if (!genreId) {
                 document.body.innerHTML = "<h2>شناسه ژانر مشخص نشده است!</h2>";
                 return;
             }
-
-            const token = localStorage.getItem("access_token");
-            if (!token) {
-                alert("لطفاً وارد شوید.");
-                window.location.href = "login.html";
-                return;
-            }
-
+    
             const booksApiUrl = "http://127.0.0.1:8000/books/";
             const publishersApiUrl = "http://127.0.0.1:8000/publishers/";
+            const genreApiUrl = `http://127.0.0.1:8000/genres/${genreId}/`;
+    
             let allBooks = [];
             let filteredBooks = [];
             let currentPage = 1;
             const booksPerPage = 6;
-            
+    
             const booksContainer = document.querySelector(".books-container");
             const sortSelect = document.getElementById("sort");
             const publisherSelect = document.getElementById("publisher");
             const prevPageBtn = document.getElementById("prevPage");
             const nextPageBtn = document.getElementById("nextPage");
             const pageInfo = document.getElementById("pageInfo");
-            
+            const genreNameElement = document.getElementById("genre-name");
+    
             async function fetchBooks() {
                 try {
-                    const response = await fetch(booksApiUrl, {
-                        headers: {
-                            "Authorization": `Bearer ${token}`,
-                            "Content-Type": "application/json"
-                        }
-                    });
+                    const response = await fetch(booksApiUrl);
                     allBooks = await response.json();
-                    filteredBooks = allBooks.filter(book => 
+    
+                    filteredBooks = allBooks.filter(book =>
                         book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId))
                     );
+    
                     renderBooks();
                 } catch (error) {
                     console.error("❌ خطا در دریافت کتاب‌ها:", error);
                 }
             }
-            
+    
             async function fetchPublishers() {
                 try {
-                    const response = await fetch(publishersApiUrl, {
-                        headers: {
-                            "Authorization": `Bearer ${token}`,
-                            "Content-Type": "application/json"
-                        }
-                    });
+                    const response = await fetch(publishersApiUrl);
                     const publishers = await response.json();
+    
                     publishers.forEach(publisher => {
                         const option = document.createElement("option");
                         option.value = publisher.id;
@@ -109,7 +99,23 @@
                     console.error("❌ خطا در دریافت ناشران:", error);
                 }
             }
-            
+    
+            async function fetchGenre() {
+                try {
+                    const response = await fetch(genreApiUrl);
+    
+                    if (!response.ok) {
+                        throw new Error("اطلاعات ژانر بارگذاری نشد.");
+                    }
+    
+                    const genre = await response.json();
+                    genreNameElement.textContent = genre.name; // نمایش نام ژانر در صفحه
+                } catch (error) {
+                    genreNameElement.textContent = "خطا در بارگذاری نام ژانر";
+                    console.error("❌ خطا در بارگذاری اطلاعات ژانر:", error);
+                }
+            }
+    
             function renderBooks() {
                 booksContainer.innerHTML = "";
                 const startIndex = (currentPage - 1) * booksPerPage;
@@ -119,10 +125,13 @@
                 booksToShow.forEach(book => {
                     const bookCard = `
                         <div class="product-card">
-                            <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
-                            <p id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</p>
-                            <p>${book.price} تومان</p>
-                            <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+                            <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
+                            <div class="product-info">
+                                <p>${book.title}</p>
+                                <span id="discount">${book.discount ? book.discount + " %" : "بوکیتو"}</span>
+                                <p>قیمت: ${book.price} تومان</p>
+                                <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+                            </div>
                         </div>
                     `;
                     booksContainer.innerHTML += bookCard;
@@ -130,102 +139,58 @@
     
                 updatePagination();
             }
+    
             function filterBooks() {
-    const selectedPublisher = publisherSelect.value;
-    if (selectedPublisher === "all") {
-        // فیلتر بدون انتخاب ناشر خاص
-        filteredBooks = allBooks.filter(book => 
-            book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId))
-        );
-    } else {
-        // فیلتر با انتخاب ناشر خاص
-        filteredBooks = allBooks.filter(book => 
-            book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId)) &&
-            book.publisher && book.publisher.id == selectedPublisher
-        );
-    }
-    currentPage = 1; // صفحه به اول برگشت
-    sortBooks(); // بعد از فیلتر مرتب‌سازی هم انجام می‌شود
-}
-
-function sortBooks() {
-    const sortBy = sortSelect.value;
-    if (sortBy === "cheap") {
-        filteredBooks.sort((a, b) => a.price - b.price);
-    } else if (sortBy === "expensive") {
-        filteredBooks.sort((a, b) => b.price - a.price);
-    } else if (sortBy === "newest") {
-        filteredBooks.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    }
-    renderBooks();
-}
-
-            
+                const selectedPublisher = publisherSelect.value;
+    
+                filteredBooks = allBooks.filter(book =>
+                    book.genres && book.genres.some(genre => Number(genre.id) === Number(genreId)) &&
+                    (selectedPublisher === "all" || (book.publisher && book.publisher.id == selectedPublisher))
+                );
+    
+                currentPage = 1;
+                sortBooks();
+            }
+    
+            function sortBooks() {
+                const sortBy = sortSelect.value;
+    
+                if (sortBy === "cheap") {
+                    filteredBooks.sort((a, b) => a.price - b.price);
+                } else if (sortBy === "expensive") {
+                    filteredBooks.sort((a, b) => b.price - a.price);
+                } else if (sortBy === "newest") {
+                    filteredBooks.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+                }
+    
+                renderBooks();
+            }
+    
             function updatePagination() {
                 const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
                 pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
                 prevPageBtn.disabled = currentPage === 1;
                 nextPageBtn.disabled = currentPage === totalPages;
             }
-            
+    
             function changePage(step) {
                 currentPage += step;
                 renderBooks();
             }
-            
+    
+            // رویدادها
             sortSelect.addEventListener("change", sortBooks);
             publisherSelect.addEventListener("change", filterBooks);
             prevPageBtn.addEventListener("click", () => changePage(-1));
             nextPageBtn.addEventListener("click", () => changePage(1));
-            
+    
+            // دریافت اطلاعات از API
+            await fetchGenre();
             await fetchPublishers();
             await fetchBooks();
         });
     </script>
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", async function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const genreId = urlParams.get("id");
-    if (!genreId) {
-        document.body.innerHTML = "<h2>شناسه ژانر مشخص نشده است!</h2>";
-        return;
-    }
-
-    const token = localStorage.getItem("access_token");
-    if (!token) {
-        alert("لطفاً وارد شوید.");
-        window.location.href = "login.html";
-        return;
-    }
-
-    const genreApiUrl = `http://127.0.0.1:8000/genres/${genreId}/`; // آدرس API برای گرفتن اطلاعات ژانر
-    const genreNameElement = document.getElementById("genre-name");
-
-    try {
-        // گرفتن اطلاعات ژانر
-        const response = await fetch(genreApiUrl, {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        });
-        
-        if (!response.ok) {
-            throw new Error("اطلاعات ژانر بارگذاری نشد.");
-        }
-
-        const genre = await response.json();
-        genreNameElement.textContent = genre.name; // نمایش نام ژانر در صفحه
-
-    } catch (error) {
-        genreNameElement.textContent = "خطا در بارگذاری نام ژانر"; // در صورت بروز خطا
-        console.error("❌ خطا در بارگذاری اطلاعات ژانر:", error);
-    }
-});
-
-</script>
+    
 </body>
 
 <script src="footer.js"></script>

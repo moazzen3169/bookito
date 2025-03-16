@@ -1,64 +1,73 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const cartItems = document.querySelector(".cart-items");
-    const subtotalEl = document.getElementById("subtotal");
-    const totalEl = document.getElementById("total");
+document.addEventListener("DOMContentLoaded", function () {
+    const cartItemsContainer = document.querySelector(".cart-items");
+    const subtotalElement = document.getElementById("subtotal");
+    const totalElement = document.getElementById("total");
 
-    let cart = [
-        { id: 1, title: "بیگانه", author: "آلبر کامو", price: 150000, img: "image/bookcover.jpg", quantity: 1 },
-        { id: 2, title: "دنیای سوفی", author: "یوستین گردر", price: 200000, img: "image/bookcover.jpg", quantity: 1 },
-        { id: 3, title: "شازده کوچولو", author: "آنتوان دوسنت اگزوپری", price: 120000, img: "image/bookcover.jpg", quantity: 1 },
-        { id: 4, title: "شازده کوچولو", author: "آنتوان دوسنت اگزوپری", price: 120000, img: "image/bookcover.jpg", quantity: 1 },
-        { id: 5, title: "شازده کوچولو", author: "آنتوان دوسنت اگزوپری", price: 120000, img: "image/bookcover.jpg", quantity: 1 }
-    ];
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    function renderCart() {
-        cartItems.innerHTML = "";
+    // به‌روزرسانی جدول سبد خرید
+    function updateCartDisplay() {
+        cartItemsContainer.innerHTML = ""; // پاک کردن محتوای قبلی
+
         let subtotal = 0;
+        let rowNumber = 1; // شماره ردیف‌ها از 1 شروع می‌شود
 
-        cart.forEach(item => {
-            subtotal += item.price * item.quantity;
+        // ایجاد ردیف جدول برای هر کتاب
+        cart.forEach((book, index) => {
+            // بررسی و جایگزینی مقدارهای پیش‌فرض
+            let title = book.title || "نامشخص";
+            let price = book.price ? Number(book.price) : 0;
+            let quantity = book.quantity ? Number(book.quantity) : 1;
 
-            const cartItem = document.createElement("div");
-            cartItem.classList.add("cart-item");
-            cartItem.innerHTML = `
-                <img src="${item.img}" alt="${item.title}">
-                <div class="item-details">
-                    <h4>${item.title}</h4>
-                    <p>✍ نویسنده: ${item.author}</p>
-                </div>
-                <p class="item-price">${(item.price * item.quantity).toLocaleString()} تومان</p>
-                <input type="number" value="${item.quantity}" min="1" class="item-quantity" data-id="${item.id}">
-                <button class="remove-btn" data-id="${item.id}">❌</button>
+            
+            // ایجاد ردیف جدول برای هر کتاب
+            const cartItemRow = document.createElement("tr");
+            cartItemRow.innerHTML = `
+                <td>${rowNumber}</td> <!-- شماره ردیف -->
+                <td>${title}</td>
+                <td>${price.toLocaleString()} </td>
+                <td>${quantity}</td>
+                <td><button class="remove-btn" data-index="${index}">❌</button></td>
             `;
-            cartItems.appendChild(cartItem);
+            cartItemsContainer.appendChild(cartItemRow);
+            rowNumber++; // افزایش شماره ردیف
+
+            let itemTotal = price * quantity;
+            subtotal += itemTotal;
         });
 
-        // آپدیت قیمت‌ها
-        subtotalEl.innerText = `${subtotal.toLocaleString()} تومان`;
-        totalEl.innerText = `${(subtotal + 10000 + 15000).toLocaleString()} تومان`;
+        // محاسبه قیمت کل
+        subtotalElement.textContent = `${subtotal.toLocaleString()} تومان`;
+        let total = subtotal + 60000; // اضافه کردن هزینه ارسال و مالیات
+        totalElement.textContent = `${total.toLocaleString()} تومان`;
 
-        // حذف آیتم‌ها
+        // افزودن عملکرد حذف آیتم
         document.querySelectorAll(".remove-btn").forEach(button => {
-            button.addEventListener("click", (e) => {
-                const id = parseInt(e.target.getAttribute("data-id"));
-                cart = cart.filter(item => item.id !== id);
-                renderCart();
-            });
-        });
-
-        // تغییر تعداد
-        document.querySelectorAll(".item-quantity").forEach(input => {
-            input.addEventListener("input", (e) => {
-                const id = parseInt(e.target.getAttribute("data-id"));
-                const newQuantity = parseInt(e.target.value);
-                const item = cart.find(item => item.id === id);
-                if (item && newQuantity > 0) {
-                    item.quantity = newQuantity;
-                    renderCart();
-                }
+            button.addEventListener("click", function () {
+                let index = this.getAttribute("data-index");
+                cart.splice(index, 1); // حذف آیتم از آرایه
+                localStorage.setItem("cart", JSON.stringify(cart)); // ذخیره مجدد در localStorage
+                updateCartDisplay(); // به‌روزرسانی جدول
             });
         });
     }
 
-    renderCart();
+    updateCartDisplay();
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const checkoutBtn = document.querySelector(".checkout-btn");
+
+    checkoutBtn.addEventListener("click", function () {
+        // بررسی وضعیت ورود کاربر
+        const accessToken = localStorage.getItem("access_token");
+
+        if (accessToken) {
+            // اگر کاربر وارد شده است، به صفحه پرداخت هدایت شود
+            window.location.href = "/get-address.html"; // به صفحه پرداخت هدایت می‌کند
+        } else {
+            // اگر کاربر وارد نشده است، به صفحه ورود هدایت شود
+            window.location.href = "/register.html"; // به صفحه ورود هدایت می‌کند
+        }
+    });
 });

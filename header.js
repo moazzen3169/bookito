@@ -36,3 +36,27 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => console.error("خطا در بارگذاری هدر:", error));
 });
         
+
+document.addEventListener("DOMContentLoaded", function () {
+    const cartCountElement = document.getElementById('cart-count'); // المنت نمایش تعداد محصولات
+
+    // به‌روزرسانی تعداد محصولات داخل سبد خرید
+    function updateCartCount() {
+        // خواندن داده‌های سبد خرید از localStorage
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || []; 
+        
+        // محاسبه تعداد کل محصولات (با در نظر گرفتن quantity)
+        const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0); // جمع تعداد کل محصولات
+        
+        // نمایش تعداد محصولات یا مخفی کردن شمارنده
+        if (cartCount > 0) {
+            cartCountElement.textContent = cartCount; // نمایش تعداد در شمارنده
+            cartCountElement.style.display = 'inline-block';  // نمایش شمارنده
+        } else {
+            cartCountElement.style.display = 'none';  // اگر سبد خرید خالی است، شمارنده را مخفی کنیم
+        }
+    }
+
+    // فراخوانی به‌روزرسانی شمارنده هنگام بارگذاری صفحه
+    updateCartCount();
+});

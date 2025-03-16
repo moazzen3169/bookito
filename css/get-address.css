@@ -1,0 +1,100 @@
+/* استایل بدنه صفحه */
+body {
+    background-color: #f4f7fa; /* رنگ زمینه روشن */
+    margin: 0;
+    padding: 0;
+    font-family: modam; /* فونت پیش‌فرض برای تمامی المان‌ها */
+}
+
+/* استایل فرم */
+.get-address-formcontainer {
+    display: grid;
+    justify-items: center;
+    width: 95%;
+    max-width: 800px; /* حداکثر عرض فرم */
+    margin: 10px auto;
+    padding: 20px 50px;
+    background-color: #ffffff;
+    border-radius: 8px; /* گوشه‌های گرد */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* سایه ملایم */
+    direction: rtl;
+}
+
+/* استایل ورودی‌های متنی */
+.get-address-formcontainer input,
+.get-address-formcontainer select {
+    font-family: modam;
+    width: 100%; /* عرض 100% برای پوشش کل فضا */
+    padding: 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9; /* پس‌زمینه روشن */
+    margin-bottom: 20px;
+    transition: all 0.3s ease; /* اضافه کردن انیمیشن برای تغییرات */
+}
+
+/* تغییرات هنگام فوکوس (برای ورودی‌ها و انتخاب‌ها) */
+.get-address-formcontainer input:focus,
+.get-address-formcontainer select:focus {
+    border-color: #4a90e2; /* رنگ مرز آبی هنگام فوکوس */
+    background-color: #e9f5ff; /* تغییر رنگ پس‌زمینه هنگام فوکوس */
+    outline: none; /* حذف خط حاشیه پیش‌فرض مرورگر */
+}
+
+/* استایل دکمه‌ها */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #357ab7; /* تغییر رنگ دکمه در حالت هاور */
+}
+
+/* استایل فیلدهای انتخابی (select) */
+.get-address-formcontainer select {
+    background-color: #f9f9f9;
+}
+
+/* استایل برای دستگاه‌های موبایل */
+@media (max-width: 768px) {
+    .get-address-formcontainer {
+        padding: 20px; /* کاهش پدینگ برای صفحه نمایش کوچکتر */
+        width: 90%; /* عرض فرم به 95% صفحه برای موبایل */
+    }
+
+    button {
+        font-size: 14px; /* اندازه فونت دکمه برای موبایل */
+    }
+
+    input,
+    select {
+        font-size: 16px; /* فونت بزرگتر برای راحتی خواندن */
+        max-width: 95%;
+    }
+}
+
+/* استایل برای عنوان‌ها */
+h2, h3 {
+    font-size: 22px;
+    color: #333;
+    text-align: center;
+    float: right;
+    margin-bottom: 20px;
+}
+
+/* استایل برای فیلدهای جداگانه */
+.city {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* عرض 100% برای پوشش کامل فضای موجود */
+    gap: 10px; /* فاصله بین استان و شهر */
+}

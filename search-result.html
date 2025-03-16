@@ -33,24 +33,26 @@
         }
     }
 
-    // تابع برای نمایش نتایج جستجو
-    function displayResults(data, query) {
-        const searchShow = document.getElementById('searchShow');
-        searchShow.innerHTML = ''; // پاک کردن نتایج قبلی
+// تابع برای نمایش نتایج جستجو
+function displayResults(data, query) {
+    const searchShow = document.getElementById('searchShow');
+    searchShow.innerHTML = ''; // پاک کردن نتایج قبلی
 
+    // نمایش عبارت جستجو شده در تگ <h3>
+    const searchQuery = document.createElement('h3');
+    searchQuery.textContent = `نتایج جستجو برای: "${query}"`;
+    searchShow.appendChild(searchQuery);
 
-                    // نمایش عبارت جستجو شده در تگ <h3>
-                        const searchQuery = document.createElement('h3');
-            searchQuery.textContent = `نتایج جستجو برای: "${query}"`;
-            searchShow.appendChild(searchQuery);
+    // ایجاد یک container برای تمام کتاب‌ها
+    const booksContainer = document.createElement('div');
+    booksContainer.classList.add('books-container'); // اضافه کردن کلاس books-container
 
+    // فیلتر کردن کتاب‌ها بر اساس نام دقیق
+    const foundBooks = data.filter(book => book.title.toLowerCase().includes(query.toLowerCase()));
 
-        // فیلتر کردن کتاب‌ها بر اساس نام دقیق
-        const foundBooks = data.filter(book => book.title.toLowerCase().includes(query.toLowerCase()));
-
-        if (foundBooks.length > 0) {
-            foundBooks.forEach(product => {
-                const productCard = `
+    if (foundBooks.length > 0) {
+        foundBooks.forEach(product => {
+            const productCard = `
     <div class="product-card">
         <img src="${product.cover_image}" alt="${product.title}" class="product-image">
         <div class="product-info">
@@ -62,12 +64,15 @@
     </div>
 `;
 
-                searchShow.innerHTML += productCard;
-            });
-        } else {
-            searchShow.textContent = 'کتابی با این نام یافت نشد.';
-        }
+            // اضافه کردن هر کارت کتاب به booksContainer
+            booksContainer.innerHTML += productCard;
+        });
+        // اضافه کردن booksContainer به searchShow
+        searchShow.appendChild(booksContainer);
+    } else {
+        searchShow.textContent = 'کتابی با این نام یافت نشد.';
     }
+}
 
 
 
@@ -92,6 +97,8 @@
 
 
 <style>
+
+
      .search-show h3{
         text-align: center;
         direction: rtl;

@@ -1,9 +1,12 @@
 /* تنظیمات کلی */
 
 body {
+    margin: 0%;
     padding-top: 60px;
     direction: ltr;
     font-family: modam;
+    background-color: #f0f1f7;
+
 }
 
 /* هدر */
@@ -84,11 +87,20 @@ body {
     background-color: #ffffff00;
 }
 
-
+#searchBtn img{
+    user-select: none; /* جلوگیری از انتخاب تصویر */
+    pointer-events: none; /* جلوگیری از تعاملات با تصویر (مثلاً کلیک) */
+}
 
 .menu {
     cursor: pointer;
 }
+
+.menu img{
+    user-select: none; /* جلوگیری از انتخاب تصویر */
+    pointer-events: none; /* جلوگیری از تعاملات با تصویر (مثلاً کلیک) */
+}
+
 .sidebar {
     position: fixed;
     top: 50;
@@ -118,6 +130,12 @@ body {
     font-size: 22px;
     margin-bottom: 20px;
     color: #313131;
+
+}
+
+
+.logo{
+    margin-left: -100px;
 }
 .sidebar ul {
     list-style: none;
@@ -186,13 +204,19 @@ animation: gradientAnimation 15s ease infinite;
     display: flex;
     align-items: center;
     justify-content: center;
+    
 
 }
 .icons a img{
     margin: 0px 10px;
-
+    user-select: none; /* جلوگیری از انتخاب تصویر */
+    pointer-events: none; /* جلوگیری از تعاملات با تصویر (مثلاً کلیک) */
 }
 @media (max-width:700px) {
+
+    .logo{
+        margin-left: -50px;
+    }
 
     .items-container{
         margin-right: 30px;
@@ -220,7 +244,6 @@ animation: gradientAnimation 15s ease infinite;
 
 }
 
-search-container
 
 .book-card {
     border: 1px solid #ddd;
@@ -247,3 +270,14 @@ p {
     font-size: 1em;
     color: #555;
 }
+
+
+#cart-count {
+    margin: -10px 10px -10px -25px;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+

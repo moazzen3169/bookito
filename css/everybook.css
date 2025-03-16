@@ -8,41 +8,6 @@ body{
 
 
 
-/* استایل‌های اصلی */
-
-body{
-    background-color: #e8e8e8;
-    padding: 0%;
-    margin: 0%;
-}
-
-.slider-container {
-    font-family: modam;
-    position: relative;
-    width: 95%;
-    height: auto;
-    margin: 20px auto;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.slider {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    overflow-x: scroll;
-    user-select: none;
-    padding: 10px;
-    width: 100%;
-    max-width: 1500px;
-    height: auto;
-    direction: rtl;
-
-}
-
 .books-container {
     display: flex;
     justify-content: center;
@@ -94,7 +59,7 @@ body{
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 90%;
+    width: 100%;
     background: rgba(255, 255, 255, 0.9);
     padding: 10px;
     text-align: center;
@@ -116,7 +81,7 @@ body{
 
 .view-details {
     display: block;
-    background-color: #5bab55;
+    background-color: #556d97;
     color: #fff;
     text-decoration: none;
     font-size: 12px;
@@ -129,22 +94,6 @@ body{
 .view-details:hover {
     background-color: #313131;
 }
-
-
-
-.search-show{
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    margin-top: 50px;
-    
-}
-
-.search-show h3{
-    color: #313131;
-
-}
-
 
 
 
@@ -174,64 +123,26 @@ max-width: 90%;
 }
 .product-card{
 min-width: 160px;
-min-height: 310px;
+min-height: 250px;
 max-width: 160px;
-max-height: 310px;
+max-height: 250px;
 }
 .everybook-banner{
-max-width: 90%;
-max-height: 300px;
+min-width: 90%;
+height: 250px;
 
 }
 .everybook-banner img{
-    max-width: 90%;
-    max-height: 300px;
-}
-.sort-container{
 width: 90%;
-}
-.pagination{
-max-width: 90%;
-text-align: center;
-}
-.pagination button{
-scale: 0.7;
-
+height: 100%;
 }
 
 }
 
 
-
-
-.sort-container{
-display: flex;
-align-items: center;
-justify-content: center;
-margin: 10px auto;
-background-color: #fff;
-max-width: 1300px;
-height: 50px;
-border-radius: 10px;
-direction: rtl;
-}
-
-
-.sort-container select{
-
-direction: ltr;
-width: 200px;
-text-align: center;
-padding: 2px;
-border-radius: 3px;
-cursor: pointer;
-border: 1px dashed #27272a;
-margin: 0px 20px;
-}
 
 .everybook-banner{
     max-width: 1300px;
-    min-width: 1300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,27 +157,3 @@ border-radius: 10px;
 
 }
 
-.pagination{
-background-color: #fff;
-display: flex;
-align-items: center;
-justify-content: center;
-width: 1300px;
-height: 50px;
-margin: 10px auto;
-border-radius: 10px;
-gap: 10px;
-}
-
-.pagination button{
-padding: 5px;
-border: 1px dashed #27272a;
-border-radius: 5px;
-}
-
-.pagination button:hover{
-background-color: #27272a;
-color: #fff;
-border: 1px dashed #ffffff;
-
-}

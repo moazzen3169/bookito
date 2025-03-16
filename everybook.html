@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="library/script1.js"></script>
         <link rel="stylesheet" href="css/everybook.css">
+        <link rel="stylesheet" href="css/filter-pagination.css  ">
         <script src="header.js"></script>
         <title> همه کتاب ها</title>
 
@@ -20,16 +21,20 @@
 <div class="everybook-banner"><img src="image/slide5.jpg" alt="بنر"></div>
 
 <body>
-
-    <div class="sort-container">
-        <select id="sort">
-            <option value="newest">مرتب سازی</option>
-            <option value="cheap">ارزان‌ترین‌ها</option>
-            <option value="expensive">گران‌ترین‌ها</option>
-        </select>
     
-        <select id="publisher">
-        </select>
+    <div class="sort-container">
+    <h2>اینجا میتونی همه کتاب هارو ببینی</h2>
+
+        <div class="selets">
+            <select id="sort">
+                <option value="newest">مرتب سازی</option>
+                <option value="cheap">ارزان‌ترین‌ها</option>
+                <option value="expensive">گران‌ترین‌ها</option>
+            </select>
+        
+            <select id="publisher">
+            </select>
+        </div>
     </div>
     
     <div class="books-container">
@@ -43,10 +48,9 @@
     </div>
     
     <script>
-   document.addEventListener("DOMContentLoaded", async function () {
+  document.addEventListener("DOMContentLoaded", async function () {
     const booksApiUrl = "http://127.0.0.1:8000/books/";  
     const publishersApiUrl = "http://127.0.0.1:8000/publishers/";  
-    const token = localStorage.getItem("access_token");  // توکن برای احراز هویت
     const booksContainer = document.querySelector(".books-container");
     const sortSelect = document.getElementById("sort");
     const publisherSelect = document.getElementById("publisher");
@@ -58,21 +62,13 @@
     let filteredBooks = [];  
     let publishers = [];  
     let currentPage = 1;  
-    const booksPerPage = 6;
-
-    // اگر توکن موجود نیست، کاربر را به صفحه ورود هدایت کن
-    if (!token) {
-        alert("لطفاً وارد شوید.");
-        window.location.href = "login.html";
-        return;
-    }
+    const booksPerPage = 12;
 
     // دریافت کتاب‌ها
     async function fetchBooks() {
         try {
             const response = await fetch(booksApiUrl, {
                 headers: {
-                    "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
                 }
             });
@@ -90,7 +86,6 @@
         try {
             const response = await fetch(publishersApiUrl, {
                 headers: {
-                    "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"
                 }
             });
@@ -126,16 +121,16 @@
         const fragment = document.createDocumentFragment();
         booksToShow.forEach(book => {
             const bookCard = document.createElement("div");
-bookCard.classList.add("product-card");
-bookCard.innerHTML = `
-    <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
-    <div class="product-info">
-        <p>${book.title}</p>
-        ${book.discount ? `<span id="discount">${book.discount} %</span>` : ''}
-        <p>قیمت: ${book.price} تومان</p>
-        <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
-    </div>
-`;
+            bookCard.classList.add("product-card");
+            bookCard.innerHTML = `
+                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
+                <div class="product-info">
+                    <p>${book.title}</p>
+                    ${book.discount ? `<span id="discount">${book.discount} %</span>` : ''}
+                    <p>قیمت: ${book.price} </p>
+                    <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+                </div>
+            `;
 
             fragment.appendChild(bookCard);
         });
@@ -191,6 +186,7 @@ bookCard.innerHTML = `
     await fetchPublishers();
     await fetchBooks();
 });
+
 
 
     </script>
