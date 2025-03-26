@@ -1,5 +1,5 @@
 body {
-    font-family: modam;
+    font-family: dana;
     background-color: #e8e8e8;
     margin: 0px;
     padding: 0px;
@@ -26,7 +26,7 @@ body {
     margin: 0px auto;
     background-size: cover; /* یا contain */
     background-position: center;
-    background-image: url('image/3.jpg');
+    background-image: url('image/38.jpg');
 }
 
 .banner2  {
@@ -36,7 +36,7 @@ body {
     margin: 0px auto;
     background-size: cover; /* یا contain */
     background-position: center;
-    background-image: url('image/32.jpg');
+    background-image: url('image/37.jpg');
 }
 
 
@@ -164,9 +164,9 @@ body {
 
 
 .top-section-banner{
-    width: 80%;
+    width: 77.5%;
     height: 100px;
-    background-color: #556d97;
+    background: linear-gradient(127deg, #646DA0, #32364F);
     display: flex;
     align-items: center;
     justify-content: center;

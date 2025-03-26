@@ -1,83 +1,128 @@
-<script>
-    // تابع برای دریافت پارامترهای URL
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نتایج جستجو</title>
+    <link rel="stylesheet" href="css/products_card.css">
+    <script src="header.js" defer></script>
+</head>
+<body>
 
-    // دریافت عبارت جستجو از URL
-    const query = getQueryParam('q');
+    <h3 id="searchQuery"></h3>
+    <div class="search-show" id="searchShow"></div>
 
-    if (query) {
-        // اگر عبارت جستجو وجود داشت، جستجو را انجام دهید
-        searchBooks(query);
-    } else {
-        // اگر عبارت جستجو وجود نداشت، پیام مناسب نمایش دهید
-        document.getElementById('searchShow').textContent = 'لطفاً عبارت جستجو را وارد کنید.';
-    }
-
-    // تابع برای جستجوی کتاب‌ها
-    async function searchBooks(query) {
-        const url = `http://127.0.0.1:8000/books/`; // آدرس API که تمام کتاب‌ها را برمی‌گرداند
-
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error('خطا در دریافت اطلاعات از سرور.');
-            }
-            const data = await response.json();
-            displayResults(data, query);
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('searchShow').textContent = 'خطا در دریافت اطلاعات.';
+    <script>
+        // دریافت پارامتر جستجو از URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
         }
-    }
 
-// تابع برای نمایش نتایج جستجو
-function displayResults(data, query) {
-    const searchShow = document.getElementById('searchShow');
-    searchShow.innerHTML = ''; // پاک کردن نتایج قبلی
+        // دریافت مقدار جستجو
+        const query = getQueryParam('q');
 
-    // نمایش عبارت جستجو شده در تگ <h3>
-    const searchQuery = document.createElement('h3');
-    searchQuery.textContent = `نتایج جستجو برای: "${query}"`;
-    searchShow.appendChild(searchQuery);
+        if (query) {
+            searchBooks(query);
+        } else {
+            document.getElementById('searchShow').textContent = 'لطفاً عبارت جستجو را وارد کنید.';
+        }
 
-    // ایجاد یک container برای تمام کتاب‌ها
-    const booksContainer = document.createElement('div');
-    booksContainer.classList.add('books-container'); // اضافه کردن کلاس books-container
+        // تابع جستجوی کتاب‌ها
+        async function searchBooks(query) {
+            const url = `http://127.0.0.1:8000/books/`; // API کتاب‌ها
 
-    // فیلتر کردن کتاب‌ها بر اساس نام دقیق
-    const foundBooks = data.filter(book => book.title.toLowerCase().includes(query.toLowerCase()));
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error('خطا در دریافت اطلاعات از سرور.');
+                }
+                const data = await response.json();
+                displayResults(data, query);
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('searchShow').textContent = 'خطا در دریافت اطلاعات.';
+            }
+        }
 
-    if (foundBooks.length > 0) {
-        foundBooks.forEach(product => {
-            const productCard = `
-    <div class="product-card">
-        <img src="${product.cover_image}" alt="${product.title}" class="product-image">
-        <div class="product-info">
-            <p> ${product.title} </p>
-            ${product.discount ? `<span id="discount">${product.discount} %</span>` : ''}
-            <p>قیمت: ${product.price} تومان</p>
-            <a href="detail.html?id=${product.id}" class="view-details">مشاهده جزئیات</a>
-        </div>
-    </div>
-`;
+        // تابع نمایش نتایج جستجو
+        function displayResults(data, query) {
+            const searchShow = document.getElementById('searchShow');
+            searchShow.innerHTML = ''; 
 
-            // اضافه کردن هر کارت کتاب به booksContainer
-            booksContainer.innerHTML += productCard;
-        });
-        // اضافه کردن booksContainer به searchShow
-        searchShow.appendChild(booksContainer);
-    } else {
-        searchShow.textContent = 'کتابی با این نام یافت نشد.';
-    }
-}
+            // نمایش متن جستجو شده
+            const searchQuery = document.createElement('h3');
+            searchQuery.textContent = `نتایج جستجو برای: "${query}"`;
+            searchShow.appendChild(searchQuery);
+
+            // ایجاد کانتینر برای نمایش کتاب‌ها
+            const booksContainer = document.createElement('div');
+            booksContainer.classList.add('books-container');
+
+            // فیلتر کردن کتاب‌ها
+            const foundBooks = data.filter(book => book.title.toLowerCase().includes(query.toLowerCase()));
+
+            if (foundBooks.length > 0) {
+                foundBooks.forEach(book => {
+                    const bookCard = document.createElement("div");
+                    bookCard.classList.add("product_card");
+
+                    // محاسبه قیمت تخفیف‌خورده
+                    const discountedPrice = book.discount ? Math.round(book.price * (1 - book.discount / 100)) : book.price;
+
+                    bookCard.innerHTML = `
+                        <div class="product_image">
+                            <a href="detail.html?id=${book.id}">
+                                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
+                            </a>
+                        </div>
+                        <div class="product_info">
+                            <div class="product_title">
+                                <a href="detail.html?id=${book.id}" class="title_link">${book.title}</a>
+                            </div>
+                            
+                            <div class="product_author">
+                                ${book.authors ? book.authors.map(author => `
+                                <a href="authors.html?id=${author.id}" class="author_link">
+                                    ${author.first_name} ${author.last_name || ''}
+                                </a>
+                                `).join(', ') : ''}
+                            </div>
+
+                            <div class="product_discount">
+                                ${book.discount ? `<span class="offer">${book.discount}%</span>` : ''}
+                                <span class="product_firstprice">${book.price}</span>
+                                <span class="toman">تومان</span>
+                            </div>
+                            <div class="buy_price_rating">
+                                <div class="product_price">
+                                    <span>${discountedPrice}</span>
+                                    <span class="toman">تومان</span>
+                                </div>
+                                <div class="product_rating">
+                                    <img src="https://icongr.am/fontawesome/star.svg?size=20&color=ffd500" alt="rating">
+                                    <span>${book.rating || 'N/A'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    booksContainer.appendChild(bookCard);
+                });
+
+                // اضافه کردن کانتینر به نمایش نتایج
+                searchShow.appendChild(booksContainer);
+            } else {
+                searchShow.textContent = 'کتابی با این نام یافت نشد.';
+            }
+        }
+    </script>
 
 
 
+</body>
+</html>
 
-</script>
 
 <!DOCTYPE html>
 <html lang="fa">
@@ -97,6 +142,7 @@ function displayResults(data, query) {
 
 
 <style>
+
 
 
      .search-show h3{

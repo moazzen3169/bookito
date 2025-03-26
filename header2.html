@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" dir="rtl">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/header2.css">
+</head>
+<body>
+
+    <div class="header_container">
+        <div class="header_section">
+
+            <div class="right_section">
+                <div class="menu">
+                    <button class="menu_btn">
+                        <img src="https://icongr.am/jam/align-justify.svg?size=25&color=currentColor" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <div class="middle_section">
+                <div class="logo">
+                    <a href="index.html"> <img src="image/logo.png" alt="logo"></a>
+                </div>
+            </div>
+
+            <div class="left_section">
+                <div class="header_user">
+                    <button class="user_btn">
+                        <img src="https://icongr.am/feather/user.svg?size=20&color=000000" alt="">
+                    </button>
+                </div>
+                <div class="header_buy_bag">
+                    <button class="buy_bag_btn">
+                        <img src="https://icongr.am/feather/shopping-bag.svg?size=20&color=000000" alt="">
+                    </button>
+                </div>
+                <div class="header_search">
+                    <button class="search_btn">
+                        <img src="https://icongr.am/feather/search.svg?size=20&color=000000" alt="">
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="search_overlay">
+            <div class="search_container">
+                <button class="close_btn">&times;</button>
+                <input type="text" placeholder="جستجو کنید..." class="search_input">
+                <button class="search_submit">
+                    <img src="https://icongr.am/fontawesome/search.svg?size=16&color=ffffff" alt="جستجو">
+                </button>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="sidebar_container">
+            <div class="sidebar_logo">
+                <img src="image/logo.png" alt="logo">
+            </div>
+            <div class="sidebar_links">
+                <span><a class="sidebar__link" href="index.html">صفحه اصلی</a></span>
+                <span><a class="sidebar__link" href="everybook.html">همه کتاب ها</a></span>
+                <span><a class="sidebar__link" href="category.html">دسته بندی</a></span>
+                <span><a class="sidebar__link" href="eboutUS">درباره ما</a></span>
+                <span><a class="sidebar__link instagram" href="https://www.instagram.com/bookito_/">instagram</a></span>
+            </div>
+            <div class="sidebar_footer">
+                <h3>ممنونیم از همه شما</h3>
+            </div>
+        </div>
+
+
+        <div class="buy_bag_list">
+            <div class="buy_bag_title">
+                <a class="buy_bag_title_link" href="#">سبد خرید</a>
+            </div>
+            <div class="buy_bag_items_container">
+                <div class="buy_bag_item">
+                        <div class="item_name">
+                            <span>مرگ ایوان ایلیچ</span>
+                        </div>
+                        <div class="item_price">
+                            <span>1000 تومان</span>
+                        </div>
+                        <div class="item_stock">
+                            <span>2عدد</span>
+                        </div>
+                        <div class="item_delete">
+                            <img src="https://icongr.am/fontawesome/times.svg?size=20&color=dd4b4b" alt="">
+                        </div>
+                </div>
+                <div class="buy_bag_item">
+                    <div class="item_name">
+                        <span>مرگ ایوان ایلیچ</span>
+                    </div>
+                    <div class="item_price">
+                        <span>1000 تومان</span>
+                    </div>
+                    <div class="item_stock">
+                        <span>2عدد</span>
+                    </div>
+                    <div class="item_delete">
+                        <img src="https://icongr.am/fontawesome/times.svg?size=20&color=dd4b4b" alt="">
+                    </div>
+            </div>
+            </div>
+            <div class="buy_bag_total_price">
+                <span>جمع کل سبد خرید: 1000 تومان</span>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const searchBtn = document.querySelector(".search_btn");
+    const searchOverlay = document.querySelector(".search_overlay");
+    const closeBtn = document.querySelector(".close_btn");
+
+    // نمایش صفحه جستجو
+    searchBtn.addEventListener("click", function () {
+        searchOverlay.style.display = "flex";
+    });
+
+    // بستن صفحه جستجو
+    closeBtn.addEventListener("click", function () {
+        searchOverlay.style.display = "none";
+    });
+
+    // بستن صفحه جستجو با کلیک بیرون از فرم
+    searchOverlay.addEventListener("click", function (event) {
+        if (event.target === searchOverlay) {
+            searchOverlay.style.display = "none";
+        }
+    });
+});
+
+
+
+
+const menuBtn = document.querySelector(".menu_btn");
+const sidebar = document.querySelector(".sidebar_container");
+
+// وقتی روی دکمه منو کلیک شد، سایدبار نمایش داده شود
+menuBtn.addEventListener("click", function (event) {
+    sidebar.classList.toggle("sidebar_active");
+    event.stopPropagation(); // جلوگیری از بسته شدن سریع در لحظه کلیک روی دکمه
+});
+
+// وقتی روی جای خالی کلیک شد، سایدبار بسته شود
+document.addEventListener("click", function (event) {
+    // اگر کلیک خارج از سایدبار بود، آن را مخفی کن
+    if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+        sidebar.classList.remove("sidebar_active");
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const buyBagBtn = document.querySelector(".buy_bag_btn");
+    const buyBagList = document.querySelector(".buy_bag_list");
+
+    buyBagBtn.addEventListener("click", function () {
+        buyBagList.classList.toggle("active");
+    });
+
+    // بستن سبد خرید با کلیک بیرون از آن
+    document.addEventListener("click", function (event) {
+        if (!buyBagList.contains(event.target) && !buyBagBtn.contains(event.target)) {
+            buyBagList.classList.remove("active");
+        }
+    });
+});
+
+
+
+    </script>
+
+
+
+    
+</body>
+</html>
+

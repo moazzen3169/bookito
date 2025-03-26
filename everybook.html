@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="library/script1.js"></script>
-        <link rel="stylesheet" href="css/everybook.css">
+        <link rel="stylesheet" href="css/products_card.css">
         <link rel="stylesheet" href="css/filter-pagination.css  ">
         <script src="header.js"></script>
         <title> همه کتاب ها</title>
@@ -37,7 +37,7 @@
         </div>
     </div>
     
-    <div class="books-container">
+    <div class="product_container">
         <!-- داده‌های محصولات اینجا اضافه می‌شود -->
     </div>
     
@@ -51,7 +51,7 @@
   document.addEventListener("DOMContentLoaded", async function () {
     const booksApiUrl = "http://127.0.0.1:8000/books/";  
     const publishersApiUrl = "http://127.0.0.1:8000/publishers/";  
-    const booksContainer = document.querySelector(".books-container");
+    const booksContainer = document.querySelector(".product_container");
     const sortSelect = document.getElementById("sort");
     const publisherSelect = document.getElementById("publisher");
     const prevPageBtn = document.getElementById("prevPage");
@@ -111,33 +111,64 @@
         }
     }
 
-    // نمایش کتاب‌ها با صفحه‌بندی
     function renderBooks() {
-        booksContainer.innerHTML = "";  
-        const startIndex = (currentPage - 1) * booksPerPage;
-        const endIndex = startIndex + booksPerPage;
-        const booksToShow = filteredBooks.slice(startIndex, endIndex);
+    booksContainer.innerHTML = "";  
+    const startIndex = (currentPage - 1) * booksPerPage;
+    const endIndex = startIndex + booksPerPage;
+    const booksToShow = filteredBooks.slice(startIndex, endIndex);
 
-        const fragment = document.createDocumentFragment();
-        booksToShow.forEach(book => {
-            const bookCard = document.createElement("div");
-            bookCard.classList.add("product-card");
-            bookCard.innerHTML = `
-                <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}" class="product-image">
-                <div class="product-info">
-                    <p>${book.title}</p>
-                    ${book.discount ? `<span id="discount">${book.discount} %</span>` : ''}
-                    <p>قیمت: ${book.price} </p>
-                    <a href="detail.html?id=${book.id}" class="view-details">مشاهده جزئیات</a>
+    const fragment = document.createDocumentFragment();
+    booksToShow.forEach(book => {
+        const discountedPrice = book.discount ? Math.round(book.price - (book.price * (book.discount / 100))) : book.price;
+        
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("product_card");
+        bookCard.innerHTML = `
+            <div class="product_image">
+                <a href="detail.html?id=${book.id}">
+                    <img src="${book.cover_image || 'default-book.jpg'}" alt="${book.title}">
+                </a>
+            </div>
+            <div class="product_info">
+                <div class="product_title">
+                    <a href="detail.html?id=${book.id}" class="title_link">${book.title}</a>
                 </div>
-            `;
+                
+                <div class="product_author">
+                    ${book.authors.map(author => `
+                    <a href="authors.html?id=${author.id}" class="author_link">
+                        ${author.first_name} ${author.last_name || ''}
+                    </a>
+                     `).join(', ')}
+                </div>
 
-            fragment.appendChild(bookCard);
-        });
 
-        booksContainer.appendChild(fragment);
-        updatePagination();
-    }
+                <div class="product_discount">
+                    ${book.discount ? `<span class="offer">${book.discount}%</span>` : ''}
+                    <span class="product_firstprice">${book.price}</span>
+                    <span class="toman">تومان</span>
+                </div>
+                <div class="buy_price_rating">
+ 
+                    <div class="product_price">
+                        <span>${discountedPrice}</span>
+                        <span class="toman">تومان</span>
+                    </div>
+                    <div class="product_rating">
+                        <img src="https://icongr.am/fontawesome/star.svg?size=20&color=ffd500" alt="">
+                        <span>${book.rating || 'N/A'}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        fragment.appendChild(bookCard);
+    });
+
+    booksContainer.appendChild(fragment);
+    updatePagination();
+}
+
 
     // فیلتر کردن کتاب‌ها بر اساس ناشر
     function filterBooks() {

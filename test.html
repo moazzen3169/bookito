@@ -1,55 +1,14 @@
-<div id="cart-container"></div>
-<p id="total-price"></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" dir="rtl">
+    <title>Document</title>
+</head>
+<body>
 
-<script>
-    function loadCart() {
-        let cart = JSON.parse(localStorage.getItem("cart"));
-        
-        // بررسی اینکه آیا سبد خرید وجود دارد یا نه
-        if (!cart || cart.length === 0) {
-            document.getElementById("cart-container").innerHTML = "<p>سبد خرید خالی است.</p>";
-            document.getElementById("total-price").innerText = "مجموع کل: 0 تومان";
-            return;
-        }
+    
 
-        let cartContainer = document.getElementById("cart-container");
-        let totalPrice = 0;
 
-        cartContainer.innerHTML = ""; // پاک کردن محتوا قبل از نمایش جدید
-
-        cart.forEach(item => {
-            let bookRecord = document.createElement("div");
-            bookRecord.classList.add("book-record");
-
-            bookRecord.innerHTML = `
-                <h3>${item.title}</h3>
-                <p>قیمت: ${item.price} تومان</p>
-                <p>تعداد: ${item.quantity}</p>
-                <p>مجموع: ${item.price * item.quantity} تومان</p>
-                <hr>
-            `;
-
-            cartContainer.appendChild(bookRecord);
-            totalPrice += item.price * item.quantity;
-        });
-
-        document.getElementById("total-price").innerText = `مجموع کل: ${totalPrice} تومان`;
-    }
-
-    window.onload = loadCart;
-</script>
-
-<style>
-    .book-record {
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    hr {
-        border: none;
-        border-top: 1px solid #ccc;
-        margin: 10px 0;
-    }
-</style>
+</body>
+</html>
